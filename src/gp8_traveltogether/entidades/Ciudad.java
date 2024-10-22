@@ -13,6 +13,14 @@ public class Ciudad {
         this.estado = estado;
     }
 
+    public Ciudad(String nombre, boolean estado) {
+        this.nombre = nombre;
+        this.estado = estado;
+    }
+    
+    public Ciudad() {
+    }
+
     public int getCodCiudad() {
         return codCiudad;
     }

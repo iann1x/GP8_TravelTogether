@@ -1,21 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gp8_traveltogether.vistas;
 
-/**
- *
- * @author xiana
- */
+import gp8_traveltogether.entidades.Ciudad;
+import gp8_traveltogether.persistencia.CiudadData;
+
+
 public class GP8_TravelTogether {
 
-    /**
-     * @param args the command line arguments
-     */
+  
     public static void main(String[] args) {
-        // TODO code application logic here
+        //Ciudad ciudad = new Ciudad ("San Rafael", true);
+        
+        CiudadData cData= new CiudadData();
+        
+        //cData.agregarCiudad(ciudad);
+        //cData.bajaLogicaCiudad(1);
+        //cData.altaLogicaCiudad(1);
+        
+        for (Ciudad city: cData.mostrarCiudades()){
+            System.out.println(city.toString());
+        }
     }
     
 }
