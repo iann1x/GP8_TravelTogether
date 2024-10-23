@@ -75,5 +75,4 @@ public class Pasaje {
         this.tipoViaje = tipoViaje;
     }
     
-    
 }

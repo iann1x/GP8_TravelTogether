@@ -13,23 +13,23 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class CiudadData {
-    private Connection con = null;
+     private Connection con;
 
     public CiudadData() {
         con = Conexion.getConexion();      
     }
     
-    public void agregarCiudad(Ciudad ciudad){
+    public void agregarCiudad(Ciudad ciudad) {
         String query = "INSERT INTO ciudad (nombre, estado) VALUES (?, ?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, ciudad.getNombre());
             ps.setBoolean(2, ciudad.isEstado());
-            ps.executeQuery();
+            ps.executeUpdate();
             
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 ciudad.setCodCiudad(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "El destino se cargó con éxito.");
             }
@@ -39,19 +39,18 @@ public class CiudadData {
         }     
     }
     
-    public ArrayList <Ciudad> mostrarCiudades(){
-        String query = "SELECT codCiudad, nombre FROM `ciudad` WHERE estado=1";
-        ArrayList <Ciudad> ciudades = new ArrayList<>();
+    public ArrayList<Ciudad> mostrarCiudades() {
+        String query = "SELECT codCiudad, nombre FROM ciudad WHERE estado=1";
+        ArrayList<Ciudad> ciudades = new ArrayList<>();
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             
-            while(rs.next()){
-                Ciudad ciudad = new Ciudad ();
+            while (rs.next()) {
+                Ciudad ciudad = new Ciudad();
                 ciudad.setCodCiudad(rs.getInt("codCiudad"));
-                ciudad.setNombre (rs.getString("nombre"));
-                
+                ciudad.setNombre(rs.getString("nombre"));
                 ciudades.add(ciudad);
             }
             ps.close();
@@ -62,7 +61,7 @@ public class CiudadData {
         return ciudades;
     }
     
-    public void modificarCiudad(Ciudad ciudad){
+    public void modificarCiudad(Ciudad ciudad) {
         String query = "UPDATE ciudad SET nombre=? WHERE codCiudad =?";
         
         try {
@@ -70,8 +69,8 @@ public class CiudadData {
             ps.setString(1, ciudad.getNombre());
             ps.setInt(2, ciudad.getCodCiudad());
             int exito = ps.executeUpdate();
-            if (exito ==1){
-                JOptionPane.showMessageDialog(null, "La ciudad se modifcó con éxito.");
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "La ciudad se modificó con éxito.");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -79,15 +78,14 @@ public class CiudadData {
         }
     }
     
-    public void bajaLogicaCiudad(int id){
+    public void bajaLogicaCiudad(int id) {
         String query = "UPDATE ciudad SET estado=0 WHERE codCiudad =?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id);
-            
             int exito = ps.executeUpdate();
-            if(exito ==1){
+            if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "La ciudad se dio de baja con éxito.");
             }
             ps.close();
@@ -96,15 +94,14 @@ public class CiudadData {
         }
     }
     
-    public void altaLogicaCiudad(int id){
+    public void altaLogicaCiudad(int id) {
         String query = "UPDATE ciudad SET estado=1 WHERE codCiudad =?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id);
-            
             int exito = ps.executeUpdate();
-            if(exito ==1){
+            if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "La ciudad se dio de alta con éxito.");
             }
             ps.close();
@@ -113,10 +110,6 @@ public class CiudadData {
         }
     }
     
-    
-    
-    
-    
-    
-    
+
+
 }

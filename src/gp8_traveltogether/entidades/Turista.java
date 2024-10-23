@@ -13,12 +13,14 @@ public class Turista {
     private int dni;
     private String nombre;
     private int edad;
+    private int codigoPaquete;
     private boolean estado;
 
-    public Turista(int dni, String nombre, int edad, boolean estado) {
+    public Turista(int dni, String nombre, int edad, int codigoPaquete, boolean estado) {
         this.dni = dni;
         this.nombre = nombre;
         this.edad = edad;
+        this.codigoPaquete = codigoPaquete;
         this.estado = estado;
     }
 
@@ -37,6 +39,10 @@ public class Turista {
         return edad;
     }
 
+    public int getCodigoPaquete() {
+        return codigoPaquete;
+    }
+
     public boolean isEstado() {
         return estado;
     }
@@ -51,6 +57,10 @@ public class Turista {
 
     public void setEdad(int edad) {
         this.edad = edad;
+    }
+
+    public void setCodigoPaquete(int codigoPaquete) {
+        this.codigoPaquete = codigoPaquete;
     }
 
     public void setEstado(boolean estado) {

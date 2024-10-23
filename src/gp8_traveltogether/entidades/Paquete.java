@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class Paquete {
     
+     
     private int codigoPaquete;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
@@ -20,13 +21,15 @@ public class Paquete {
     private Ciudad destino;
     private Pasaje boleto;
     private Alojamiento estadia;
-    private Pension regimen;
+    private Pension pension;
     private boolean traslado;
     private List<Turista> turistas;
     private double montoFinal;
     private boolean estado;
 
-    public Paquete(int codigoPaquete, LocalDate fechaInicio, LocalDate fechaFin, Ciudad origen, Ciudad destino, Pasaje boleto, Alojamiento estadia, Pension regimen, boolean traslado, List<Turista> turistas, double montoFinal, boolean estado) {
+    public Paquete(int codigoPaquete, LocalDate fechaInicio, LocalDate fechaFin, Ciudad origen, Ciudad destino, 
+                   Pasaje boleto, Alojamiento estadia, Pension pension, boolean traslado, 
+                   List<Turista> turistas, double montoFinal, boolean estado) {
         this.codigoPaquete = codigoPaquete;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -34,7 +37,7 @@ public class Paquete {
         this.destino = destino;
         this.boleto = boleto;
         this.estadia = estadia;
-        this.regimen = regimen;
+        this.pension = pension;
         this.traslado = traslado;
         this.turistas = turistas;
         this.montoFinal = montoFinal;
@@ -72,8 +75,8 @@ public class Paquete {
         return estadia;
     }
 
-    public Pension getRegimen() {
-        return regimen;
+    public Pension getPension() {
+        return pension;
     }
 
     public boolean isTraslado() {
@@ -120,8 +123,8 @@ public class Paquete {
         this.estadia = estadia;
     }
 
-    public void setRegimen(Pension regimen) {
-        this.regimen = regimen;
+    public void setPension(Pension pension) {
+        this.pension = pension;
     }
 
     public void setTraslado(boolean traslado) {
