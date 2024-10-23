@@ -1,7 +1,5 @@
 package gp8_traveltogether.entidades;
 
-import java.util.logging.Logger;
-
 public class Alojamiento {
     private int codAlojam;
     private String nombre;
@@ -16,6 +14,10 @@ public class Alojamiento {
         this.capacidad = capacidad;
         this.precioNoche = precioNoche;
     }
+    
+    public Alojamiento(){
+    }
+    
 
     public int getCodAlojam() {
         return codAlojam;
