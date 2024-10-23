@@ -41,6 +41,9 @@ public class Paquete {
         this.estado = estado;
     }
 
+    public Paquete() {
+    }
+
     public int getCodigoPaquete() {
         return codigoPaquete;
     }
