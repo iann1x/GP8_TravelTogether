@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class AlojamientoData {
+public class AlojamientoData{
     private Connection con;
 
-    public AlojamientoData(Connection con) {
+    public AlojamientoData(Connection con){
         this.con = con;
     }
-    public void agregarAlojam(Alojamiento alojamiento) {
+    public void agregarAlojam(Alojamiento alojamiento){
         String query = "INSERT INTO alojamiento (nombre, direccion, precioPorNoche, codCiudad) VALUES (?, ?, ?, ?)";
 
-        try {
+        try{
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, alojamiento.getNombre());
             ps.setString(2, alojamiento.getDireccion());
@@ -30,74 +30,74 @@ public class AlojamientoData {
             ps.executeUpdate();
             
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
+            if (rs.next()){
                 alojamiento.setCodAdicional(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "El alojamiento se agregó con éxito.");
             }
-        } catch (SQLException ex) {
+        }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
         }
     }
-    public void modificarAlojam(Alojamiento alojamiento) {
+    public void modificarAlojam(Alojamiento alojamiento){
         String query = "UPDATE alojamiento SET nombre=?, direccion=?, precioPorNoche=? WHERE codAdicional=?";
 
-        try {
+        try{
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, alojamiento.getNombre());
             ps.setString(2, alojamiento.getDireccion());
             ps.setDouble(3, alojamiento.getPrecioPorNoche());
             ps.setInt(4, alojamiento.getCodAdicional());
             int exito = ps.executeUpdate();
-            if (exito == 1) {
+            if (exito == 1){
                 JOptionPane.showMessageDialog(null, "El alojamiento se modificó con éxito.");
             }
-        } catch (SQLException ex) {
+        }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
         }
     }
-    public void bajaLogicaAlojam(int id) {
+    public void bajaLogicaAlojam(int id){
         String query = "UPDATE alojamiento SET estado=0 WHERE codAdicional=?";
 
-        try {
+        try{
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
-            if (exito == 1) {
+            if (exito == 1){
                 JOptionPane.showMessageDialog(null, "El alojamiento se dio de baja con éxito.");
             }
-        } catch (SQLException ex) {
+        }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
         }
     }
-    public void altaLogicaAlojam(int id) {
+    public void altaLogicaAlojam(int id){
         String query = "UPDATE alojamiento SET estado=1 WHERE codAdicional=?";
 
-        try {
+        try{
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
-            if (exito == 1) {
+            if (exito == 1){
                 JOptionPane.showMessageDialog(null, "El alojamiento se dio de alta con éxito.");
             }
-        } catch (SQLException ex) {
+        } catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
         }
     }
-    public List<Ciudad> mostrarCiudades(int codCiudad) {
+    public List<Ciudad> mostrarCiudades(int codCiudad){
         String query = "SELECT * FROM ciudad WHERE codCiudad=?";
         List<Ciudad> ciudades = new ArrayList<>();
 
-        try {
+        try{
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, codCiudad);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            while (rs.next()){
                 Ciudad ciudad = new Ciudad();
                 ciudad.setCodCiudad(rs.getInt("codCiudad"));
                 ciudad.setNombre(rs.getString("nombre"));
                 ciudades.add(ciudad);
             }
-        } catch (SQLException ex) {
+        }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
         }
         return ciudades;
