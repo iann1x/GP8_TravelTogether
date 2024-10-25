@@ -11,8 +11,14 @@ public class Pension {
         this.porcentaje = porcentaje;
     }
     
+    public Pension(String nombre, double porcentaje) {
+        this.nombre = nombre;
+        this.porcentaje = porcentaje;
+    }
+    
     public Pension(){
     }
+    
     public int getCodAdicional() {
         return codAdicional;
     }
@@ -36,6 +42,13 @@ public class Pension {
     public void setPorcentaje(double porcentaje) {
         this.porcentaje = porcentaje;
     }
+
+    @Override
+    public String toString() {
+        return nombre + ", porcentaje: " + porcentaje;
+    }
+    
+    
     
     
 }

@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class PensionData{
-   private Connection con;
+    private Connection con;
 
-    public PensionData(Connection con) {
-        this.con = con;
+    public PensionData() {
+        con = Conexion.getConexion();
     }
 
     public void crearPension(Pension pension) {
@@ -25,7 +25,10 @@ public class PensionData{
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 pension.setCodAdicional(rs.getInt(1));
+                JOptionPane.showMessageDialog(null, "Los datos se guardaron con éxito.");
             }
+            ps.close();
+            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pensión.");
         }

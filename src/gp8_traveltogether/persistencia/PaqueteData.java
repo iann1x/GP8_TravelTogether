@@ -26,6 +26,9 @@ public class PaqueteData{
         this.ciudadData = ciudadData;
         this.alojaData = alojaData;
     }
+    
+    public PaqueteData(){
+    }
 
     public double calcularPresupuesto(Paquete paquete) {
         double total = 0;
