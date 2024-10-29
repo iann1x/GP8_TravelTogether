@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class PensionData{
@@ -25,7 +27,7 @@ public class PensionData{
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 pension.setCodAdicional(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Los datos se guardaron con éxito.");
+                //JOptionPane.showMessageDialog(null, "Los datos se guardaron con éxito.");
             }
             ps.close();
             rs.close();
@@ -63,7 +65,7 @@ public class PensionData{
             ps.setInt(3, pension.getCodAdicional());
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "La pensión se modificó con éxito.");
+                //JOptionPane.showMessageDialog(null, "La pensión se modificó con éxito.");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pensión.");
@@ -82,6 +84,29 @@ public class PensionData{
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pensión.");
         }
+    }
+    
+    public Pension buscarPensionPorCod (int cod){
+        String query = "SELECT nombre, porcentaje FROM pension WHERE codAdicional=?";
+        Pension pension = null;
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1,cod);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                pension = new Pension();
+                pension.setCodAdicional(cod);
+                pension.setNombre(rs.getString("nombre"));
+                pension.setPorcentaje(rs.getDouble("porcentaje"));
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "No exite una Pension con ese código.");    
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pensión.");
+        }
+        return pension;
     }
 }
 

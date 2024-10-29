@@ -1,22 +1,34 @@
 package gp8_traveltogether.entidades;
 
 public class Alojamiento {
-     private int codAlojam;
+    private int codAlojam;
     private String nombre;
-    private boolean estado;
+    private Ciudad ciudad;
+    private String tipoAlojam;
     private int capacidad;
     private double precioNoche;
-    private int codCiudad; // Agregado el campo codCiudad para enlazar con la Ciudad
+    private boolean estado;
+    //private int codCiudad; // Agregado el campo codCiudad para enlazar con la Ciudad
 
-    public Alojamiento(int codAlojam, String nombre, boolean estado, int capacidad, double precioNoche, int codCiudad) {
+    public Alojamiento(int codAlojam, String nombre, Ciudad ciudad, String tipoAlojam, int capacidad, double precioNoche, boolean estado) {
         this.codAlojam = codAlojam;
         this.nombre = nombre;
-        this.estado = estado;
+        this.ciudad = ciudad;
+        this.tipoAlojam = tipoAlojam;
         this.capacidad = capacidad;
         this.precioNoche = precioNoche;
-        this.codCiudad = codCiudad;
+        this.estado = estado;
     }
 
+    public Alojamiento(String nombre, Ciudad ciudad, String tipoAlojam, int capacidad, double precioNoche, boolean estado) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.tipoAlojam = tipoAlojam;
+        this.capacidad = capacidad;
+        this.precioNoche = precioNoche;
+        this.estado = estado;
+    }
+    
     public Alojamiento() {
     }
 
@@ -36,13 +48,22 @@ public class Alojamiento {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public Ciudad getCiudad() {
+        return ciudad;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
     }
+
+    public String getTipoAlojam() {
+        return tipoAlojam;
+    }
+
+    public void setTipoAlojam(String tipoAlojam) {
+        this.tipoAlojam = tipoAlojam;
+    }
+    
 
     public int getCapacidad() {
         return capacidad;
@@ -60,13 +81,15 @@ public class Alojamiento {
         this.precioNoche = precioNoche;
     }
 
-    public int getCodCiudad() {
-        return codCiudad;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setCodCiudad(int codCiudad) {
-        this.codCiudad = codCiudad;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
+
+    
         
 }
 

@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class vistaPension extends javax.swing.JInternalFrame {
     PensionData pensionData = new PensionData();
-    Pension pensionActual = new Pension();
+    Pension pensionActual = null;
     
 
     
@@ -43,7 +43,7 @@ public class vistaPension extends javax.swing.JInternalFrame {
         jtCodPension = new javax.swing.JTextField();
         jtNombrePension = new javax.swing.JTextField();
         jtPorcentaje = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Pension");
@@ -85,7 +85,12 @@ public class vistaPension extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setText("Buscar");
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,7 +115,7 @@ public class vistaPension extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jtCodPension, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton5))))
+                                .addComponent(jbBuscar))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jbNuevo)
@@ -131,7 +136,7 @@ public class vistaPension extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtCodPension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jbBuscar))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -169,13 +174,12 @@ public class vistaPension extends javax.swing.JInternalFrame {
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // TODO add your handling code here:
         limpiarCampos();
+        pensionActual = null;
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-        pensionActual=null;
         try{
-            //Integer codPension = Integer.parseInt(jtCodPension.getText());
             String nombre = jtNombrePension.getText();
             String porcentaje = jtPorcentaje.getText();
             
@@ -190,16 +194,38 @@ public class vistaPension extends javax.swing.JInternalFrame {
                 pensionActual = new Pension (nombre, porcentaje2);
                 pensionData.crearPension(pensionActual);
                 JOptionPane.showMessageDialog(this,"Pensión creada.");
+                limpiarCampos();
+                pensionActual = null;
             }else{
                 pensionActual.setNombre(nombre);
                 pensionActual.setPorcentaje(porcentaje2);
                 pensionData.modificarPension(pensionActual);
                 JOptionPane.showMessageDialog(this,"Modificación exitosa.");
+                limpiarCampos();
+                pensionActual = null;
             }
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(this,"Ingresa un porcentaje valido.");
         }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        try{
+            Integer cod = Integer.parseInt(jtCodPension.getText());
+            pensionActual = pensionData.buscarPensionPorCod(cod);
+            
+            if (pensionActual !=null){
+                jtNombrePension.setText(pensionActual.getNombre());
+                jtPorcentaje.setText(String.valueOf(pensionActual.getPorcentaje()));
+            } else{
+                JOptionPane.showMessageDialog (null,"No existe una Pension con ese código");
+            }
+        } catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog (null,"Ingresa un çódigo válido");
+            
+        }  
+    }//GEN-LAST:event_jbBuscarActionPerformed
     
 
     private void limpiarCampos(){
@@ -209,11 +235,11 @@ public class vistaPension extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbNuevo;

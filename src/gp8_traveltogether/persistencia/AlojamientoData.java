@@ -14,21 +14,23 @@ import javax.swing.JOptionPane;
 
 public class AlojamientoData{
     private Connection con;
+    private CiudadData cd = new CiudadData();
 
-    public AlojamientoData(Connection con) {
-        this.con = con;
+    public AlojamientoData() {
+        this.con = Conexion.getConexion();
     }
 
     public void agregarAlojam(Alojamiento alojamiento) {
-        String query = "INSERT INTO alojamiento (nombre, capacidad, precioNoche, codCiudad, estado) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO alojamiento (nombre, codCiudad, tipoAlojam, capacidad, precioNoche, estado) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, alojamiento.getNombre());
-            ps.setInt(2, alojamiento.getCapacidad());
-            ps.setDouble(3, alojamiento.getPrecioNoche());
-            ps.setInt(4, alojamiento.getCodCiudad());
-            ps.setBoolean(5, alojamiento.isEstado());
+            ps.setInt(2, alojamiento.getCiudad().getCodCiudad());
+            ps.setString(3, alojamiento.getTipoAlojam());
+            ps.setInt(4, alojamiento.getCapacidad());
+            ps.setDouble(5, alojamiento.getPrecioNoche());
+            ps.setBoolean(6, alojamiento.isEstado());
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -42,15 +44,16 @@ public class AlojamientoData{
     }
 
     public void modificarAlojam(Alojamiento alojamiento) {
-        String query = "UPDATE alojamiento SET nombre=?, capacidad=?, precioNoche=?, codCiudad=?, estado=? WHERE codAlojam=?";
+        String query = "UPDATE alojamiento SET nombre=?, codCiudad=?, tipoAlojam=?, capacidad=?, precioNoche=?,  estado=? WHERE codAlojam=?";
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, alojamiento.getNombre());
-            ps.setInt(2, alojamiento.getCapacidad());
-            ps.setDouble(3, alojamiento.getPrecioNoche());
-            ps.setInt(4, alojamiento.getCodCiudad());
-            ps.setBoolean(5, alojamiento.isEstado());
+            ps.setInt(2, alojamiento.getCiudad().getCodCiudad());
+            ps.setString(3, alojamiento.getTipoAlojam());
+            ps.setInt(4, alojamiento.getCapacidad());
+            ps.setDouble(5, alojamiento.getPrecioNoche());
+            ps.setBoolean(6, alojamiento.isEstado());
             ps.setInt(6, alojamiento.getCodAlojam());
 
             int exito = ps.executeUpdate();
@@ -92,9 +95,9 @@ public class AlojamientoData{
         }
     }
 
-    public List<Ciudad> mostrarCiudades(int codCiudad) {
+    public ArrayList<Ciudad> mostrarCiudades(int codCiudad) {
         String query = "SELECT * FROM ciudad WHERE codCiudad=?";
-        List<Ciudad> ciudades = new ArrayList<>();
+        ArrayList <Ciudad> ciudades = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(query);

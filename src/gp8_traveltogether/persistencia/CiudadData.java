@@ -31,12 +31,37 @@ public class CiudadData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 ciudad.setCodCiudad(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "El destino se cargó con éxito.");
+                JOptionPane.showMessageDialog(null, "La ciudad se cargó con éxito.");
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
         }     
+    }
+    
+    public Ciudad buscarCiudad(int cod){
+        String query = "SELECT nombre, estado FROM ciudad WHERE codCiudad =?";
+        Ciudad ciudad = null;
+        
+         try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt (1, cod);
+            ResultSet rs = ps.executeQuery();
+             
+            if (rs.next()){
+                ciudad = new Ciudad ();
+                ciudad.setCodCiudad(cod);
+                ciudad.setNombre(rs.getString("nombre"));
+                ciudad.setEstado(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No exite una ciudad con ese código.");
+            }
+            ps.close();
+            rs.close();
+         } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
+         }            
+    return ciudad;
     }
     
     public ArrayList<Ciudad> mostrarCiudades() {

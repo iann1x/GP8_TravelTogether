@@ -5,16 +5,21 @@
  */
 package gp8_traveltogether.vistas;
 
+import gp8_traveltogether.entidades.Ciudad;
+import gp8_traveltogether.persistencia.CiudadData;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author xiana
  */
-public class vistaDestino extends javax.swing.JInternalFrame {
+public class vistaCiudad extends javax.swing.JInternalFrame {
+    private CiudadData ciudadData = new CiudadData();
+    private Ciudad ciudadActual = null;
 
-    /**
-     * Creates new form vistaDestino
-     */
-    public vistaDestino() {
+    
+    
+    public vistaCiudad() {
         initComponents();
     }
 
@@ -30,15 +35,15 @@ public class vistaDestino extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jbNuevo = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
+        jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jtNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jTextField2 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        jrEstado = new javax.swing.JRadioButton();
+        jtCodigoCiudad = new javax.swing.JTextField();
+        jtBuscar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Destino");
@@ -49,14 +54,24 @@ public class vistaDestino extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Estado:");
 
-        jButton1.setText("Nuevo");
-
-        jButton2.setText("Eliminar");
-
-        jButton3.setText("Guardar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbNuevoActionPerformed(evt);
+            }
+        });
+
+        jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
+
+        jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
             }
         });
 
@@ -70,12 +85,12 @@ public class vistaDestino extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("Codigo:");
 
-        jRadioButton1.setText("Disponible");
+        jrEstado.setText("Disponible");
 
-        jButton5.setText("Buscar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jtBuscar.setText("Buscar");
+        jtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jtBuscarActionPerformed(evt);
             }
         });
 
@@ -85,11 +100,11 @@ public class vistaDestino extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 40, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jbNuevo)
                 .addGap(29, 29, 29)
-                .addComponent(jButton2)
+                .addComponent(jbEliminar)
                 .addGap(30, 30, 30)
-                .addComponent(jButton3)
+                .addComponent(jbGuardar)
                 .addGap(33, 33, 33)
                 .addComponent(jbSalir)
                 .addGap(35, 35, 35))
@@ -106,12 +121,12 @@ public class vistaDestino extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton1)
+                            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jrEstado)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtCodigoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton5)))))
+                                .addComponent(jtBuscar)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -122,21 +137,21 @@ public class vistaDestino extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jtCodigoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jRadioButton1))
+                    .addComponent(jrEstado))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(jbNuevo)
+                    .addComponent(jbEliminar)
+                    .addComponent(jbGuardar)
                     .addComponent(jbSalir))
                 .addGap(25, 25, 25))
         );
@@ -144,32 +159,80 @@ public class vistaDestino extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        String nombre = jtNombre.getText();
+            
+        if (nombre.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
+            return;
+        }
+            
+        Boolean estado =jrEstado.isSelected();
+            
+        if (ciudadActual == null){
+            ciudadActual = new Ciudad (nombre, estado);
+            ciudadData.agregarCiudad(ciudadActual);
+        } else {
+            ciudadActual.setNombre(nombre);
+            ciudadActual.setEstado(estado);
+            ciudadData.modificarCiudad(ciudadActual);
+        }   
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+        try{
+            Integer cod = Integer.parseInt(jtCodigoCiudad.getText());
+            ciudadActual = ciudadData.buscarCiudad(cod);
+            
+            if (ciudadActual != null){
+                jtNombre.setText(ciudadActual.getNombre());
+                jrEstado.setSelected(ciudadActual.isEstado());
+            }
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido");
+        }
+    }//GEN-LAST:event_jtBuscarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+        ciudadActual = null;
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        if (ciudadActual != null){
+            ciudadData.bajaLogicaCiudad(ciudadActual.getCodCiudad());
+            ciudadActual = null;
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+    
+    private void limpiarCampos(){
+        jtCodigoCiudad.setText("");
+        jtNombre.setText("");
+        jrEstado.setSelected(false);    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
+    private javax.swing.JRadioButton jrEstado;
+    private javax.swing.JButton jtBuscar;
+    private javax.swing.JTextField jtCodigoCiudad;
+    private javax.swing.JTextField jtNombre;
     // End of variables declaration//GEN-END:variables
 }
