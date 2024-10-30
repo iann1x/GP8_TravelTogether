@@ -5,6 +5,7 @@ import gp8_traveltogether.entidades.Alojamiento;
 import gp8_traveltogether.entidades.Ciudad;
 import gp8_traveltogether.persistencia.AlojamientoData;
 import gp8_traveltogether.persistencia.CiudadData;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -14,6 +15,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
     
     private AlojamientoData alojData = new AlojamientoData();
     private Alojamiento alojActual = null;
+  
 
     
     public vistaAlojamiento() {
@@ -21,6 +23,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
         
         ciudades = ciudadData.mostrarCiudades();
         cargarCiudades();
+        
     }
 
     /**
@@ -48,7 +51,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
         jtCapacidad = new javax.swing.JTextField();
         jtPrecio = new javax.swing.JTextField();
         jrEstado = new javax.swing.JRadioButton();
-        jButton5 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
         jcCiudades = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jcTipo = new javax.swing.JComboBox<>();
@@ -104,7 +107,12 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
 
         jrEstado.setText("Disponible");
 
-        jButton5.setText("Buscar");
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel8.setText("Tipo:");
@@ -140,9 +148,11 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton5))
+                                        .addComponent(jbBuscar))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jcCiudades, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addComponent(jcCiudades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(71, 71, 71))
                                         .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -170,7 +180,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jbBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -179,7 +189,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jcCiudades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jcTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,7 +226,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
             Integer capacidad = Integer.parseInt(jtCapacidad.getText());
             Double precio = Double.parseDouble(jtPrecio.getText());
             
-            if(nombre.isEmpty() || citySeleccionada.getCodCiudad()== 0){
+            if(nombre.isEmpty() || (jcCiudades.getSelectedItem() == null)){
                 JOptionPane.showMessageDialog(this, "No puede haber campos vacíos.");
                 return;
             }
@@ -233,6 +243,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
                 alojActual.setTipoAlojam(tipo);
                 alojActual.setCapacidad(capacidad);
                 alojActual.setPrecioNoche(precio);
+                alojData.modificarAlojam(alojActual);
             }    
         } catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
@@ -259,15 +270,54 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
             limpiarCampos();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        try{
+            Integer codAlojam = Integer.parseInt(jtCodigo.getText());
+            
+            if (jtCodigo.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un código.");
+                return;
+            }
+            
+            alojActual = alojData.buscarAlojamiento(codAlojam);
+            
+            if (alojActual != null){
+                jtNombre.setText(alojActual.getNombre());
+                
+                Ciudad ciudadSeleccionada = alojActual.getCiudad();
+                    for (int i = 0; i < jcCiudades.getItemCount(); i++) {
+                        Ciudad ciudad = (Ciudad) jcCiudades.getItemAt(i);
+                        if (ciudad.getCodCiudad() == ciudadSeleccionada.getCodCiudad()) {
+                            jcCiudades.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+
+                jcTipo.setSelectedItem(alojActual.getTipoAlojam());
+                jtCapacidad.setText(String.valueOf(alojActual.getCapacidad()));
+                jtPrecio.setText(String.valueOf(alojActual.getPrecioNoche()));
+                jrEstado.setSelected(alojActual.isEstado());   
+            } else{
+                JOptionPane.showMessageDialog(this, "No existe un alojamiento con ese código.");
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Número no válido.");    
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
     
     private void cargarCiudades(){
         jcCiudades.removeAllItems();
-        jcCiudades.addItem(new Ciudad(0, "Seleccione una opcion", false));
+        jcCiudades.addItem(new Ciudad(0, "Seleccione", false));
         for (Ciudad c: ciudades){
             jcCiudades.addItem(c);
-        }
+        }  
     }
-
+//    private void setCiudadSeleccionadaPorNombre(JComboBox <Ciudad> jcCiudades, Ciudad ciudadBuscada){
+//            jcCiudades.setSelectedItem(ciudadBuscada);
+//    }
+    
     private void limpiarCampos(){
         jtCodigo.setText("");
         jtNombre.setText("");
@@ -281,7 +331,6 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -290,6 +339,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbSalir;
     private javax.swing.JComboBox<Ciudad> jcCiudades;

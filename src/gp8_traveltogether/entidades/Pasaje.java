@@ -9,15 +9,13 @@ import java.time.LocalDateTime;
 public class Pasaje {
     
     private int codPasaje;
-    private LocalDateTime fechaHora;
     private Ciudad origen;
     private Ciudad destino;
     private double precioPasaje;
     private String tipoViaje;
 
-    public Pasaje(int codPasaje, LocalDateTime fechaHora, Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje) {
+    public Pasaje(int codPasaje, Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje) {
         this.codPasaje = codPasaje;
-        this.fechaHora = fechaHora;
         this.origen = origen;
         this.destino = destino;
         this.precioPasaje = precioPasaje;
@@ -29,10 +27,6 @@ public class Pasaje {
 
     public int getCodPasaje() {
         return codPasaje;
-    }
-
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
     }
 
     public Ciudad getOrigen() {
@@ -55,10 +49,6 @@ public class Pasaje {
         this.codPasaje = codPasaje;
     }
 
-    public void setFechaHora(LocalDateTime fechaHora) {
-        this.fechaHora = fechaHora;
-    }
-
     public void setOrigen(Ciudad origen) {
         this.origen = origen;
     }
@@ -74,5 +64,11 @@ public class Pasaje {
     public void setTipoViaje(String tipoViaje) {
         this.tipoViaje = tipoViaje;
     }
+
+    @Override
+    public String toString() {
+        return origen + "-" + destino;
+    }
+    
     
 }

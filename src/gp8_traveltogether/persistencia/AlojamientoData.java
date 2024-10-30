@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AlojamientoData{
@@ -54,15 +56,46 @@ public class AlojamientoData{
             ps.setInt(4, alojamiento.getCapacidad());
             ps.setDouble(5, alojamiento.getPrecioNoche());
             ps.setBoolean(6, alojamiento.isEstado());
-            ps.setInt(6, alojamiento.getCodAlojam());
+            ps.setInt(7, alojamiento.getCodAlojam());
 
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "El alojamiento se modificó con éxito.");
             }
+            ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
         }
+    }
+    
+    public Alojamiento buscarAlojamiento(int cod){
+        String query = "SELECT nombre, codCiudad, tipoAlojam, capacidad, precioNoche, estado FROM alojamiento WHERE codAlojam=?";
+        Alojamiento alojamiento = null;
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, cod);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()){
+                alojamiento = new Alojamiento();
+                alojamiento.setCodAlojam(cod);
+                alojamiento.setNombre(rs.getString("nombre"));
+                Ciudad ciudad = cd.buscarCiudad(rs.getInt("codCiudad"));
+                alojamiento.setCiudad(ciudad);
+                alojamiento.setTipoAlojam(rs.getString("tipoAlojam"));
+                alojamiento.setCapacidad(rs.getInt("capacidad"));
+                alojamiento.setPrecioNoche(rs.getDouble("precioNoche"));
+                alojamiento.setEstado(rs.getBoolean("estado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe un alojamiento con ese código.");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
+        }
+        return alojamiento;
     }
 
     public void bajaLogicaAlojam(int id) {
@@ -131,6 +164,21 @@ public class AlojamientoData{
             JOptionPane.showMessageDialog(null, "No se pudo calcular el precio.");
         }
         return total;
+    }
+    
+    //hay que continuarlo
+    public ArrayList <Alojamiento> mostrarAlojamPorTipo (String tipo){
+        String query = "SELECT * FROM alojamiento WHERE tipoAlojam=?";
+        ArrayList <Alojamiento> alojPorTipo = new ArrayList <>();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AlojamientoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return alojPorTipo;
     }
 }
 
