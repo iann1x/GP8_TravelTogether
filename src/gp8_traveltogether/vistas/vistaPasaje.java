@@ -50,6 +50,8 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         jcOrigen = new javax.swing.JComboBox<>();
         jcDestino = new javax.swing.JComboBox<>();
         jcTipo = new javax.swing.JComboBox<>();
+        jrEstado = new javax.swing.JRadioButton();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Pasaje");
@@ -77,6 +79,11 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         });
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +107,11 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         });
 
         jcTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Avion", "Colectivo" }));
+
+        jrEstado.setText("Disponible");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel7.setText("Estado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,7 +139,8 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -138,7 +151,8 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                                 .addComponent(jcTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jcDestino, javax.swing.GroupLayout.Alignment.LEADING, 0, 149, Short.MAX_VALUE)
                                 .addComponent(jcOrigen, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jtPrecio, javax.swing.GroupLayout.Alignment.LEADING)))))
+                                .addComponent(jtPrecio, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jrEstado))))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -146,7 +160,7 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,7 +181,11 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jcTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jrEstado)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
                     .addComponent(jbEliminar)
@@ -202,14 +220,17 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                     return;
             }
             
+            Boolean estado = jrEstado.isSelected();
+            
             if(pasajeActual ==null){
-                pasajeActual = new Pasaje (origen, destino, precio, tipo);
+                pasajeActual = new Pasaje (origen, destino, precio, tipo, estado);
                 pData.agregarPasaje(pasajeActual);
             } else {
                 pasajeActual.setOrigen(origen);
                 pasajeActual.setDestino(destino);
                 pasajeActual.setPrecioPasaje(precio);
                 pasajeActual.setTipoViaje(tipo);
+                pasajeActual.setEstado(true);
                 pData.modificarPasaje(pasajeActual);
             }
             
@@ -256,7 +277,8 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                 }
 
                 jtPrecio.setText(String.valueOf(pasajeActual.getPrecioPasaje()));
-                jcTipo.setSelectedItem(pasajeActual.getTipoViaje());       
+                jcTipo.setSelectedItem(pasajeActual.getTipoViaje());
+                jrEstado.setSelected(pasajeActual.isEstado()); 
             }else {
                  JOptionPane.showMessageDialog(this,"No existe un pasaje con ese código.");
             }
@@ -264,6 +286,15 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Número no válido.");
         }
     }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        if( pasajeActual != null){
+            pData.bajaLogica(pasajeActual.getCodPasaje());
+            pasajeActual = null;
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void cargarOrigen(){
         jcOrigen.removeAllItems();
@@ -287,6 +318,7 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         jcDestino.setSelectedItem(0);
         jtPrecio.setText("");
         jcTipo.setSelectedItem("Seleccione");
+        jrEstado.setSelected(false);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -295,6 +327,7 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
@@ -303,6 +336,7 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<Ciudad> jcDestino;
     private javax.swing.JComboBox<Ciudad> jcOrigen;
     private javax.swing.JComboBox<String> jcTipo;
+    private javax.swing.JRadioButton jrEstado;
     private javax.swing.JTextField jtCodigo;
     private javax.swing.JTextField jtPrecio;
     // End of variables declaration//GEN-END:variables
