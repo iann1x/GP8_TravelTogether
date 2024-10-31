@@ -39,8 +39,28 @@ public class PasajeData{
                JOptionPane.showMessageDialog(null, "El pasaje se agregó con éxito.");
            }
            ps.close();
-           rs.close();
-            
+           rs.close();   
+       } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasaje.");
+       }
+    }
+    
+    public void modificarPasaje (Pasaje pasaje){
+        String query = "UPDATE pasaje SET origen=?,destino=?, precioPasaje=?, tipoViaje=? WHERE codPasaje=?";
+        
+       try {
+           PreparedStatement ps = con.prepareStatement(query);
+           ps.setInt(1, pasaje.getOrigen().getCodCiudad());
+           ps.setInt(2, pasaje.getDestino().getCodCiudad());
+           ps.setDouble(3, pasaje.getPrecioPasaje());
+           ps.setString(4, pasaje.getTipoViaje());
+           ps.setInt(5, pasaje.getCodPasaje());
+           
+           int exito = ps.executeUpdate();
+           if(exito ==1){
+               JOptionPane.showMessageDialog(null, "El pasaje se modificó con éxito");
+           }
+           ps.close();
        } catch (SQLException ex) {
            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Pasaje.");
        }
@@ -84,7 +104,7 @@ public class PasajeData{
                pasaje.setOrigen(origen);
                
                Ciudad destino = cd.buscarCiudad(rs.getInt("destino"));
-               pasaje.setOrigen(destino);
+               pasaje.setDestino(destino);
                
                pasaje.setPrecioPasaje(rs.getDouble("precioPasaje"));
                pasaje.setTipoViaje(rs.getString("tipoViaje"));

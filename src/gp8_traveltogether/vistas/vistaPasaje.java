@@ -6,6 +6,7 @@ import gp8_traveltogether.entidades.Pasaje;
 import gp8_traveltogether.persistencia.CiudadData;
 import gp8_traveltogether.persistencia.PasajeData;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class vistaPasaje extends javax.swing.JInternalFrame {
 
@@ -20,9 +21,8 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         initComponents();
         
         ciudades = ciudadData.mostrarCiudades();
-        cargarCiudades();
-        
-        
+        cargarOrigen();
+        cargarDestino();
     }
 
     /**
@@ -40,13 +40,13 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jbNuevo = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
+        jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
         jtCodigo = new javax.swing.JTextField();
         jtPrecio = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
         jcOrigen = new javax.swing.JComboBox<>();
         jcDestino = new javax.swing.JComboBox<>();
         jcTipo = new javax.swing.JComboBox<>();
@@ -69,19 +69,19 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("Tipo de viaje:");
 
-        jButton1.setText("Nuevo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbNuevoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Eliminar");
+        jbEliminar.setText("Eliminar");
 
-        jButton3.setText("Guardar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbGuardarActionPerformed(evt);
             }
         });
 
@@ -92,7 +92,12 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setText("Buscar");
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jcTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Avion", "Colectivo" }));
 
@@ -102,11 +107,11 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(36, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jbNuevo)
                 .addGap(32, 32, 32)
-                .addComponent(jButton2)
+                .addComponent(jbEliminar)
                 .addGap(36, 36, 36)
-                .addComponent(jButton3)
+                .addComponent(jbGuardar)
                 .addGap(28, 28, 28)
                 .addComponent(jbSalir)
                 .addGap(36, 36, 36))
@@ -128,7 +133,7 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton5))
+                                .addComponent(jbBuscar))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jcTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jcDestino, javax.swing.GroupLayout.Alignment.LEADING, 0, 149, Short.MAX_VALUE)
@@ -145,7 +150,7 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jbBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -164,9 +169,9 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
                     .addComponent(jcTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(jbNuevo)
+                    .addComponent(jbEliminar)
+                    .addComponent(jbGuardar)
                     .addComponent(jbSalir))
                 .addGap(24, 24, 24))
         );
@@ -179,21 +184,96 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        try{
+            Ciudad origen = (Ciudad) jcOrigen.getSelectedItem();
+            Ciudad destino = (Ciudad) jcDestino.getSelectedItem();
+            Double precio = Double.parseDouble(jtPrecio.getText());
+            String tipo = (String) jcTipo.getSelectedItem();
+            
+            if((jcOrigen.getSelectedItem() == null)|| (jcDestino.getSelectedItem() == null) || (jcTipo.getSelectedItem() == null)){
+                JOptionPane.showMessageDialog(null, "No puede haber campos vacíos.");
+                return;
+            }
+            
+            if (origen.getCodCiudad() == destino.getCodCiudad()){
+                    JOptionPane.showMessageDialog(this,"Las ciudades de origen y destino no pueden ser iguales.");
+                    return;
+            }
+            
+            if(pasajeActual ==null){
+                pasajeActual = new Pasaje (origen, destino, precio, tipo);
+                pData.agregarPasaje(pasajeActual);
+            } else {
+                pasajeActual.setOrigen(origen);
+                pasajeActual.setDestino(destino);
+                pasajeActual.setPrecioPasaje(precio);
+                pasajeActual.setTipoViaje(tipo);
+                pData.modificarPasaje(pasajeActual);
+            }
+            
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this,"Ingrese un precio válido."); 
+        }
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        limpiarCampos();
+        pasajeActual = null;
+    }//GEN-LAST:event_jbNuevoActionPerformed
 
-    private void cargarCiudades(){
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        try{
+            if (jtCodigo.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this,"Error. Ingrese un numero válido.");
+                return;
+            }
+            
+            Integer cod = Integer.parseInt(jtCodigo.getText());
+            pasajeActual = pData.buscarPasaje(cod);
+            
+            if (pasajeActual !=null){
+                
+                Ciudad origen = pasajeActual.getOrigen();
+                    for (int i = 0; i < jcOrigen.getItemCount(); i++) {
+                        Ciudad ciudad = (Ciudad) jcOrigen.getItemAt(i);
+                        if (ciudad.getCodCiudad() == origen.getCodCiudad()) {
+                            jcOrigen.setSelectedIndex(i);
+                            break;
+                        }
+                    }
+                      
+                Ciudad destino = pasajeActual.getDestino();
+                    for (int i = 0; i < jcDestino.getItemCount(); i++) {
+                    Ciudad ciudad = (Ciudad) jcDestino.getItemAt(i);
+                    if (ciudad.equals(destino)) {
+                    jcDestino.setSelectedIndex(i);
+                    break;
+                    }
+                }
+
+                jtPrecio.setText(String.valueOf(pasajeActual.getPrecioPasaje()));
+                jcTipo.setSelectedItem(pasajeActual.getTipoViaje());       
+            }else {
+                 JOptionPane.showMessageDialog(this,"No existe un pasaje con ese código.");
+            }
+        } catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Número no válido.");
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void cargarOrigen(){
         jcOrigen.removeAllItems();
         jcOrigen.addItem(new Ciudad(0, "Seleccione", false));
         for (Ciudad c: ciudades){
             jcOrigen.addItem(c);
-        }  
-        
+        }
+    }
+    
+    public void cargarDestino(){
         jcDestino.removeAllItems();
         jcDestino.addItem(new Ciudad(0, "Seleccione", false));
         for (Ciudad c: ciudades){
@@ -209,16 +289,16 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
         jcTipo.setSelectedItem("Seleccione");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton jbBuscar;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
     private javax.swing.JComboBox<Ciudad> jcDestino;
     private javax.swing.JComboBox<Ciudad> jcOrigen;

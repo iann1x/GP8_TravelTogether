@@ -22,6 +22,13 @@ public class Pasaje {
         this.tipoViaje = tipoViaje;
     }
 
+    public Pasaje(Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje) {
+        this.origen = origen;
+        this.destino = destino;
+        this.precioPasaje = precioPasaje;
+        this.tipoViaje = tipoViaje;
+    }
+
     public Pasaje() {
     }
 

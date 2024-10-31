@@ -274,13 +274,12 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
         try{
-            Integer codAlojam = Integer.parseInt(jtCodigo.getText());
-            
             if (jtCodigo.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, ingrese un código.");
                 return;
             }
             
+            Integer codAlojam = Integer.parseInt(jtCodigo.getText());
             alojActual = alojData.buscarAlojamiento(codAlojam);
             
             if (alojActual != null){
