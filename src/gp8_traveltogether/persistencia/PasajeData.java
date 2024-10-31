@@ -123,7 +123,7 @@ public class PasajeData{
     }
     
     public void bajaLogica (int cod){
-        String query = "UPDATE alojamiento SET estado=0 WHERE codPasaje=?";
+        String query = "UPDATE pasaje SET estado=0 WHERE codPasaje=?";
         
        try {
             PreparedStatement ps = con.prepareStatement(query);
