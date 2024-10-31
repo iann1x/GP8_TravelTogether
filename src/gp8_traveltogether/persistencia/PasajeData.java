@@ -23,7 +23,7 @@ public class PasajeData{
     }
 
     public void agregarPasaje (Pasaje pasaje){
-        String query = "INSERT INTO pasaje(origen, destino, precioPasaje, tipoViaje) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO pasaje(origen, destino, precioPasaje, tipoViaje, estado) VALUES (?, ?, ?, ?, ?)";
         
        try {
            PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -31,6 +31,7 @@ public class PasajeData{
            ps.setInt(2, pasaje.getDestino().getCodCiudad());
            ps.setDouble(3, pasaje.getPrecioPasaje());
            ps.setString(4, pasaje.getTipoViaje());
+           ps.setBoolean(5, pasaje.isEstado());
            ps.executeUpdate();
            
            ResultSet rs = ps.getGeneratedKeys();
@@ -46,7 +47,7 @@ public class PasajeData{
     }
     
     public void modificarPasaje (Pasaje pasaje){
-        String query = "UPDATE pasaje SET origen=?,destino=?, precioPasaje=?, tipoViaje=? WHERE codPasaje=?";
+        String query = "UPDATE pasaje SET origen=?,destino=?, precioPasaje=?, tipoViaje=?, estado=? WHERE codPasaje=?";
         
        try {
            PreparedStatement ps = con.prepareStatement(query);
@@ -54,7 +55,8 @@ public class PasajeData{
            ps.setInt(2, pasaje.getDestino().getCodCiudad());
            ps.setDouble(3, pasaje.getPrecioPasaje());
            ps.setString(4, pasaje.getTipoViaje());
-           ps.setInt(5, pasaje.getCodPasaje());
+           ps.setBoolean(5, pasaje.isEstado());
+           ps.setInt(6, pasaje.getCodPasaje());
            
            int exito = ps.executeUpdate();
            if(exito ==1){
@@ -88,7 +90,7 @@ public class PasajeData{
     }
     
     public Pasaje buscarPasaje(int cod){
-        String query = "SELECT origen, destino, precioPasaje, tipoViaje FROM pasaje WHERE codPasaje=?";
+        String query = "SELECT origen, destino, precioPasaje, tipoViaje, estado FROM pasaje WHERE codPasaje=?";
         Pasaje pasaje = null;
         
        try {
@@ -108,6 +110,7 @@ public class PasajeData{
                
                pasaje.setPrecioPasaje(rs.getDouble("precioPasaje"));
                pasaje.setTipoViaje(rs.getString("tipoViaje"));
+               pasaje.setEstado(rs.getBoolean("estado"));
             } else {
                JOptionPane.showMessageDialog(null, "No exite un pasaje con ese código.");
             }
@@ -117,6 +120,21 @@ public class PasajeData{
            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Pasaje.");
        }
         return pasaje;
+    }
+    
+    public void bajaLogica (int cod){
+        String query = "UPDATE pasaje SET estado=0 WHERE codPasaje=?";
+        
+       try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, cod);
+            int exito = ps.executeUpdate();
+            if (exito ==1){
+               JOptionPane.showMessageDialog(null, "El pasaje se dio de baja con éxito.");
+            }
+       } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Pasaje.");
+       }
     }
 
     public List<Pasaje> mostrarPasajesPorCiudad(int codCiudad) {

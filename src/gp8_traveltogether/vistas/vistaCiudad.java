@@ -46,7 +46,7 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
         jtBuscar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Destino");
+        jLabel1.setText("Ciudad");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Nombre:");

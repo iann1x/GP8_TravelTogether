@@ -13,20 +13,23 @@ public class Pasaje {
     private Ciudad destino;
     private double precioPasaje;
     private String tipoViaje;
+    private boolean estado;
 
-    public Pasaje(int codPasaje, Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje) {
+    public Pasaje(int codPasaje, Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje, boolean estado) {
         this.codPasaje = codPasaje;
         this.origen = origen;
         this.destino = destino;
         this.precioPasaje = precioPasaje;
         this.tipoViaje = tipoViaje;
+        this.estado = estado;
     }
 
-    public Pasaje(Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje) {
+    public Pasaje(Ciudad origen, Ciudad destino, double precioPasaje, String tipoViaje, boolean estado) {
         this.origen = origen;
         this.destino = destino;
         this.precioPasaje = precioPasaje;
         this.tipoViaje = tipoViaje;
+        this.estado = estado;
     }
 
     public Pasaje() {
@@ -70,6 +73,14 @@ public class Pasaje {
 
     public void setTipoViaje(String tipoViaje) {
         this.tipoViaje = tipoViaje;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     @Override

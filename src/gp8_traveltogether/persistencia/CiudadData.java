@@ -103,17 +103,62 @@ public class CiudadData {
         }
     }
     
-    public void bajaLogicaCiudad(int id) {
-        String query = "UPDATE ciudad SET estado=0 WHERE codCiudad =?";
+    public void bajaLogicaCiudad(int cod) {
+        String consultaOrigen = "SELECT COUNT(*) AS tienePasajes FROM pasaje WHERE origen=?";
+        String consultaDestino = "SELECT COUNT(*) AS tienePasajes FROM pasaje WHERE destino=?";
+        String consultaAloj = "SELECT COUNT(*) AS tieneAlojamientos FROM alojamiento WHERE codCiudad=?";
+        String queryBaja = "UPDATE ciudad SET estado=0 WHERE codCiudad =?";
         
         try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, id);
-            int exito = ps.executeUpdate();
+            PreparedStatement psOrigen = con.prepareStatement(consultaOrigen);
+            psOrigen.setInt(1, cod);
+            ResultSet rsOrigen = psOrigen.executeQuery();
+            
+            if (rsOrigen.next()){
+                int pasajes = rsOrigen.getInt("tienePasajes");
+                if(pasajes >0){
+                    JOptionPane.showMessageDialog(null, "La ciudad tiene pasajes asociados. Eliminelos antes de darla de baja.");
+                    return;
+                }
+            }
+            
+            PreparedStatement psDestino = con.prepareStatement(consultaDestino);
+            psDestino.setInt(1, cod);
+            ResultSet rsDestino = psDestino.executeQuery();
+            
+            if (rsDestino.next()){
+                int pasajes = rsDestino.getInt("tienePasajes");
+                if(pasajes >0){
+                    JOptionPane.showMessageDialog(null, "La ciudad tiene pasajes asociados. Eliminelos antes de darla de baja.");
+                    return;
+                }
+            }
+            
+           PreparedStatement psAlojam = con.prepareStatement(consultaAloj);
+            psAlojam.setInt(1, cod);
+            ResultSet rsAlojam = psAlojam.executeQuery();
+            
+            if (rsAlojam.next()){
+                int alojamientos = rsAlojam.getInt("tieneAlojamientos");
+                if(alojamientos >0){
+                    JOptionPane.showMessageDialog(null, "La ciudad tiene alojamientos asociados. Eliminelos antes de darla de baja.");
+                    return;
+                }
+            }
+      
+            PreparedStatement psBaja = con.prepareStatement(queryBaja);
+            psBaja.setInt(1, cod);
+            int exito = psBaja.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "La ciudad se dio de baja con éxito.");
             }
-            ps.close();
+            psOrigen.close();
+            psDestino.close();
+            rsOrigen.close();
+            rsDestino.close();
+            psAlojam.close();
+            rsAlojam.close();
+            psBaja.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
         }
