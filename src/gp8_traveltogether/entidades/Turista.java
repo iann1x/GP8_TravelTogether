@@ -24,6 +24,12 @@ public class Turista {
         this.estado = estado;
     }
 
+    public Turista(int dni, String nombre, int edad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
     public Turista() {
     }
 

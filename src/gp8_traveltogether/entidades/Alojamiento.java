@@ -8,7 +8,6 @@ public class Alojamiento {
     private int capacidad;
     private double precioNoche;
     private boolean estado;
-    //private int codCiudad; // Agregado el campo codCiudad para enlazar con la Ciudad
 
     public Alojamiento(int codAlojam, String nombre, Ciudad ciudad, String tipoAlojam, int capacidad, double precioNoche, boolean estado) {
         this.codAlojam = codAlojam;
@@ -87,10 +86,7 @@ public class Alojamiento {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
-    }
-
-    
-        
+    }       
 }
 
     

@@ -5,6 +5,8 @@
  */
 package gp8_traveltogether.vistas;
 
+import java.awt.BorderLayout;
+
 /**
  *
  * @author xiana
@@ -48,19 +50,29 @@ public class menu extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 717, Short.MAX_VALUE)
+            .addGap(0, 1059, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 509, Short.MAX_VALUE)
+            .addGap(0, 1016, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Paquetes");
 
-        jMenuItem1.setText("Cotizar");
+        jMenuItem1.setText("Paquete");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Modificar paquete");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -126,7 +138,6 @@ public class menu extends javax.swing.JFrame {
         escritorio.repaint();
         vistaCiudad vd = new vistaCiudad();
         vd.setVisible(true);
-      
         escritorio.add(vd);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -136,7 +147,6 @@ public class menu extends javax.swing.JFrame {
         escritorio.repaint();
         vistaAlojamiento va = new vistaAlojamiento();
         va.setVisible(true);
-      
         escritorio.add(va);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -146,7 +156,6 @@ public class menu extends javax.swing.JFrame {
         escritorio.repaint();
         vistaPasaje vp = new vistaPasaje();
         vp.setVisible(true);
-      
         escritorio.add(vp);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -156,9 +165,26 @@ public class menu extends javax.swing.JFrame {
         escritorio.repaint();
         vistaPension vpn = new vistaPension();
         vpn.setVisible(true);
-      
         escritorio.add(vpn);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        vistaPaquete vPaq = new vistaPaquete();
+        vPaq.setVisible(true);
+        escritorio.add(vPaq);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        vistaPaquete1 vp1 = new vistaPaquete1();
+        vp1.setVisible(true);
+        escritorio.add(vp1);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
