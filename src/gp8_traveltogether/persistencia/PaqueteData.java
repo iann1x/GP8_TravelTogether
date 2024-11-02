@@ -2,6 +2,7 @@ package gp8_traveltogether.persistencia;
 
 import gp8_traveltogether.entidades.Paquete;
 import gp8_traveltogether.entidades.Ciudad;
+import gp8_traveltogether.entidades.EstadisticaCiudad;
 import gp8_traveltogether.entidades.Turista;
 import java.sql.Connection;
 import java.sql.Date;
@@ -199,4 +200,5 @@ public class PaqueteData{
         JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
     }
     return estadisticas;
+}
 }
