@@ -121,7 +121,7 @@ public class menu extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem7.setText("jMenuItem7");
+        jMenuItem7.setText("Estadistica");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);

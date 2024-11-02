@@ -5,8 +5,11 @@
 package gp8_traveltogether.vistas;
 
 import gp8_traveltogether.entidades.EstadisticaCiudad;
+import gp8_traveltogether.persistencia.EstadisticaCiudadData;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -17,28 +20,39 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Estadisticas extends javax.swing.JInternalFrame {
 
+     private EstadisticaCiudadData estadisticaData;
     
     public Estadisticas( ) {
-    
-        
         initComponents();
-    }
-public void mostrarEstadisticasEnTabla(List<EstadisticaCiudad> estadisticas, String titulo) {
-    JFrame frame = new JFrame(titulo);
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("Código de Ciudad");
-    model.addColumn("Nombre");
-    model.addColumn("Frecuencia");
-
-    for (EstadisticaCiudad estadistica : estadisticas) {
-        model.addRow(new Object[]{estadistica.getCodCiudad(), estadistica.getNombre(), estadistica.getFrecuencia()});
+        this.estadisticaData = new EstadisticaCiudadData();
+        actualizarTabla();
+        
+        
     }
 
-    JTable table = new JTable(model);
-    frame.add(new JScrollPane(table));
-    frame.setSize(400, 300);
-    frame.setVisible(true);
+ public void mostrarEstadisticasEnTabla(List<EstadisticaCiudad> estadisticas) {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Código de Ciudad");
+        model.addColumn("Nombre");
+        model.addColumn("Frecuencia");
+
+        for (EstadisticaCiudad estadistica : estadisticas) {
+            model.addRow(new Object[]{estadistica.getCodCiudad(), estadistica.getNombre(), estadistica.getFrecuencia()});
+        }
+
+        jtEstadisticas.setModel(model);
+    }
+
+    private void actualizarTabla() {
+    try {
+        int codigoPaqueteSeleccionado = jcbPaquetes.getSelectedIndex() + 1; // Cambia según el índice correcto
+        List<EstadisticaCiudad> estadisticas = estadisticaData.obtenerEstadisticasPorPaquete(codigoPaqueteSeleccionado);
+        mostrarEstadisticasEnTabla(estadisticas);
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al obtener estadísticas: " + e.getMessage());
+    }
 }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
