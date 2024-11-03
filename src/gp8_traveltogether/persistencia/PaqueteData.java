@@ -65,18 +65,16 @@ public class PaqueteData{
             
             ResultSet rs = ps.getGeneratedKeys();
             if(rs.next()){
-                paquete.setCodigoPaquete(rs.getInt(1));   
-            }
+                int codigoPaquete = rs.getInt(1);
+                paquete.setCodigoPaquete(codigoPaquete);   
             
-            for (Turista turista : paquete.getTuristas()) {
-                psTurista.setInt(1, turista.getDni());
-                psTurista.setString(2, turista.getNombre()); 
-                psTurista.setInt(3, turista.getEdad()); 
-                psTurista.setInt(4, paquete.getCodigoPaquete()); 
-                ps.setBoolean(5, true);
-                psTurista.executeUpdate();
-            }
+            
+                for (Turista turista : paquete.getTuristas()) {
+                    turista.setCodigoPaquete(codigoPaquete);
+                    turistaData.agregarTurista(turista);
+                }
             JOptionPane.showMessageDialog(null, "El paquete se guardó con éxito.");
+            }
             ps.close();
             psTurista.close();
             rs.close();

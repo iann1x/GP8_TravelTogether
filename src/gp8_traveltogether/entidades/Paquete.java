@@ -33,6 +33,15 @@ public class Paquete {
         this.fechaFin = fechaFin;
         this.temporada = calcularTemporada(fechaInicio);
     }
+
+    public Paquete(Ciudad origen, Ciudad destino, LocalDate fechaInicio, LocalDate fechaFin, String temporada) {
+        this.origen = origen;
+        this.destino = destino;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.temporada = temporada;
+        this.turistas = new ArrayList<>();
+    }
     
     public Paquete(int codigoPaquete, Ciudad origen, Ciudad destino, LocalDate fechaInicio, LocalDate fechaFin, String temporada, Alojamiento estadia, Pasaje boleto, Pension pension, boolean traslado, ArrayList<Turista> turistas, double montoFinal, boolean estado) {
         this.codigoPaquete = codigoPaquete;
@@ -45,7 +54,7 @@ public class Paquete {
         this.boleto = boleto;
         this.pension = pension;
         this.traslado = traslado;
-        this.turistas = new ArrayList<>();
+       // this.turistas = new ArrayList<>();
         this.montoFinal = calcularMontoFinal();
         this.estado = estado;
     }
@@ -60,7 +69,7 @@ public class Paquete {
         this.boleto = boleto;
         this.pension = pension;
         this.traslado = traslado;
-        this.turistas = new ArrayList<>();
+       // this.turistas = new ArrayList<>();
         this.montoFinal = calcularMontoFinal();
         this.estado = estado;
     }
@@ -250,9 +259,30 @@ public class Paquete {
     }
     
     public void agregarTurista(Turista turista){
-         turistas.add(turista);
+        if (turistas == null) {
+            turistas = new ArrayList<>();
+        }
+        turistas.add(turista);
     }
-           
+
+    @Override
+    public String toString() {
+        return "Paquete{" +
+                "codigoPaquete=" + codigoPaquete + 
+                ", origen=" + origen +
+                ", destino=" + destino +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", temporada=" + temporada +
+                ", estadia=" + estadia +
+                ", boleto=" + boleto +
+                ", pension=" + pension +
+                ", traslado=" + traslado +
+                ", turistas=" + turistas +
+                ", montoFinal=" + montoFinal +
+                ", estado=" + estado + '}';
+    }
+  
 } //cierre de Clase Paquete
     
    

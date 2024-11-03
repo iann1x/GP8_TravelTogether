@@ -1,16 +1,19 @@
 package gp8_traveltogether.persistencia;
 
+import gp8_traveltogether.entidades.Ciudad;
 import gp8_traveltogether.entidades.Turista;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class TuristaData{
      private Connection con;
 
-    public TuristaData(Connection con) {
-        this.con = con;
+    public TuristaData() {
+        this.con = Conexion.getConexion();
     }
 
     public void agregarTurista(Turista turista) {
@@ -28,6 +31,29 @@ public class TuristaData{
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
         }
+    }
+    
+    public ArrayList <Turista> mostrarTuristas() {
+        String query = "SELECT dni, nombre, edad, codigoPaquete, estado FROM turista";
+        ArrayList<Turista> turistas = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Turista turista = new Turista();
+                turista.setDni(rs.getInt("dni¿"));
+                turista.setNombre(rs.getString("nombre"));
+                turista.setEdad(rs.getInt("edad"));
+                turistas.add(turista);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
+        }
+        return turistas;
     }
 
     public void modificarTurista(Turista turista) {
