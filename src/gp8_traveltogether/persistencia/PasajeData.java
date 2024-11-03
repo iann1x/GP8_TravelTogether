@@ -68,12 +68,14 @@ public class PasajeData{
        }
     }
     
-    public ArrayList<Pasaje> mostrarPasajes() {
-        String query = "SELECT * FROM pasaje WHERE estado=1"; 
+    public ArrayList<Pasaje> mostrarPasajes(Ciudad origen, Ciudad destino) {
+        String query = "SELECT * FROM pasaje WHERE origen=? AND destino =?"; 
         ArrayList<Pasaje> pasajes = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, origen.getCodCiudad());
+            ps.setInt(2, destino.getCodCiudad());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
@@ -82,6 +84,7 @@ public class PasajeData{
                 pasaje.setTipoViaje(rs.getString("tipoViaje"));
                 pasajes.add(pasaje);
             }
+            ps.close();
             rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Pasaje.");

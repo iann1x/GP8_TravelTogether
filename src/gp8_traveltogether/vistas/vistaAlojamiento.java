@@ -320,7 +320,7 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
     private void limpiarCampos(){
         jtCodigo.setText("");
         jtNombre.setText("");
-        jcCiudades.setSelectedItem(0);
+        jcCiudades.setSelectedIndex(0);
         jcTipo.setSelectedItem("Seleccione");
         jtCapacidad.setText("");
         jtPrecio.setText("");

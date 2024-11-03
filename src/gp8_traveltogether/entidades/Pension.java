@@ -15,6 +15,11 @@ public class Pension {
         this.nombre = nombre;
         this.porcentaje = porcentaje;
     }
+
+    public Pension(int codAdicional, String nombre) {
+        this.codAdicional = codAdicional;
+        this.nombre = nombre;
+    }
     
     public Pension(){
     }
@@ -45,7 +50,7 @@ public class Pension {
 
     @Override
     public String toString() {
-        return nombre + ", porcentaje: " + porcentaje;
+        return nombre;
     }
     
     

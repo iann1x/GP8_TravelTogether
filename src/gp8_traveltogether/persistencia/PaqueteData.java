@@ -45,11 +45,11 @@ public class PaqueteData{
 
     public void guardarPaquete(Paquete paquete) {
         String query = "INSERT INTO paquete (origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        String queryTurista = "INSERT INTO turista(dni, nombre, edad, codigoPaquete, estado) VALUES (?, ?, ?, ?, ?)";
+        //String queryTurista = "INSERT INTO turista(dni, nombre, edad, codigoPaquete, estado) VALUES (?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            PreparedStatement psTurista = con.prepareStatement(queryTurista);
+            //PreparedStatement psTurista = con.prepareStatement(queryTurista);
             
             ps.setInt(1, paquete.getOrigen().getCodCiudad());
             ps.setInt(2, paquete.getDestino().getCodCiudad());
@@ -77,7 +77,7 @@ public class PaqueteData{
             JOptionPane.showMessageDialog(null, "El paquete se guardó con éxito.");
             }
             ps.close();
-            psTurista.close();
+            //psTurista.close();
             rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo guardar el paquete.");
