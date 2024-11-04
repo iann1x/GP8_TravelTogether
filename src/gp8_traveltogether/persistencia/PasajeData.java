@@ -80,6 +80,8 @@ public class PasajeData{
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setCodPasaje(rs.getInt("codPasaje"));
+                pasaje.setOrigen(origen);
+                pasaje.setDestino(destino);
                 pasaje.setPrecioPasaje(rs.getDouble("precioPasaje"));
                 pasaje.setTipoViaje(rs.getString("tipoViaje"));
                 pasajes.add(pasaje);

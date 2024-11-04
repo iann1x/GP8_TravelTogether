@@ -143,7 +143,8 @@ public class AlojamientoData{
                 
                 Ciudad ciudad = new Ciudad();
                 ciudad.setCodCiudad(rs.getInt("codCiudad"));
-                
+                alojamiento.setCiudad(ciudad);
+       
                 alojamiento.setTipoAlojam(rs.getString("tipoAlojam"));
                 alojamiento.setCapacidad(rs.getInt("capacidad"));
                 alojamiento.setPrecioNoche(rs.getDouble("precioNoche"));

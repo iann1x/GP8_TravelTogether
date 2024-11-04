@@ -42,12 +42,14 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
     
     private PasajeData pasajeData = new PasajeData();
     private Pasaje pasajeActual = new Pasaje();
+    private ArrayList <Pasaje> pasajesPaquete = null;
     
     private TuristaData turiData = new TuristaData();
     private Turista turistaActual = null;
     
     private AlojamientoData alojaData = new AlojamientoData();
     private Alojamiento alojamiento = null;
+    private ArrayList <Alojamiento> alojamPorCiudad = null;
     
     private PensionData pensionData = new PensionData();
     private Pension pensionActual = null;
@@ -657,8 +659,11 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (paqueteActual != null){
             int filaAloj = tableAlojamiento.getSelectedRow();
-            if(filaAloj == 1){
-                Alojamiento alojSelected = (Alojamiento) modeloAlojam.getValueAt(filaAloj,0);
+            if(filaAloj !=-1){
+                Ciudad citySeleccionada = (Ciudad)jcDestino.getSelectedItem();
+                alojamPorCiudad = (ArrayList) alojaData.mostrarAlojPorCiudad(citySeleccionada.getCodCiudad());
+
+                Alojamiento alojSelected = alojamPorCiudad.get(filaAloj);;
                 paqueteActual.setEstadia(alojSelected);
             }else {
                 JOptionPane.showMessageDialog(this, "Selecciona un alojamiento.");
@@ -666,11 +671,16 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         }
         
         int filaPasaje = tablePasaje.getSelectedRow();
-        if ( filaPasaje == 1){
-            Pasaje pasajeSelected = (Pasaje)modeloPasaje.getValueAt(filaPasaje, 0);
+        if (filaPasaje  !=-1){
+            Ciudad origen = (Ciudad) jcOrigen.getSelectedItem();
+            Ciudad destino = (Ciudad) jcDestino.getSelectedItem();
+        
+            pasajesPaquete = (ArrayList) pasajeData.mostrarPasajes(origen, destino);
+            
+            Pasaje pasajeSelected = pasajesPaquete.get(filaPasaje);
             paqueteActual.setBoleto(pasajeSelected);
         }else{
-                JOptionPane.showMessageDialog(this, "Selecciona un pasaje.");
+            JOptionPane.showMessageDialog(this, "Selecciona un pasaje.");
         }
         
         boolean traslado = jrTraslado.isSelected();
@@ -679,7 +689,14 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         Pension pensionSelected = (Pension) jcPension.getSelectedItem();
         paqueteActual.setPension(pensionSelected);
         
-        paqueteData.guardarPaquete(paqueteActual);
+        paqueteActual.costoAdulto();// Asegúrate de llamarlo en el lugar correcto
+        System.out.println("Monto final adulto " + paqueteActual.getMontoFinal());
+        double precioMenor = paqueteActual.costoMenor();
+        System.out.println("precio menor" +precioMenor);
+        
+        System.out.println(paqueteActual);
+        
+        //paqueteData.guardarPaquete(paqueteActual);
          
     }//GEN-LAST:event_jbGuardarPaqueteActionPerformed
     
@@ -734,7 +751,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         modeloAlojam.setRowCount(0);
         Ciudad citySeleccionada = (Ciudad)jcDestino.getSelectedItem();
 
-        ArrayList <Alojamiento> alojamPorCiudad = (ArrayList) alojaData.mostrarAlojPorCiudad(citySeleccionada.getCodCiudad());
+        alojamPorCiudad = (ArrayList) alojaData.mostrarAlojPorCiudad(citySeleccionada.getCodCiudad());
         
         if (alojamPorCiudad == null || alojamPorCiudad.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No hay alojamientos en el destino seleccionado.");

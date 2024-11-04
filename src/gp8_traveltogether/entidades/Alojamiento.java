@@ -27,6 +27,12 @@ public class Alojamiento {
         this.precioNoche = precioNoche;
         this.estado = estado;
     }
+
+    public Alojamiento(String nombre, Ciudad ciudad, double precioNoche) {
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.precioNoche = precioNoche;
+    }
     
     public Alojamiento() {
     }
@@ -86,7 +92,21 @@ public class Alojamiento {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
-    }       
+    }
+
+    @Override
+    public String toString() {
+        return "Alojamiento{" +
+            "codAlojam=" + codAlojam +
+            ", nombre='" + nombre + '\'' +
+            ", ciudad=" + (ciudad != null ? ciudad.getCodCiudad() : "null") +
+            ", tipoAlojam='" + tipoAlojam + '\'' +
+            ", capacidad=" + capacidad +
+            ", precioNoche=" + precioNoche +
+            '}';
+    }
+    
+    
 }
 
     
