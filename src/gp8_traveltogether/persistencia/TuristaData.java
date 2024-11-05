@@ -25,7 +25,7 @@ public class TuristaData{
             ps.setString(2, turista.getNombre());
             ps.setInt(3, turista.getEdad());
             ps.setInt(4, turista.getCodigoPaquete());
-            ps.setBoolean(5, turista.isEstado());
+            ps.setBoolean(5,true);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "El turista se agregó con éxito.");
         } catch (SQLException ex) {
@@ -43,7 +43,7 @@ public class TuristaData{
             
             while (rs.next()) {
                 Turista turista = new Turista();
-                turista.setDni(rs.getInt("dni¿"));
+                turista.setDni(rs.getInt("dni"));
                 turista.setNombre(rs.getString("nombre"));
                 turista.setEdad(rs.getInt("edad"));
                 turistas.add(turista);

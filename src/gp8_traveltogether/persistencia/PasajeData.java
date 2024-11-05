@@ -163,29 +163,4 @@ public class PasajeData{
         }
         return pasajes;
     }
-
-    public void calcularPrecioPasaje(int codPasaje, List<Turista> turistas) {
-        String query = "UPDATE pasaje SET precioPasaje=? WHERE codPasaje=?";
-        double precioPasaje = 0;
-
-        try {
-            PreparedStatement ps = con.prepareStatement("SELECT precioPasaje FROM pasaje WHERE codPasaje=?");
-            ps.setInt(1, codPasaje);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                precioPasaje = rs.getDouble("precioPasaje");
-            }
-
-            double nuevoPrecio = precioPasaje * turistas.size();
-
-            PreparedStatement psUpdate = con.prepareStatement(query);
-            psUpdate.setDouble(1, nuevoPrecio);
-            psUpdate.setInt(2, codPasaje);
-            psUpdate.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "El precio del pasaje se actualizó con éxito.");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar el precio del pasaje.");
-        }
-    }
-}
+} //cierre clase PaqueteData

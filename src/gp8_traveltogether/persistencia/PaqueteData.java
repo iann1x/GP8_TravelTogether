@@ -1,8 +1,11 @@
 package gp8_traveltogether.persistencia;
 
+import gp8_traveltogether.entidades.Alojamiento;
 import gp8_traveltogether.entidades.Paquete;
 import gp8_traveltogether.entidades.Ciudad;
 import gp8_traveltogether.entidades.EstadisticaCiudad;
+import gp8_traveltogether.entidades.Pasaje;
+import gp8_traveltogether.entidades.Pension;
 import gp8_traveltogether.entidades.Turista;
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,6 +16,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class PaqueteData{
@@ -25,16 +30,6 @@ public class PaqueteData{
 
     public PaqueteData() {
         con = Conexion.getConexion();
-    }
-   
-
-    public double calcularPresupuesto(Paquete paquete) {
-        double total = 0;
-        for (Iterator<Turista> it = paquete.getTuristas().iterator(); it.hasNext();) {
-            Turista turista = it.next(); 
-            total += paquete.getMontoFinal();
-        }
-        return total;
     }
 
     public void guardarPaquete(Paquete paquete) {
@@ -70,20 +65,16 @@ public class PaqueteData{
                     turistaData.agregarTurista(turista);
                 }
                 }
-           
             ps.close();
             rs.close();
-            
-            
             psTurista.close();
-            
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo guardar el paquete.");
+            JOptionPane.showMessageDialog(null, "No se pudo guardar el paquete."+ex.getMessage());
         }
     }
 
     public Paquete buscarPaquete(int codigoPaquete) {
-        String query = "SELECT * FROM paquete WHERE codigoPaquete=?";
+        String query = "SELECT origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal, estado FROM paquete WHERE codigoPaquete=?";
         Paquete paquete = null;
         
         try {
@@ -93,8 +84,31 @@ public class PaqueteData{
             
             if (rs.next()) {
                 paquete = new Paquete();
-                paquete.setCodigoPaquete(rs.getInt("codigoPaquete"));
-                paquete.setMontoFinal(rs.getDouble("precio"));
+                paquete.setCodigoPaquete(codigoPaquete);
+                
+                Ciudad origen = ciudadData.buscarCiudad(rs.getInt("origen"));
+                paquete.setOrigen(origen);
+                
+                Ciudad destino = ciudadData.buscarCiudad(rs.getInt("destino"));
+                paquete.setDestino(destino);
+                
+                paquete.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                paquete.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                paquete.setTemporada(rs.getString("temporada"));
+                
+                Alojamiento aloja = alojaData.buscarAlojamiento(rs.getInt("codAlojam"));
+                paquete.setEstadia(aloja);
+                
+                Pasaje pasaje = pasajeData.buscarPasaje(rs.getInt("codPasaje"));
+                paquete.setBoleto(pasaje);
+                
+                Pension pension = pensionData.buscarPensionPorCod(rs.getInt("codAdicional"));
+                paquete.setPension(pension);
+                
+                paquete.setMontoFinal(rs.getDouble("montoFinal"));
+                paquete.setEstado(rs.getBoolean("estado"));
+            } else{
+                JOptionPane.showMessageDialog(null, "No existe un paquete con ese código.");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete.");
@@ -102,19 +116,56 @@ public class PaqueteData{
         return paquete;
     }
 
-    public void modificarPaquete(int codigoPaquete, Paquete paquete) {
-        String query = "UPDATE paquete SET precio=? WHERE codigoPaquete=?";
+    public void modificarPaquete(Paquete paquete) {
+        String query = "UPDATE paquete SET origen=?, destino=?, fechaInicio=?, fechaFin=?, temporada=?, codAlojam=?, codPasaje=?, codAdicional=?, traslado=?, montoFinal=?, estado=? WHERE codigoPaquete=?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setDouble(1, paquete.getMontoFinal());
-            ps.setInt(2, codigoPaquete);
+            ps.setInt(1,paquete.getOrigen().getCodCiudad());
+            ps.setInt(2, paquete.getDestino().getCodCiudad());
+            ps.setDate(3, Date.valueOf(paquete.getFechaInicio()));
+            ps.setDate(4, Date.valueOf(paquete.getFechaFin()));
+            ps.setString(5, paquete.getTemporada());
+            ps.setInt(6, paquete.getEstadia().getCodAlojam());
+            ps.setInt(7, paquete.getBoleto().getCodPasaje());
+            ps.setInt (8, paquete.getPension().getCodAdicional());
+            ps.setBoolean(9, paquete.isTraslado());
+            ps.setDouble(10, paquete.getMontoFinal());
+            ps.setBoolean(11, true);
+            ps.setInt(12, paquete.getCodigoPaquete());
+            
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "El paquete se modificó con éxito.");
+            } else{
+                JOptionPane.showMessageDialog(null, "No se encontró el paquete a modificar.");
             }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete."+ ex.getMessage());
+        }
+    }
+    
+    public boolean existePaquete(int codigoPaquete){
+        String query = "SELECT COUNT(*) FROM paquete WHERE codigoPaquete=?";
+        boolean existePaquete = false;
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigoPaquete);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()){
+                int contador = rs.getInt(1);
+                if (contador >0){
+                    existePaquete = true;
+                }
+            }
+            ps.close();
+            rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete.");
         }
+        return existePaquete;
     }
 
     public void bajaLogicaPaquete(int codigoPaquete) {
@@ -132,6 +183,29 @@ public class PaqueteData{
     }
 
     public void agregarTurista(int codigoPaquete, Turista turista) {
+    }
+    
+    public ArrayList<Turista> mostrarTuristasPorPaquete(int codigoPaquete){
+        String query = "SELECT * FROM turista WHERE codigoPaquete=?";
+        ArrayList <Turista> turistasPaquete = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigoPaquete);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                Turista turista = new Turista();
+                turista.setDni(rs.getInt("dni"));
+                turista.setNombre(rs.getString("nombre"));
+                turista.setCodigoPaquete(codigoPaquete);
+                
+                turistasPaquete.add(turista);
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
+        }
+        return turistasPaquete;
     }
 
     public List<Paquete> mostrarPaquetes() {
