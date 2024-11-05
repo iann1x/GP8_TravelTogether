@@ -689,14 +689,12 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         Pension pensionSelected = (Pension) jcPension.getSelectedItem();
         paqueteActual.setPension(pensionSelected);
         
-        paqueteActual.costoAdulto();// Asegúrate de llamarlo en el lugar correcto
-        System.out.println("Monto final adulto " + paqueteActual.getMontoFinal());
-        double precioMenor = paqueteActual.costoMenor();
-        System.out.println("precio menor" +precioMenor);
-        
+        double montoFinal = paqueteActual.calcularMontoFinal();
+        paqueteActual.setMontoFinal(montoFinal);
+        paqueteActual.setEstado(true);
+
+        paqueteData.guardarPaquete(paqueteActual);
         System.out.println(paqueteActual);
-        
-        //paqueteData.guardarPaquete(paqueteActual);
          
     }//GEN-LAST:event_jbGuardarPaqueteActionPerformed
     

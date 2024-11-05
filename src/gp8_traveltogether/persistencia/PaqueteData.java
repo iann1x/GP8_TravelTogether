@@ -17,22 +17,16 @@ import javax.swing.JOptionPane;
 
 public class PaqueteData{
     private Connection con;
-    private TuristaData turistaData;
-    private PasajeData pasajeData;
-    private CiudadData ciudadData;
-    private AlojamientoData alojaData;
-    private PensionData pensionData;
+    private TuristaData turistaData = new TuristaData();
+    private PasajeData pasajeData = new PasajeData();
+    private CiudadData ciudadData = new CiudadData();
+    private AlojamientoData alojaData = new AlojamientoData();
+    private PensionData pensionData = new PensionData();
 
-    public PaqueteData(Connection con, TuristaData turistaData, PasajeData viajeData, CiudadData ciudadData, AlojamientoData alojaData) {
-        this.con = con;
-        this.turistaData = turistaData;
-        this.pasajeData = viajeData;
-        this.ciudadData = ciudadData;
-        this.alojaData = alojaData;
+    public PaqueteData() {
+        con = Conexion.getConexion();
     }
-    
-    public PaqueteData(){
-    }
+   
 
     public double calcularPresupuesto(Paquete paquete) {
         double total = 0;
@@ -45,11 +39,11 @@ public class PaqueteData{
 
     public void guardarPaquete(Paquete paquete) {
         String query = "INSERT INTO paquete (origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        //String queryTurista = "INSERT INTO turista(dni, nombre, edad, codigoPaquete, estado) VALUES (?, ?, ?, ?, ?)";
+        String queryTurista = "INSERT INTO turista(dni, nombre, edad, codigoPaquete, estado) VALUES (?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            //PreparedStatement psTurista = con.prepareStatement(queryTurista);
+            PreparedStatement psTurista = con.prepareStatement(queryTurista);
             
             ps.setInt(1, paquete.getOrigen().getCodCiudad());
             ps.setInt(2, paquete.getDestino().getCodCiudad());
@@ -62,23 +56,27 @@ public class PaqueteData{
             ps.setBoolean(9, paquete.isTraslado());
             ps.setDouble(10, paquete.getMontoFinal());
             ps.setBoolean(11, true);
+            
             ps.executeUpdate();
-            
+           
             ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()){
-                int codigoPaquete = rs.getInt(1);
-                paquete.setCodigoPaquete(codigoPaquete);   
-            
-            
+                if(rs !=null && rs.next()){
+                    int codigoPaquete = rs.getInt(1);
+                    paquete.setCodigoPaquete(codigoPaquete);
+                    JOptionPane.showMessageDialog(null, "El paquete se guardó con éxito.");
+
                 for (Turista turista : paquete.getTuristas()) {
                     turista.setCodigoPaquete(codigoPaquete);
                     turistaData.agregarTurista(turista);
                 }
-            JOptionPane.showMessageDialog(null, "El paquete se guardó con éxito.");
-            }
+                }
+           
             ps.close();
-            //psTurista.close();
             rs.close();
+            
+            
+            psTurista.close();
+            
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo guardar el paquete.");
         }

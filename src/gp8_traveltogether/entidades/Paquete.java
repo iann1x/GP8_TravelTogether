@@ -190,18 +190,19 @@ public class Paquete {
         return ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
     
-    public Double calcularMontoFinal(){
+    public double calcularMontoFinal(){
         double costoFinal = 0.0;
         
-        for (Turista turista : turistas) {
-            if (turista.getEdad() < 10) {
-            
-            costoFinal += costoMenor();
-        } else {
-            costoFinal += costoAdulto();
+        if (turistas !=null){
+            for (Turista turista : turistas) {
+                if (turista.getEdad() < 10) {
+                    costoFinal += costoMenor();
+                } else {
+                    costoFinal += costoAdulto();
+                }
+            }
         }
-    }
-    
+    //this.montoFinal = costoFinal;
     return costoFinal;   
     }
         
@@ -239,16 +240,7 @@ public class Paquete {
         } else if ("media".equals(temporada)) {
             precioBaseAdulto *= 1.15;
         }
-        
-        this.montoFinal = precioBaseAdulto;
-        
-        System.out.println("Costo Alojamiento: " + costoAlojamientoAdulto);
-        System.out.println("Costo Boleto: " + costoPasajeAdulto);
-        System.out.println("Costo Traslado: " + costoTraslado);
-        System.out.println("Costo Pension: " + costoPensionAdulto);
-        System.out.println("Costo Final: " + precioBaseAdulto);
-        
-        return precioBaseAdulto;    
+    return precioBaseAdulto;    
     }
     
     public double costoMenor(){
@@ -279,19 +271,12 @@ public class Paquete {
         
         precioBaseMenor += costoTrasladoMenor;
         
-        if ("alta".equalsIgnoreCase(temporada)) {
+        if ("alta".equals(temporada)) {
             precioBaseMenor *= 1.30;
-        } else if ("media".equalsIgnoreCase(temporada)) {
+        } else if ("media".equals(temporada)) {
             precioBaseMenor *= 1.15;
         }
-        
-        System.out.println("Costo Alojamiento: " + costoAlojamientoMenor);
-        System.out.println("Costo Boleto: " + costoPasajeMenor);
-        System.out.println("Costo Traslado: " + costoTrasladoMenor);
-        System.out.println("Costo Pension: " + costoPensionMenor);
-        System.out.println("Costo Final: " + precioBaseMenor);
-        
-        return precioBaseMenor;    
+    return precioBaseMenor;    
     }
     
     public void agregarTurista(Turista turista){
