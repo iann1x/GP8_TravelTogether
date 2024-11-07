@@ -33,8 +33,17 @@ public class Paquete {
         this.fechaFin = fechaFin;
         this.temporada = calcularTemporada(fechaInicio);
     }
+
+    public Paquete(Ciudad origen, Ciudad destino, LocalDate fechaInicio, LocalDate fechaFin, String temporada) {
+        this.origen = origen;
+        this.destino = destino;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.temporada = temporada;
+        this.turistas = new ArrayList<>();
+    }
     
-    public Paquete(int codigoPaquete, Ciudad origen, Ciudad destino, LocalDate fechaInicio, LocalDate fechaFin, String temporada, Alojamiento estadia, Pasaje boleto, Pension pension, boolean traslado, ArrayList<Turista> turistas, double montoFinal, boolean estado) {
+    public Paquete(int codigoPaquete, Ciudad origen, Ciudad destino, LocalDate fechaInicio, LocalDate fechaFin, String temporada, Alojamiento estadia, Pasaje boleto, Pension pension, boolean traslado, ArrayList<Turista> turistas, boolean estado) {
         this.codigoPaquete = codigoPaquete;
         this.origen = origen;
         this.destino = destino;
@@ -45,22 +54,6 @@ public class Paquete {
         this.boleto = boleto;
         this.pension = pension;
         this.traslado = traslado;
-        this.turistas = new ArrayList<>();
-        this.montoFinal = calcularMontoFinal();
-        this.estado = estado;
-    }
-
-    public Paquete(Ciudad origen, Ciudad destino, LocalDate fechaInicio, LocalDate fechaFin, String temporada, Alojamiento estadia, Pasaje boleto, Pension pension, boolean traslado, ArrayList<Turista> turistas, double montoFinal, boolean estado) {
-        this.origen = origen;
-        this.destino = destino;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.temporada = calcularTemporada(fechaInicio);
-        this.estadia = estadia;
-        this.boleto = boleto;
-        this.pension = pension;
-        this.traslado = traslado;
-        this.turistas = new ArrayList<>();
         this.montoFinal = calcularMontoFinal();
         this.estado = estado;
     }
@@ -197,62 +190,120 @@ public class Paquete {
         return ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
     
-    public Double calcularMontoFinal(){
+    public double calcularMontoFinal(){
         double costoFinal = 0.0;
-        double costoAlojamiento = 0.0;
-        double costoPasajes = 0.0;
-        double costoTraslado = 0.0;
-        double costoPension = 0.0; 
         
+        if (turistas !=null){
+            for (Turista turista : turistas) {
+                if (turista.getEdad() < 10) {
+                    costoFinal += costoMenor();
+                } else {
+                    costoFinal += costoAdulto();
+                }
+            }
+        }
+    //this.montoFinal = costoFinal;
+    return costoFinal;   
+    }
+        
+
+    public double costoAdulto(){
+        double precioBaseAdulto = 0.0;
+        double costoAlojamientoAdulto = 0.0;
         if(estadia!=null){
-            costoAlojamiento = estadia.getPrecioNoche()*totalDias();
-            costoFinal += costoAlojamiento;
+            costoAlojamientoAdulto = estadia.getPrecioNoche()*totalDias();
         }
         
-        for (Turista t:turistas){
-            double costoBoleto = 0.0;
-            if(boleto!=null){
-                costoBoleto = boleto.getPrecioPasaje();
-            }else {
-                costoBoleto = 0.0;
-            }
-            
-            double tieneTraslado = 0.0;
-            if(traslado){
-                tieneTraslado = costoFinal * 0.01;
-            }else{
-                tieneTraslado = 0.0;
-            }
-            
-            if (pension != null) {
-                double porcentajePension = pension.getPorcentaje();
-                costoPension = costoAlojamiento * (porcentajePension / 100);
-                costoFinal += costoPension; 
-        }
-            
-            if (t.getEdad()<10){
-               costoBoleto *=0.5;
-               tieneTraslado *=0.5;
-               costoPension*=0.5;
-           }
-            
-            costoPasajes += costoBoleto;
-            costoTraslado += tieneTraslado;
-            costoFinal += costoBoleto + tieneTraslado;      
+        double costoPensionAdulto = 0.0;
+        if (pension != null) {
+            double porcentajePension = pension.getPorcentaje();
+            costoPensionAdulto = costoAlojamientoAdulto * (porcentajePension / 100);
         }
         
-        if ("Alta".equals(temporada)) {
-            costoFinal *= 1.30;
-        } else if ("Media".equals(temporada)) {
-            costoFinal *= 1.15;
+        double costoPasajeAdulto = 0.0;
+        if (boleto !=null){
+            costoPasajeAdulto = boleto.getPrecioPasaje();
         }
-        return costoFinal;
+        
+        precioBaseAdulto = costoAlojamientoAdulto+costoPensionAdulto+costoPasajeAdulto;
+        
+        
+        double costoTraslado = 0.0;
+        if (traslado) {
+            costoTraslado = precioBaseAdulto * 0.01; 
+        }
+        
+        precioBaseAdulto += costoTraslado;
+        
+        if ("alta".equals(temporada)) {
+            precioBaseAdulto *= 1.30;
+        } else if ("media".equals(temporada)) {
+            precioBaseAdulto *= 1.15;
+        }
+    return precioBaseAdulto;    
+    }
+    
+    public double costoMenor(){
+        double precioBaseMenor = 0.0;
+        double costoAlojamientoMenor = 0.0;
+        if(estadia!=null){
+            costoAlojamientoMenor = estadia.getPrecioNoche()*totalDias();
+        }
+        
+        double costoPensionMenor = 0.0;
+        if (pension != null) {
+            double porcentajePension = pension.getPorcentaje();
+            costoPensionMenor = (costoAlojamientoMenor * (porcentajePension / 100))*0.5;
+        }
+        
+        double costoPasajeMenor = 0.0;
+        if (boleto !=null){
+            costoPasajeMenor = boleto.getPrecioPasaje()*0.5;
+        }
+        
+        precioBaseMenor = costoAlojamientoMenor+costoPensionMenor+costoPasajeMenor;
+        
+        
+        double costoTrasladoMenor = 0.0;
+        if (traslado) {
+            costoTrasladoMenor = (precioBaseMenor * 0.01)*0.5; 
+        }
+        
+        precioBaseMenor += costoTrasladoMenor;
+        
+        if ("alta".equals(temporada)) {
+            precioBaseMenor *= 1.30;
+        } else if ("media".equals(temporada)) {
+            precioBaseMenor *= 1.15;
+        }
+    return precioBaseMenor;    
     }
     
     public void agregarTurista(Turista turista){
-         turistas.add(turista);
+        if (turistas == null) {
+            turistas = new ArrayList<>();
+        }
+        turistas.add(turista);
     }
-           
+
+    @Override
+    public String toString() {
+        return "Paquete{" +
+                "codigoPaquete=" + codigoPaquete + 
+                ", origen=" + origen +
+                ", destino=" + destino +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", temporada=" + temporada +
+                ", estadia=" + estadia +
+                ", boleto=" + boleto +
+                ", pension=" + pension +
+                ", traslado=" + traslado +
+                ", turistas=" + turistas +
+                ", montoFinal=" + montoFinal +
+                ", estado=" + estado + '}';
+    }
+  
 } //cierre de Clase Paquete
     
    

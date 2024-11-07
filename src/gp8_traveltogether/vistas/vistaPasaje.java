@@ -314,8 +314,8 @@ public class vistaPasaje extends javax.swing.JInternalFrame {
     
     private void limpiarCampos(){
         jtCodigo.setText("");
-        jcOrigen.setSelectedItem(0);
-        jcDestino.setSelectedItem(0);
+        jcOrigen.setSelectedIndex(0);
+        jcDestino.setSelectedIndex(0);
         jtPrecio.setText("");
         jcTipo.setSelectedItem("Seleccione");
         jrEstado.setSelected(false);

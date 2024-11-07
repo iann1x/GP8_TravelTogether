@@ -22,7 +22,7 @@ public class EstadisticaCiudadData {
     private Connection con;
 
     public EstadisticaCiudadData() {
-        con = Conexion.getConexion(); // Asegúrate de que esta clase de conexión esté configurada correctamente
+        con = Conexion.getConexion();
     }
 
     public List<EstadisticaCiudad> obtenerEstadisticasPorPaquete(int codigoPaquete) throws SQLException {

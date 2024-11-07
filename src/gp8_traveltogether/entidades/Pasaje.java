@@ -85,7 +85,7 @@ public class Pasaje {
 
     @Override
     public String toString() {
-        return origen + "-" + destino;
+        return origen +"-" + destino;
     }
     
     

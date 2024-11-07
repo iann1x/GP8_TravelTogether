@@ -36,7 +36,7 @@ public class PensionData{
         }
     }
 
-    public ArrayList<Pension> mostrarAdicionales() {
+    public ArrayList<Pension> mostrarPensiones() {
         String query = "SELECT codAdicional, nombre, porcentaje FROM pension";
         ArrayList<Pension> pensiones = new ArrayList<>();
         try {

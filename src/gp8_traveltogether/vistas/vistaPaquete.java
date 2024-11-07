@@ -5,18 +5,28 @@
  */
 package gp8_traveltogether.vistas;
 
+import gp8_traveltogether.entidades.Alojamiento;
 import gp8_traveltogether.entidades.Ciudad;
 import gp8_traveltogether.entidades.Paquete;
 import gp8_traveltogether.entidades.Pasaje;
+import gp8_traveltogether.entidades.Pension;
 import gp8_traveltogether.entidades.Turista;
+import gp8_traveltogether.persistencia.AlojamientoData;
 import gp8_traveltogether.persistencia.CiudadData;
 import gp8_traveltogether.persistencia.PaqueteData;
 import gp8_traveltogether.persistencia.PasajeData;
+import gp8_traveltogether.persistencia.PensionData;
+import gp8_traveltogether.persistencia.TuristaData;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,12 +40,49 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
     private PaqueteData paqueteData = new PaqueteData();
     private Paquete paqueteActual = null;
     
+    private PasajeData pasajeData = new PasajeData();
+    private Pasaje pasajeActual = new Pasaje();
+    private ArrayList <Pasaje> pasajesPaquete = null;
+    
+    private TuristaData turiData = new TuristaData();
+    private Turista turistaActual = null;
+    private ArrayList <Turista> turistas = null;
+    
+    private AlojamientoData alojaData = new AlojamientoData();
+    private Alojamiento alojamiento = null;
+    private ArrayList <Alojamiento> alojamPorCiudad = null;
+    
+    private PensionData pensionData = new PensionData();
+    private Pension pensionActual = null;
+    private ArrayList<Pension> pensiones = new ArrayList<>();
+    
+    private DefaultTableModel modeloAlojam = new DefaultTableModel();
+    private DefaultTableModel modeloPasaje = new DefaultTableModel();
+    
+    
+    
     public vistaPaquete() {
         initComponents();
         
         ciudades = ciudadData.mostrarCiudades();
+        pensiones = pensionData.mostrarPensiones();
         cargarOrigen();
         cargarDestino();
+        cargarPension();
+        armarTablaAlojam();
+        armarTablaPasaje();
+        
+        jcDestino.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Ciudad ciudadSeleccionada = (Ciudad) jcDestino.getSelectedItem();
+                if (ciudadSeleccionada != null) {
+                    cargarAlojamPorDestino();
+                }
+            }
+        });
+        
+        
     }
 
     /**
@@ -59,40 +106,39 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jtNombre = new javax.swing.JTextField();
-        jtEdad = new javax.swing.JTextField();
-        jtDNI = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jtNombreTuri = new javax.swing.JTextField();
+        jtEdadTuri = new javax.swing.JTextField();
+        jtDniTuri = new javax.swing.JTextField();
+        jbGuardarTuri = new javax.swing.JButton();
+        jbActualizarTuri = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jcTuristas = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableAlojamiento = new javax.swing.JTable();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel13 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablePasaje = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jbCrear = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        jrTraslado = new javax.swing.JRadioButton();
+        jcPension = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jbLimpiarTuri = new javax.swing.JButton();
+        jbGuardarPaquete = new javax.swing.JButton();
         jdIda = new com.toedter.calendar.JDateChooser();
         jdVuelta = new com.toedter.calendar.JDateChooser();
         jlTemporada = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jtCodigoPaquete = new javax.swing.JTextField();
+        jbEliminar = new javax.swing.JButton();
+        jbBuscarPaquete = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Paquete");
@@ -131,20 +177,31 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel10.setText("Edad:");
 
-        jtNombre.addActionListener(new java.awt.event.ActionListener() {
+        jtNombreTuri.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtNombreActionPerformed(evt);
+                jtNombreTuriActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jtDniTuri.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jtDniTuriActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Buscar");
+        jbGuardarTuri.setText("Guardar");
+        jbGuardarTuri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarTuriActionPerformed(evt);
+            }
+        });
+
+        jbActualizarTuri.setText("Actualizar");
+        jbActualizarTuri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbActualizarTuriActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel11.setText("Grupo:");
@@ -152,21 +209,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setText("Alojamiento");
 
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton1.setText("Hotel");
-
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton2.setText("Hostel");
-
-        jRadioButton3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton3.setText("Departamento");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableAlojamiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -177,28 +220,12 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tableAlojamiento);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setText("Pasajes");
 
-        jRadioButton4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton4.setText("Avión");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton5.setText("Colectivo");
-        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton5ActionPerformed(evt);
-            }
-        });
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablePasaje.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -209,7 +236,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tablePasaje);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel15.setText("Destino:");
@@ -224,15 +251,13 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel16.setText("Adicionales");
 
-        jRadioButton6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton6.setText("Traslados");
-        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
+        jrTraslado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jrTraslado.setText("Traslados");
+        jrTraslado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton6ActionPerformed(evt);
+                jrTrasladoActionPerformed(evt);
             }
         });
-
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Pension:");
@@ -244,12 +269,33 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setText("jButton5");
+        jbLimpiarTuri.setText("Limpiar");
+        jbLimpiarTuri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimpiarTuriActionPerformed(evt);
+            }
+        });
 
-        jButton6.setText("Guardar");
+        jbGuardarPaquete.setText("Guardar paquete");
+        jbGuardarPaquete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarPaqueteActionPerformed(evt);
+            }
+        });
 
         jlTemporada.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlTemporada.setText("Viaje en temporada:");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel6.setText("Codigo:");
+
+        jbEliminar.setText("Eliminar paquete");
+
+        jbBuscarPaquete.setText("Buscar");
+        jbBuscarPaquete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarPaqueteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -261,68 +307,8 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton5)
-                                    .addComponent(jRadioButton4))
-                                .addGap(50, 50, 50))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(230, 230, 230)
-                                .addComponent(jSeparator1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(jButton2)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButton1)
-                                .addGap(32, 32, 32)
-                                .addComponent(jButton5)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jdIda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(143, 143, 143)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jcDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(132, 132, 132))))
+                .addGap(495, 495, 495)
+                .addComponent(jSeparator1))
             .addGroup(layout.createSequentialGroup()
                 .addGap(165, 165, 165)
                 .addComponent(jlTemporada)
@@ -330,52 +316,102 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 .addComponent(jbCrear)
                 .addGap(44, 44, 44))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jRadioButton3)))
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(144, 144, 144))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(37, 37, 37)
+                        .addComponent(jbGuardarPaquete)
+                        .addGap(71, 71, 71)
+                        .addComponent(jButton4)
+                        .addGap(57, 57, 57)
+                        .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addGap(48, 48, 48)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtDniTuri, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jtEdadTuri, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel12))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(302, 302, 302)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtNombreTuri, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbGuardarTuri)
+                                .addGap(34, 34, 34)
+                                .addComponent(jbLimpiarTuri)
+                                .addGap(37, 37, 37)
+                                .addComponent(jbActualizarTuri))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jLabel16)
                         .addGap(83, 83, 83)
-                        .addComponent(jRadioButton6)
+                        .addComponent(jrTraslado)
                         .addGap(71, 71, 71)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcPension, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(256, 256, 256)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(268, 268, 268)
+                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtCodigoPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbBuscarPaquete))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jcOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jdIda, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(112, 112, 112)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jcDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel6)
+                    .addComponent(jtCodigoPaquete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscarPaquete))
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel15))
@@ -391,7 +427,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jdIda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCrear)
                     .addComponent(jlTemporada))
@@ -402,60 +438,51 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtDniTuri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jtNombreTuri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5))
-                .addGap(18, 18, 18)
+                    .addComponent(jbGuardarTuri)
+                    .addComponent(jbLimpiarTuri)
+                    .addComponent(jLabel10)
+                    .addComponent(jtEdadTuri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbActualizarTuri))
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel12)
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton3)))
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton5))
+                        .addGap(76, 76, 76))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jRadioButton6)
+                    .addComponent(jrTraslado)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcPension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton6))
+                    .addComponent(jbGuardarPaquete)
+                    .addComponent(jbEliminar))
                 .addGap(53, 53, 53))
         );
 
@@ -466,33 +493,50 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jcOrigenActionPerformed
 
-    private void jtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreActionPerformed
+    private void jtNombreTuriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreTuriActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtNombreActionPerformed
+    }//GEN-LAST:event_jtNombreTuriActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+    private void jrTrasladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrTrasladoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    }//GEN-LAST:event_jrTrasladoActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void jbGuardarTuriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarTuriActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton6ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try{
+            Integer dni=Integer.parseInt(jtDniTuri.getText());
+            String nombre=jtNombreTuri.getText();
+            Integer edad = Integer.parseInt(jtEdadTuri.getText());
+          
+            if(nombre.isEmpty()){
+                JOptionPane.showMessageDialog(this, "No puede haber campos vacios");
+                return;
+            }
+            
+            if(turistaActual == null){
+                turistaActual = new Turista (dni,nombre, edad);
+                paqueteActual.agregarTurista(turistaActual);
+ 
+                JOptionPane.showMessageDialog(this,"Turista guardado");
+         
+            }else {
+                turistaActual.setDni(dni);
+                turistaActual.setNombre(nombre);
+                turistaActual.setEdad(edad);
+                
+                JOptionPane.showMessageDialog(this,"Turista actualizado");
+            }
+            DefaultComboBoxModel<Turista> model = new DefaultComboBoxModel<>(paqueteActual.getTuristas().toArray(new Turista[0]));
+            jcTuristas.setModel(model); 
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(this,"Ingrese números válidos");
+    }                                         
+    }//GEN-LAST:event_jbGuardarTuriActionPerformed
 
     private void jcDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcDestinoActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jcDestinoActionPerformed
-
-    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -501,19 +545,27 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
     private void jbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearActionPerformed
         // TODO add your handling code here:
         try{
-            Ciudad origen = (Ciudad) jcOrigen.getSelectedItem();
-            Ciudad destino = (Ciudad) jcDestino.getSelectedItem();
-            LocalDate fechaIda= jdIda.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate fechaVuelta= jdVuelta.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            
             if((jcOrigen.getSelectedItem() == null)|| (jcDestino.getSelectedItem() == null) || (jdIda.getDate()==null)|| (jdVuelta.getDate()==null)){
-                JOptionPane.showMessageDialog(null, "No puede haber campos vacíos.");
+                JOptionPane.showMessageDialog(null, "No puede haber campos vacíos. Seleccione.");
                 return;
             }
             
+            Ciudad origen = (Ciudad) jcOrigen.getSelectedItem();
+            Ciudad destino = (Ciudad) jcDestino.getSelectedItem();
+            
+            LocalDate fechaIda= jdIda.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fechaVuelta= jdVuelta.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            
             if (origen.getCodCiudad() == destino.getCodCiudad()){
-                    JOptionPane.showMessageDialog(this,"Las ciudades de origen y destino no pueden ser iguales.");
-                    return;
+                JOptionPane.showMessageDialog(this,"Las ciudades de origen y destino no pueden ser iguales.");
+                return;
+            }
+            
+            LocalDate hoy = LocalDate.now();
+            
+            if (fechaIda.isBefore(hoy) || fechaVuelta.isBefore(hoy) || fechaIda == fechaVuelta || fechaVuelta.isBefore(fechaIda)){
+                JOptionPane.showMessageDialog(this,"Error. Verifique las fechas ingresadas.");
+                return;
             }
             
             if(paqueteActual == null){
@@ -522,12 +574,170 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                paqueteActual.setDestino(destino);
                paqueteActual.setFechaInicio(fechaIda);
                paqueteActual.setFechaFin(fechaVuelta);  
-               jlTemporada.setText("Viaje en temporada: " + paqueteActual.getTemporada());
+               jlTemporada.setText("Viaje en temporada: " + paqueteActual.getTemporada()+ " - Duración: "+ paqueteActual.totalDias()+ " días");
+               
+               cargarPasajes();
+            }else{
+                paqueteActual.setOrigen(origen);
+                paqueteActual.setDestino(destino);
+                paqueteActual.setFechaInicio(fechaIda);
+                paqueteActual.setFechaFin(fechaVuelta);
+                jlTemporada.setText("Viaje en temporada: " + paqueteActual.getTemporada() + " - Duración: " + paqueteActual.totalDias() + " días");
+                JOptionPane.showMessageDialog(this, "Fechas y destinos actualizados.");
+                
+                cargarPasajes(); 
             }
         } catch (Exception e){
                 JOptionPane.showMessageDialog(this,"Error al crear el paquete.");     
         }       
     }//GEN-LAST:event_jbCrearActionPerformed
+
+    private void jtDniTuriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtDniTuriActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtDniTuriActionPerformed
+
+    private void jbLimpiarTuriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarTuriActionPerformed
+        // TODO add your handling code here:
+        jtDniTuri.setText("");
+        jtNombreTuri.setText("");
+        jtEdadTuri.setText("");
+        turistaActual=null;
+    }//GEN-LAST:event_jbLimpiarTuriActionPerformed
+
+    private void jbGuardarPaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarPaqueteActionPerformed
+        // TODO add your handling code here:
+        if (paqueteActual != null){
+            int filaAloj = tableAlojamiento.getSelectedRow();
+            if(filaAloj !=-1){
+                Ciudad citySeleccionada = (Ciudad)jcDestino.getSelectedItem();
+                alojamPorCiudad = (ArrayList) alojaData.mostrarAlojPorCiudad(citySeleccionada.getCodCiudad());
+
+                Alojamiento alojSelected = alojamPorCiudad.get(filaAloj);;
+                paqueteActual.setEstadia(alojSelected);
+            }else {
+                JOptionPane.showMessageDialog(this, "Selecciona un alojamiento.");
+            }
+        }
+        
+        int filaPasaje = tablePasaje.getSelectedRow();
+        if (filaPasaje  !=-1){
+            Ciudad origen = (Ciudad) jcOrigen.getSelectedItem();
+            Ciudad destino = (Ciudad) jcDestino.getSelectedItem();
+        
+            pasajesPaquete = (ArrayList) pasajeData.mostrarPasajes(origen, destino);
+            
+            Pasaje pasajeSelected = pasajesPaquete.get(filaPasaje);
+            paqueteActual.setBoleto(pasajeSelected);
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecciona un pasaje.");
+        }
+        
+        boolean traslado = jrTraslado.isSelected();
+        paqueteActual.setTraslado(traslado);
+        
+        Pension pensionSelected = (Pension) jcPension.getSelectedItem();
+        paqueteActual.setPension(pensionSelected);
+        
+        double montoFinal = paqueteActual.calcularMontoFinal();
+        paqueteActual.setMontoFinal(montoFinal);
+        paqueteActual.setEstado(true);
+
+        
+        
+        if(paqueteData.existePaquete(paqueteActual.getCodigoPaquete())){
+            paqueteData.modificarPaquete(paqueteActual);
+            JOptionPane.showMessageDialog(this, "Paquete modificado.");
+        } else{
+            paqueteData.guardarPaquete(paqueteActual);
+            JOptionPane.showMessageDialog(this, "Paquete guardado.");
+        } 
+        
+        for (Turista turista : paqueteActual.getTuristas()) {
+            turista.setCodigoPaquete(paqueteActual.getCodigoPaquete()); // Asegúrate de que el turista tenga el código del paquete
+            turiData.agregarTurista(turista); // Método para agregar turistas
+        }
+        
+        System.out.println(paqueteActual);
+    }//GEN-LAST:event_jbGuardarPaqueteActionPerformed
+
+    private void jbBuscarPaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarPaqueteActionPerformed
+        // TODO add your handling code here:
+        try{
+            if (jtCodigoPaquete.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un código.");
+                return;
+            }
+            
+            Integer codigoPaquete = Integer.parseInt(jtCodigoPaquete.getText());
+            paqueteActual = paqueteData.buscarPaquete(codigoPaquete);
+            
+            if(paqueteActual !=null){
+                Ciudad origen = paqueteActual.getOrigen();
+                for (int i = 0; i < jcOrigen.getItemCount(); i++) {
+                        Ciudad ciudad = (Ciudad) jcOrigen.getItemAt(i);
+                        if (ciudad.getCodCiudad() == origen.getCodCiudad()) {
+                            jcOrigen.setSelectedIndex(i);
+                            break;
+                        }
+                }
+                
+                Ciudad destino = paqueteActual.getDestino();
+                for (int i = 0; i < jcDestino.getItemCount(); i++) {
+                        Ciudad ciudad = (Ciudad) jcDestino.getItemAt(i);
+                        if (ciudad.getCodCiudad() == destino.getCodCiudad()) {
+                            jcDestino.setSelectedIndex(i);
+                            break;
+                        }
+                }
+                
+                LocalDate ida = paqueteActual.getFechaInicio();
+                java.util.Date fIda=java.util.Date.from(ida.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                jdIda.setDate(fIda);
+                
+                LocalDate vuelta = paqueteActual.getFechaFin();
+                java.util.Date fVuelta=java.util.Date.from(vuelta.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                jdVuelta.setDate(fVuelta);
+                
+                jlTemporada.setText("Viaje en temporada: " + paqueteActual.getTemporada()+ " - Duración: "+ paqueteActual.totalDias()+ " días");
+                
+                paqueteActual.setTuristas(paqueteData.mostrarTuristasPorPaquete(codigoPaquete));
+                    for (Turista turista : paqueteActual.getTuristas()){
+                        jcTuristas.addItem(turista); 
+                    }
+                    
+                cargarPasajes();
+                
+                jrTraslado.setSelected(paqueteActual.isEstado());
+                Pension pensionActual = paqueteActual.getPension();
+                for (int i = 0; i < jcPension.getItemCount(); i++) {
+                    Pension pension = (Pension) jcPension.getItemAt(i);
+                    if (pension.getCodAdicional() == pensionActual.getCodAdicional()) {
+                        jcPension.setSelectedIndex(i);
+                        break;
+                    }
+                }
+                
+            }
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Número no válido.");
+        }
+    }//GEN-LAST:event_jbBuscarPaqueteActionPerformed
+
+    private void jbActualizarTuriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarTuriActionPerformed
+        // TODO add your handling code here:
+        turistaActual = (Turista) jcTuristas.getSelectedItem();
+        Integer dni=Integer.parseInt(jtDniTuri.getText());
+        String nombre=jtNombreTuri.getText();
+        Integer edad = Integer.parseInt(jtEdadTuri.getText());
+        if(turistaActual !=null){
+            turistaActual.setDni(dni);
+            turistaActual.setNombre(nombre);
+            turistaActual.setEdad(edad);
+            JOptionPane.showMessageDialog(this,"Turista actualizado");
+        } else {
+            JOptionPane.showMessageDialog(this,"No se pudo actualizar.");
+        }        
+    }//GEN-LAST:event_jbActualizarTuriActionPerformed
     
     private void cargarOrigen(){
         jcOrigen.removeAllItems();
@@ -545,6 +755,77 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         }  
     }
     
+    public void cargarPension(){
+        jcPension.removeAllItems();
+        jcPension.addItem(new Pension (0, "Seleccione"));
+        for (Pension p: pensiones){
+            jcPension.addItem(p);
+        }
+    }
+    
+    private void actualizarCBTuristas() {
+        jcTuristas.removeAllItems();
+        for (Turista turista : paqueteActual.getTuristas()){
+            jcTuristas.addItem(turista); 
+        }
+    }
+    
+    private void armarTablaAlojam(){
+        modeloAlojam.addColumn("Nombre");
+        modeloAlojam.addColumn("Tipo");
+        modeloAlojam.addColumn("Capacidad");
+        modeloAlojam.addColumn("Precio por noche");
+        
+        tableAlojamiento.setModel(modeloAlojam);
+    }
+    
+    private void armarTablaPasaje(){
+        modeloPasaje.addColumn("Medio de transporte");
+        modeloPasaje.addColumn("Precio por persona");
+        
+        tablePasaje.setModel(modeloPasaje);
+    }
+    
+    public void cargarAlojamPorDestino(){
+        modeloAlojam.setRowCount(0);
+        Ciudad citySeleccionada = (Ciudad)jcDestino.getSelectedItem();
+
+        alojamPorCiudad = (ArrayList) alojaData.mostrarAlojPorCiudad(citySeleccionada.getCodCiudad());
+        
+        if (alojamPorCiudad == null || alojamPorCiudad.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay alojamientos en el destino seleccionado.");
+            return;
+        }
+
+        for (Alojamiento aloja : alojamPorCiudad) {
+            modeloAlojam.addRow(new Object[] {
+                aloja.getNombre(),
+                aloja.getTipoAlojam(),
+                aloja.getCapacidad(),
+                aloja.getPrecioNoche() });
+        }
+        
+    }
+    
+    public void cargarPasajes(){
+        modeloPasaje.setRowCount(0);
+        Ciudad origen = (Ciudad) jcOrigen.getSelectedItem();
+        Ciudad destino = (Ciudad) jcDestino.getSelectedItem();
+        
+        ArrayList <Pasaje> pasajesPaquete = (ArrayList) pasajeData.mostrarPasajes(origen, destino);
+        
+        if (pasajesPaquete == null || pasajesPaquete.isEmpty()){
+            JOptionPane.showMessageDialog(null, "No hay pasajes para el viaje seleccionado.");
+            return;
+        }
+        
+        for (Pasaje pasaje:pasajesPaquete){
+            modeloPasaje.addRow(new Object[] {
+                pasaje.getTipoViaje(),
+                pasaje.getPrecioPasaje()});
+        }
+    }
+    
 //    private void limpiarCampos(){
 //        jtCodigo.setText("");
 //        jcOrigen.setSelectedItem(0);
@@ -555,13 +836,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<Turista> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -573,15 +848,10 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
@@ -590,16 +860,26 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JButton jbActualizarTuri;
+    private javax.swing.JButton jbBuscarPaquete;
     private javax.swing.JButton jbCrear;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbGuardarPaquete;
+    private javax.swing.JButton jbGuardarTuri;
+    private javax.swing.JButton jbLimpiarTuri;
     private javax.swing.JComboBox<Ciudad> jcDestino;
     private javax.swing.JComboBox<Ciudad> jcOrigen;
+    private javax.swing.JComboBox<Pension> jcPension;
+    private javax.swing.JComboBox<Turista> jcTuristas;
     private com.toedter.calendar.JDateChooser jdIda;
     private com.toedter.calendar.JDateChooser jdVuelta;
     private javax.swing.JLabel jlTemporada;
-    private javax.swing.JTextField jtDNI;
-    private javax.swing.JTextField jtEdad;
-    private javax.swing.JTextField jtNombre;
+    private javax.swing.JRadioButton jrTraslado;
+    private javax.swing.JTextField jtCodigoPaquete;
+    private javax.swing.JTextField jtDniTuri;
+    private javax.swing.JTextField jtEdadTuri;
+    private javax.swing.JTextField jtNombreTuri;
+    private javax.swing.JTable tableAlojamiento;
+    private javax.swing.JTable tablePasaje;
     // End of variables declaration//GEN-END:variables
 }

@@ -68,20 +68,25 @@ public class PasajeData{
        }
     }
     
-    public ArrayList<Pasaje> mostrarPasajes() {
-        String query = "SELECT * FROM pasaje WHERE estado=1"; 
+    public ArrayList<Pasaje> mostrarPasajes(Ciudad origen, Ciudad destino) {
+        String query = "SELECT * FROM pasaje WHERE origen=? AND destino =?"; 
         ArrayList<Pasaje> pasajes = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, origen.getCodCiudad());
+            ps.setInt(2, destino.getCodCiudad());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pasaje pasaje = new Pasaje();
                 pasaje.setCodPasaje(rs.getInt("codPasaje"));
+                pasaje.setOrigen(origen);
+                pasaje.setDestino(destino);
                 pasaje.setPrecioPasaje(rs.getDouble("precioPasaje"));
                 pasaje.setTipoViaje(rs.getString("tipoViaje"));
                 pasajes.add(pasaje);
             }
+            ps.close();
             rs.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Pasaje.");
@@ -158,29 +163,4 @@ public class PasajeData{
         }
         return pasajes;
     }
-
-    public void calcularPrecioPasaje(int codPasaje, List<Turista> turistas) {
-        String query = "UPDATE pasaje SET precioPasaje=? WHERE codPasaje=?";
-        double precioPasaje = 0;
-
-        try {
-            PreparedStatement ps = con.prepareStatement("SELECT precioPasaje FROM pasaje WHERE codPasaje=?");
-            ps.setInt(1, codPasaje);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                precioPasaje = rs.getDouble("precioPasaje");
-            }
-
-            double nuevoPrecio = precioPasaje * turistas.size();
-
-            PreparedStatement psUpdate = con.prepareStatement(query);
-            psUpdate.setDouble(1, nuevoPrecio);
-            psUpdate.setInt(2, codPasaje);
-            psUpdate.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "El precio del pasaje se actualizó con éxito.");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar el precio del pasaje.");
-        }
-    }
-}
+} //cierre clase PaqueteData

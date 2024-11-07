@@ -128,58 +128,32 @@ public class AlojamientoData{
         }
     }
 
-    public ArrayList<Ciudad> mostrarCiudades(int codCiudad) {
-        String query = "SELECT * FROM ciudad WHERE codCiudad=?";
-        ArrayList <Ciudad> ciudades = new ArrayList<>();
+    public ArrayList<Alojamiento> mostrarAlojPorCiudad (int codCiudad) {
+        String query = "SELECT * FROM alojamiento WHERE codCiudad=?";
+        ArrayList <Alojamiento> alojaPorCiudad = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, codCiudad);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                Alojamiento alojamiento = new Alojamiento();
+                alojamiento.setCodAlojam(rs.getInt("codAlojam"));
+                alojamiento.setNombre(rs.getString("nombre"));
+                
                 Ciudad ciudad = new Ciudad();
                 ciudad.setCodCiudad(rs.getInt("codCiudad"));
-                ciudad.setNombre(rs.getString("nombre"));
-                ciudades.add(ciudad);
+                alojamiento.setCiudad(ciudad);
+       
+                alojamiento.setTipoAlojam(rs.getString("tipoAlojam"));
+                alojamiento.setCapacidad(rs.getInt("capacidad"));
+                alojamiento.setPrecioNoche(rs.getDouble("precioNoche"));
+                
+                alojaPorCiudad.add(alojamiento);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");
         }
-        return ciudades;
+        return alojaPorCiudad;
     }
-
-    public double calcularPrecio(int numNoches, int codAlojamiento) {
-        double total = 0;
-        String query = "SELECT precioNoche FROM alojamiento WHERE codAlojam=?";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, codAlojamiento);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                double precioNoche = rs.getDouble("precioNoche");
-                total = precioNoche * numNoches;
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo calcular el precio.");
-        }
-        return total;
-    }
-    
-    //hay que continuarlo
-    public ArrayList <Alojamiento> mostrarAlojamPorTipo (String tipo){
-        String query = "SELECT * FROM alojamiento WHERE tipoAlojam=?";
-        ArrayList <Alojamiento> alojPorTipo = new ArrayList <>();
-        
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AlojamientoData.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return alojPorTipo;
-    }
-}
-
-
+}//cierre clase AlojamientoData
