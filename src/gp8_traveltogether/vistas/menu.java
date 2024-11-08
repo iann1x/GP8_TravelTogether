@@ -194,11 +194,11 @@ public class menu extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        escritorio.removeAll();
-        escritorio.repaint();
-        vistaPaquete1 vp1 = new vistaPaquete1();
-        vp1.setVisible(true);
-        escritorio.add(vp1);
+//        escritorio.removeAll();
+//        escritorio.repaint();
+//        vistaPresupuesto vp1 = new vistaPresupuesto(paqueteActual);
+//        vp1.setVisible(true);
+//        escritorio.add(vp1);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
@@ -250,7 +250,7 @@ public class menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane escritorio;
+    public static javax.swing.JDesktopPane escritorio;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

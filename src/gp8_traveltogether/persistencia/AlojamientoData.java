@@ -38,7 +38,7 @@ public class AlojamientoData{
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 alojamiento.setCodAlojam(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "El alojamiento se agregó con éxito.");
+                //JOptionPane.showMessageDialog(null, "El alojamiento se agregó con éxito.");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Alojamiento.");

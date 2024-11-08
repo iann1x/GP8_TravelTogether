@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class TuristaData{
@@ -89,7 +91,24 @@ public class TuristaData{
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
         }
     }
-
+    
+    public boolean existeTuristaEnPaquete(int dni, int codigoPaquete) {
+        String query = "SELECT (*) FROM turista WHERE dni=? AND codigoPaquete=?";
+        
+         try {
+             PreparedStatement ps = con.prepareStatement(query);
+             ps.setInt(1, dni);
+             ps.setInt(2, codigoPaquete);
+             ResultSet rs = ps.executeQuery();
+             if (rs.next()){
+                 return rs.getInt(1)>0;
+             }  
+         } catch (SQLException ex) {
+             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
+         }
+        return false; 
+    }
+    
     public void altaLogicaTurista(int dni) {
         String query = "UPDATE turista SET estado=1 WHERE dni=?";
 

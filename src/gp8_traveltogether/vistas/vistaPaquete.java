@@ -139,6 +139,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jtCodigoPaquete = new javax.swing.JTextField();
         jbEliminar = new javax.swing.JButton();
         jbBuscarPaquete = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Paquete");
@@ -297,6 +298,13 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -399,7 +407,10 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel15)
                                     .addComponent(jcDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(265, 265, 265)
+                        .addComponent(jButton1)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -452,7 +463,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,7 +494,9 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                     .addComponent(jButton4)
                     .addComponent(jbGuardarPaquete)
                     .addComponent(jbEliminar))
-                .addGap(53, 53, 53))
+                .addGap(15, 15, 15)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         pack();
@@ -540,6 +553,10 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        vistaPresupuesto vPresu = new vistaPresupuesto(paqueteActual);
+        menu.escritorio.add(vPresu);
+        vPresu.toFront();
+        vPresu.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearActionPerformed
@@ -645,16 +662,24 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         
         
         if(paqueteData.existePaquete(paqueteActual.getCodigoPaquete())){
-            paqueteData.modificarPaquete(paqueteActual);
-            JOptionPane.showMessageDialog(this, "Paquete modificado.");
-        } else{
+            int rta = JOptionPane.showConfirmDialog(this, "Modificar el paquete implica un recargo del 10% por pasajero. Confirma?", "Confirmar modificación y recargo",JOptionPane.OK_CANCEL_OPTION);
+            if (rta ==0){
+                paqueteData.modificarPaquete(paqueteActual);
+                JOptionPane.showMessageDialog(this, "Paquete modificado.");
+            }else{
+                JOptionPane.showMessageDialog(this, "Modificación cancelada.");
+                dispose();
+            }
+        }else{
             paqueteData.guardarPaquete(paqueteActual);
             JOptionPane.showMessageDialog(this, "Paquete guardado.");
         } 
         
         for (Turista turista : paqueteActual.getTuristas()) {
-            turista.setCodigoPaquete(paqueteActual.getCodigoPaquete()); // Asegúrate de que el turista tenga el código del paquete
-            turiData.agregarTurista(turista); // Método para agregar turistas
+            if (!turiData.existeTuristaEnPaquete(turista.getDni(), paqueteActual.getCodigoPaquete())) {
+                turista.setCodigoPaquete(paqueteActual.getCodigoPaquete()); 
+                turiData.agregarTurista(turista);
+            }
         }
         
         System.out.println(paqueteActual);
@@ -738,6 +763,11 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"No se pudo actualizar.");
         }        
     }//GEN-LAST:event_jbActualizarTuriActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     private void cargarOrigen(){
         jcOrigen.removeAllItems();
@@ -836,6 +866,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

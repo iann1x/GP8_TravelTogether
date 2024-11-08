@@ -202,7 +202,6 @@ public class Paquete {
                 }
             }
         }
-    //this.montoFinal = costoFinal;
     return costoFinal;   
     }
         
