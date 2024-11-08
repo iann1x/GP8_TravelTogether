@@ -76,6 +76,7 @@ public class PaqueteData{
     public Paquete buscarPaquete(int codigoPaquete) {
         String query = "SELECT origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal, estado FROM paquete WHERE codigoPaquete=?";
         Paquete paquete = null;
+        String queryTuristas = "SELECT dni, nombre, edad, estado FROM turista WHERE codigoPaquete=?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -105,13 +106,31 @@ public class PaqueteData{
                 Pension pension = pensionData.buscarPensionPorCod(rs.getInt("codAdicional"));
                 paquete.setPension(pension);
                 
+                paquete.setTraslado(rs.getBoolean("traslado"));
+                
                 paquete.setMontoFinal(rs.getDouble("montoFinal"));
                 paquete.setEstado(rs.getBoolean("estado"));
+                
+                PreparedStatement psTuristas = con.prepareStatement(queryTuristas);
+                psTuristas.setInt(1, codigoPaquete);
+                ResultSet rsTuristas = psTuristas.executeQuery();
+                ArrayList<Turista> turistas = new ArrayList<>();
+                
+                while (rsTuristas.next()) {
+                    Turista turista = new Turista();
+                    turista.setDni(rsTuristas.getInt("dni"));
+                    turista.setNombre(rsTuristas.getString("nombre"));
+                    turista.setEdad(rsTuristas.getInt("edad"));
+                    turista.setEstado(rsTuristas.getBoolean("estado"));
+                    turistas.add(turista);
+                }
+                paquete.setTuristas(turistas);    
+            
             } else{
                 JOptionPane.showMessageDialog(null, "No existe un paquete con ese código.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete.");
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete. Error: "+ex.getMessage());
         }
         return paquete;
     }
@@ -197,6 +216,7 @@ public class PaqueteData{
                 Turista turista = new Turista();
                 turista.setDni(rs.getInt("dni"));
                 turista.setNombre(rs.getString("nombre"));
+                turista.setEdad(rs.getInt("edad"));
                 turista.setCodigoPaquete(codigoPaquete);
                 
                 turistasPaquete.add(turista);

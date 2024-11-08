@@ -6,18 +6,22 @@ import gp8_traveltogether.entidades.Turista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
+import javax.swing.table.DefaultTableModel;
 
 
 public class vistaPresupuesto extends javax.swing.JInternalFrame {
 
     private Paquete paquete;
+    private DefaultTableModel detallePresupuesto = new DefaultTableModel();
     
     public vistaPresupuesto(Paquete paquete) {
         this.paquete = paquete;
         initComponents();
+        armarTablaPresupuesto();
         mostrarPresupuesto();
         
-        
+        System.out.println(paquete);
+        System.out.println(paquete.getTuristas());
     }
 
     /**
@@ -39,7 +43,8 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         jlPrecioAdulto = new javax.swing.JLabel();
         jlPrecioMenor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaPresupuesto = new javax.swing.JTable();
+        jlTotal = new javax.swing.JLabel();
 
         jlTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlTitulo.setText("Presupuesto paquete:");
@@ -51,21 +56,28 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
             }
         });
 
+        jlIdaVuelta.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlIdaVuelta.setText("Paquete:");
 
+        jlFechas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlFechas.setText("Fechas:");
 
+        jlGrupo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlGrupo.setText("Grupo: personas");
 
+        jlAdultos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlAdultos.setText("Adultos:");
 
+        jlMenores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlMenores.setText("Menores:");
 
+        jlPrecioAdulto.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlPrecioAdulto.setText("Precio adulto:");
 
+        jlPrecioMenor.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlPrecioMenor.setText("Precio menor:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPresupuesto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -76,7 +88,10 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaPresupuesto);
+
+        jlTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlTotal.setText("Total: $");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,42 +99,41 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlTotal)
+                .addGap(251, 251, 251)
                 .addComponent(jbSiguiente)
                 .addGap(46, 46, 46))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlGrupo)
+                            .addComponent(jlPrecioAdulto)
+                            .addComponent(jlIdaVuelta))
+                        .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlGrupo)
-                                .addGap(86, 86, 86)
-                                .addComponent(jlAdultos)
-                                .addGap(107, 107, 107)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlFechas)
+                                    .addComponent(jlAdultos))
+                                .addGap(62, 62, 62)
                                 .addComponent(jlMenores))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlIdaVuelta)
-                                .addGap(234, 234, 234)
-                                .addComponent(jlFechas))))
+                            .addComponent(jlPrecioMenor)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jlPrecioAdulto)
-                        .addGap(139, 139, 139)
-                        .addComponent(jlPrecioMenor))
+                        .addGap(123, 123, 123)
+                        .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(85, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(29, 29, 29)
                 .addComponent(jlTitulo)
-                .addGap(22, 22, 22)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlIdaVuelta)
                     .addComponent(jlFechas))
@@ -132,10 +146,12 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlPrecioAdulto)
                     .addComponent(jlPrecioMenor))
-                .addGap(40, 40, 40)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addComponent(jbSiguiente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbSiguiente)
+                    .addComponent(jlTotal))
                 .addGap(26, 26, 26))
         );
 
@@ -165,15 +181,73 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         
         jlAdultos.setText("Adultos: "+adultos);
         jlMenores.setText("Menores: "+menores);
-        jlPrecioAdulto.setText("Precio adulto: "+paquete.costoAdulto()+ " pesos");
-        jlPrecioMenor.setText("Precio menor: "+paquete.costoMenor()+ " pesos");
+        
+//        double precioMenores = 0.0;
+//        double precioAdultos = 0.0;
+//        for (Turista turi:paquete.getTuristas()){
+//            if (turi.getEdad()<10){
+//                precioMenores = paquete.costoMenor();
+//            }else{
+//                precioAdultos = paquete.costoAdulto();
+//            }
+//        }
+//        jlPrecioAdulto.setText("Precio adulto: "+precioMenores+ " pesos");
+//        jlPrecioMenor.setText("Precio menor: "+precioAdultos+ " pesos");
+        llenarTablaPresupuesto();
+        
+        jlTotal.setText("Total $: "+ paquete.getMontoFinal());
         
         
     }
+    
+    public void llenarTablaPresupuesto(){
+        detallePresupuesto.setRowCount(0);
+        
+        if (paquete.getTuristas() != null) {
+        for (Turista turista : paquete.getTuristas()) {
+            System.out.println(turista.getEdad());
+            boolean esMenor = turista.getEdad() < 10;
+            
+            System.out.println(esMenor);
+            
+            double alojamiento = paquete.getCostoAlojamiento(esMenor);
+            double pasaje = paquete.getCostoPasaje(esMenor);
+            double pension = paquete.getCostoPension(esMenor);
+            double traslado = paquete.getCostoTraslado(esMenor, alojamiento + pension + pasaje);
+            double costoTotal = alojamiento + pension + pasaje + traslado;
+            double temporada = paquete.getRecargoTemporada(costoTotal);
+
+            
+            Object[] fila = {
+                turista.getNombre(),                // Nombre del turista
+                alojamiento,                         // Costo de alojamiento
+                pasaje,                             // Costo de pensión
+                pension,                              // Costo de pasaje
+                traslado,                            // Costo de traslado
+                temporada,
+                costoTotal                           // Costo total (alojamiento + pensión + pasaje + traslado)
+            };
+
+            
+            detallePresupuesto.addRow(fila);
+        }
+    }
+}
+    
    
+    public void armarTablaPresupuesto(){
+        detallePresupuesto.addColumn("Nombre");
+        detallePresupuesto.addColumn("Alojamiento");
+        detallePresupuesto.addColumn("Pasaje");
+        detallePresupuesto.addColumn("Pension");
+        detallePresupuesto.addColumn("Traslados");
+        detallePresupuesto.addColumn("Plus temporada");
+        detallePresupuesto.addColumn("Total");
+        
+        tablaPresupuesto.setModel(detallePresupuesto);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbSiguiente;
     private javax.swing.JLabel jlAdultos;
     private javax.swing.JLabel jlFechas;
@@ -183,5 +257,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jlPrecioAdulto;
     private javax.swing.JLabel jlPrecioMenor;
     private javax.swing.JLabel jlTitulo;
+    private javax.swing.JLabel jlTotal;
+    private javax.swing.JTable tablaPresupuesto;
     // End of variables declaration//GEN-END:variables
 }

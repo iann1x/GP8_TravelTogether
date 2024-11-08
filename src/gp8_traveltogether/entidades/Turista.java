@@ -69,7 +69,7 @@ public class Turista {
 
     @Override
     public String toString() {
-        return nombre;
+        return nombre+edad;
     }
     
     

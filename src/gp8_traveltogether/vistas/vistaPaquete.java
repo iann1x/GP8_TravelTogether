@@ -140,6 +140,8 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jbEliminar = new javax.swing.JButton();
         jbBuscarPaquete = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jbMostrarTuri = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Paquete");
@@ -305,6 +307,20 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jbMostrarTuri.setText("Mostrar");
+        jbMostrarTuri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbMostrarTuriActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -358,23 +374,14 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jLabel12))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(302, 302, 302)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtNombreTuri, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbGuardarTuri)
-                                .addGap(34, 34, 34)
-                                .addComponent(jbLimpiarTuri)
-                                .addGap(37, 37, 37)
-                                .addComponent(jbActualizarTuri))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
+                        .addGap(44, 44, 44)
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45)
+                        .addComponent(jbMostrarTuri)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jLabel16)
@@ -410,8 +417,20 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                                     .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(265, 265, 265)
-                        .addComponent(jButton1)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(286, 286, 286)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbGuardarTuri)
+                            .addComponent(jLabel9))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtNombreTuri, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbLimpiarTuri)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbActualizarTuri)))))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,16 +473,18 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                     .addComponent(jtNombreTuri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbGuardarTuri)
                     .addComponent(jbLimpiarTuri)
                     .addComponent(jLabel10)
                     .addComponent(jtEdadTuri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbActualizarTuri))
-                .addGap(39, 39, 39)
+                    .addComponent(jbActualizarTuri)
+                    .addComponent(jbGuardarTuri))
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                    .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2)
+                    .addComponent(jbMostrarTuri))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -530,7 +551,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 turistaActual = new Turista (dni,nombre, edad);
                 paqueteActual.agregarTurista(turistaActual);
  
-                JOptionPane.showMessageDialog(this,"Turista guardado");
+                JOptionPane.showMessageDialog(this,"El turista se agregó al paquete.");
          
             }else {
                 turistaActual.setDni(dni);
@@ -539,6 +560,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 
                 JOptionPane.showMessageDialog(this,"Turista actualizado");
             }
+            
             DefaultComboBoxModel<Turista> model = new DefaultComboBoxModel<>(paqueteActual.getTuristas().toArray(new Turista[0]));
             jcTuristas.setModel(model); 
         }catch(NumberFormatException nfe){
@@ -633,6 +655,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 paqueteActual.setEstadia(alojSelected);
             }else {
                 JOptionPane.showMessageDialog(this, "Selecciona un alojamiento.");
+                return;
             }
         }
         
@@ -647,6 +670,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             paqueteActual.setBoleto(pasajeSelected);
         }else{
             JOptionPane.showMessageDialog(this, "Selecciona un pasaje.");
+            return;
         }
         
         boolean traslado = jrTraslado.isSelected();
@@ -664,6 +688,18 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         if(paqueteData.existePaquete(paqueteActual.getCodigoPaquete())){
             int rta = JOptionPane.showConfirmDialog(this, "Modificar el paquete implica un recargo del 10% por pasajero. Confirma?", "Confirmar modificación y recargo",JOptionPane.OK_CANCEL_OPTION);
             if (rta ==0){
+                double montoFinalRecargo = 0.0;
+        
+        
+                for (Turista turista : paqueteActual.getTuristas()) {
+                    if (turista.getEdad() < 10) {
+                        montoFinalRecargo += paqueteActual.calcularMontoFinal() * 1.1; 
+                    } else {
+                        montoFinalRecargo += paqueteActual.calcularMontoFinal() * 1.1; 
+                    }
+                }
+        
+                paqueteActual.setMontoFinal(montoFinalRecargo);
                 paqueteData.modificarPaquete(paqueteActual);
                 JOptionPane.showMessageDialog(this, "Paquete modificado.");
             }else{
@@ -740,8 +776,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                         jcPension.setSelectedIndex(i);
                         break;
                     }
-                }
-                
+                } 
             }
         } catch (NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Número no válido.");
@@ -768,6 +803,30 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        Turista turiEliminar = (Turista) jcTuristas.getSelectedItem();
+        
+        if (turiEliminar !=null){
+            paqueteActual.eliminarTurista(turiEliminar);
+            jcTuristas.removeItem(turiEliminar);
+            
+        } else{
+            JOptionPane.showMessageDialog(this,"Selecciona el turista a eliminar.");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jbMostrarTuriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMostrarTuriActionPerformed
+        // TODO add your handling code here:
+        Turista turiMostrar = (Turista) jcTuristas.getSelectedItem();
+        if(turiMostrar != null){
+            jtDniTuri.setText(String.valueOf(turiMostrar.getDni()));
+            jtNombreTuri.setText(turiMostrar.getNombre());
+            jtEdadTuri.setText(String.valueOf(turiMostrar.getEdad()));
+        }
+        
+    }//GEN-LAST:event_jbMostrarTuriActionPerformed
     
     private void cargarOrigen(){
         jcOrigen.removeAllItems();
@@ -867,6 +926,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -898,6 +958,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbGuardarPaquete;
     private javax.swing.JButton jbGuardarTuri;
     private javax.swing.JButton jbLimpiarTuri;
+    private javax.swing.JButton jbMostrarTuri;
     private javax.swing.JComboBox<Ciudad> jcDestino;
     private javax.swing.JComboBox<Ciudad> jcOrigen;
     private javax.swing.JComboBox<Pension> jcPension;

@@ -4,6 +4,8 @@
  */
 package gp8_traveltogether.entidades;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
@@ -190,10 +192,25 @@ public class Paquete {
         return ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
     
-    public double calcularMontoFinal(){
+//    public double calcularMontoFinal(){
+//        double costoFinal = 0.0;
+//        
+//        if (turistas !=null){
+//            for (Turista turista : turistas) {
+//                if (turista.getEdad() < 10) {
+//                    costoFinal += costoMenor();
+//                } else {
+//                    costoFinal += costoAdulto();
+//                }
+//            }
+//        }
+//    return costoFinal;   
+//    }
+    
+    public double calcularMontoFinal() {
         double costoFinal = 0.0;
-        
-        if (turistas !=null){
+
+        if (turistas != null) {
             for (Turista turista : turistas) {
                 if (turista.getEdad() < 10) {
                     costoFinal += costoMenor();
@@ -202,9 +219,15 @@ public class Paquete {
                 }
             }
         }
-    return costoFinal;   
+
+    
+    if ("alta".equals(temporada)) {
+        costoFinal *= 1.30; 
+    } else if ("media".equals(temporada)) {
+        costoFinal *= 1.15; 
     }
-        
+    return costoFinal;   
+}
 
     public double costoAdulto(){
         double precioBaseAdulto = 0.0;
@@ -239,7 +262,11 @@ public class Paquete {
         } else if ("media".equals(temporada)) {
             precioBaseAdulto *= 1.15;
         }
-    return precioBaseAdulto;    
+        
+        BigDecimal adultoRedondeado = new BigDecimal(precioBaseAdulto);
+        adultoRedondeado = adultoRedondeado.setScale(2, RoundingMode.HALF_UP); 
+        return adultoRedondeado.doubleValue();  
+        
     }
     
     public double costoMenor(){
@@ -275,14 +302,82 @@ public class Paquete {
         } else if ("media".equals(temporada)) {
             precioBaseMenor *= 1.15;
         }
-    return precioBaseMenor;    
+        
+        BigDecimal menorRedondeado = new BigDecimal(precioBaseMenor);
+        menorRedondeado = menorRedondeado.setScale(2, RoundingMode.HALF_UP); 
+        return menorRedondeado.doubleValue();  
     }
+    
+    public double getCostoAlojamiento(boolean menor){
+        double costoAlojamiento = 0.0;
+        
+        if (estadia != null) {
+            costoAlojamiento = estadia.getPrecioNoche() * totalDias();
+        }
+        return costoAlojamiento;
+    }
+    
+    public double getCostoPension(boolean menor){
+        double costoPension = 0.0;
+        
+        if (pension != null && estadia != null) {
+            double porcentajePension = pension.getPorcentaje();
+            costoPension = estadia.getPrecioNoche() * totalDias() * (porcentajePension / 100);
+            if (menor) {
+                costoPension *= 0.5;
+            }
+        }
+        return costoPension;
+    }
+    
+    public double getCostoPasaje(boolean menor) {
+        double costoPasaje = 0.0;
+        if (boleto != null) {
+            costoPasaje = boleto.getPrecioPasaje();
+            if (menor) {
+                costoPasaje *= 0.5; 
+            }
+        }
+        return costoPasaje;
+    }
+    
+    public double getCostoTraslado(boolean menor, double precioBase) {
+        double costoTraslado = 0.0;
+        if (traslado) {
+            costoTraslado = precioBase * 0.01;
+            if (menor) {
+            costoTraslado *= 0.5; 
+            }
+        }
+        return (costoTraslado);
+    }
+    
+    public double getRecargoTemporada(double costoBase) {
+        double recargo = 0.0;
+
+        if ("alta".equals(temporada)) {
+            recargo = costoBase * 0.30;  
+        } else if ("media".equals(temporada)) {
+            recargo = costoBase * 0.15;  
+        } else if ("baja".equals(temporada)) {
+            recargo = 0.0; 
+        }
+    return recargo;
+    }
+    
     
     public void agregarTurista(Turista turista){
         if (turistas == null) {
             turistas = new ArrayList<>();
         }
         turistas.add(turista);
+    }
+    
+    public void eliminarTurista(Turista turista){
+        if (turistas == null) {
+            turistas = new ArrayList<>();
+        }
+        turistas.remove(turista);
     }
 
     @Override

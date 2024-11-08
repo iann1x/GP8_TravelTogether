@@ -93,7 +93,7 @@ public class TuristaData{
     }
     
     public boolean existeTuristaEnPaquete(int dni, int codigoPaquete) {
-        String query = "SELECT (*) FROM turista WHERE dni=? AND codigoPaquete=?";
+        String query = "SELECT * FROM turista WHERE dni=? AND codigoPaquete=?";
         
          try {
              PreparedStatement ps = con.prepareStatement(query);
@@ -101,7 +101,7 @@ public class TuristaData{
              ps.setInt(2, codigoPaquete);
              ResultSet rs = ps.executeQuery();
              if (rs.next()){
-                 return rs.getInt(1)>0;
+                 return true;
              }  
          } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
