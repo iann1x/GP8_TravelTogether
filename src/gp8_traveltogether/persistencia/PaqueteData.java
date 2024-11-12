@@ -74,7 +74,7 @@ public class PaqueteData{
     }
 
     public Paquete buscarPaquete(int codigoPaquete) {
-        String query = "SELECT origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal, estado FROM paquete WHERE codigoPaquete=?";
+        String query = "SELECT origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal, estado FROM paquete WHERE codigoPaquete=? AND estado=1";
         Paquete paquete = null;
         String queryTuristas = "SELECT dni, nombre, edad, estado FROM turista WHERE codigoPaquete=?";
         

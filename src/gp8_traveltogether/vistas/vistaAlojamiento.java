@@ -268,6 +268,8 @@ public class vistaAlojamiento extends javax.swing.JInternalFrame {
             alojData.bajaLogicaAlojam(alojActual.getCodAlojam());
             alojActual = null;
             limpiarCampos();
+        } else{
+            JOptionPane.showMessageDialog(this, "Restan menos de 30 días para el viaje. El paquete no se puede cancelar.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

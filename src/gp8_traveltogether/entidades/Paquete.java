@@ -1,11 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package gp8_traveltogether.entidades;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
@@ -168,16 +162,15 @@ public class Paquete {
     }
     
     public String calcularTemporada(LocalDate ida){
-        LocalDate inicioTAlta = LocalDate.of(2024, 12, 15);
-        LocalDate finTAlta = LocalDate.of(2025, 2, 28);
-        LocalDate inicioTMedia = LocalDate.of(2024,9,1);
-        LocalDate finTMedia = LocalDate.of(2024, 12, 14);
         
-        if (!ida.isBefore(inicioTAlta) && !ida.isAfter(finTAlta)) {
+        int mes = ida.getMonthValue();
+        int dia = ida.getDayOfMonth();
+        
+        if (dia > 15 && mes == 12 || mes == 1 || mes == 2 || mes ==7){
             return "alta";
-        } else if (!ida.isBefore(inicioTMedia) && (!ida.isAfter(finTMedia)) || semanaSanta2025(ida)) {
+        } else if (mes ==9|| mes ==10 || mes == 11 || semanaSanta2025(ida)){
             return "media";
-        } else {
+        } else{
             return "baja";
         }
     }
@@ -192,120 +185,42 @@ public class Paquete {
         return ChronoUnit.DAYS.between(fechaInicio, fechaFin);
     }
     
-//    public double calcularMontoFinal(){
-//        double costoFinal = 0.0;
-//        
-//        if (turistas !=null){
-//            for (Turista turista : turistas) {
-//                if (turista.getEdad() < 10) {
-//                    costoFinal += costoMenor();
-//                } else {
-//                    costoFinal += costoAdulto();
-//                }
-//            }
-//        }
-//    return costoFinal;   
-//    }
-    
     public double calcularMontoFinal() {
         double costoFinal = 0.0;
 
         if (turistas != null) {
             for (Turista turista : turistas) {
-                if (turista.getEdad() < 10) {
-                    costoFinal += costoMenor();
-                } else {
-                    costoFinal += costoAdulto();
-                }
+                boolean menor = turista.getEdad() <10;
+                double precioBase = getCostoAlojamiento(menor) + getCostoPension(menor) + getCostoPasaje(menor);
+                costoFinal += precioBase + getCostoTraslado(menor, precioBase);
+ 
+                } 
             }
-        }
 
-    
-    if ("alta".equals(temporada)) {
-        costoFinal *= 1.30; 
-    } else if ("media".equals(temporada)) {
-        costoFinal *= 1.15; 
+        costoFinal+= getRecargoTemporada(costoFinal);
+        return Math.round(costoFinal*100)/100;   
     }
-    return costoFinal;   
-}
+    
+    public double calcularMontoFinalConRecargo() {
+        double montoTotal = calcularMontoFinal();
+    
+        double recargoPorPasajero = montoTotal * 0.1;
+        montoTotal += recargoPorPasajero;
+    
+        return Math.round(montoTotal*100)/100;
+    }
 
     public double costoAdulto(){
-        double precioBaseAdulto = 0.0;
-        double costoAlojamientoAdulto = 0.0;
-        if(estadia!=null){
-            costoAlojamientoAdulto = estadia.getPrecioNoche()*totalDias();
-        }
+        double precioBaseAdulto = getCostoAlojamiento(false)+getCostoPasaje(false)+getCostoPension(false);
+        double costoTraslado = getCostoTraslado(false, precioBaseAdulto);
         
-        double costoPensionAdulto = 0.0;
-        if (pension != null) {
-            double porcentajePension = pension.getPorcentaje();
-            costoPensionAdulto = costoAlojamientoAdulto * (porcentajePension / 100);
-        }
-        
-        double costoPasajeAdulto = 0.0;
-        if (boleto !=null){
-            costoPasajeAdulto = boleto.getPrecioPasaje();
-        }
-        
-        precioBaseAdulto = costoAlojamientoAdulto+costoPensionAdulto+costoPasajeAdulto;
-        
-        
-        double costoTraslado = 0.0;
-        if (traslado) {
-            costoTraslado = precioBaseAdulto * 0.01; 
-        }
-        
-        precioBaseAdulto += costoTraslado;
-        
-        if ("alta".equals(temporada)) {
-            precioBaseAdulto *= 1.30;
-        } else if ("media".equals(temporada)) {
-            precioBaseAdulto *= 1.15;
-        }
-        
-        BigDecimal adultoRedondeado = new BigDecimal(precioBaseAdulto);
-        adultoRedondeado = adultoRedondeado.setScale(2, RoundingMode.HALF_UP); 
-        return adultoRedondeado.doubleValue();  
-        
+        return Math.round((precioBaseAdulto+costoTraslado)*100)/100; 
     }
     
     public double costoMenor(){
-        double precioBaseMenor = 0.0;
-        double costoAlojamientoMenor = 0.0;
-        if(estadia!=null){
-            costoAlojamientoMenor = estadia.getPrecioNoche()*totalDias();
-        }
-        
-        double costoPensionMenor = 0.0;
-        if (pension != null) {
-            double porcentajePension = pension.getPorcentaje();
-            costoPensionMenor = (costoAlojamientoMenor * (porcentajePension / 100))*0.5;
-        }
-        
-        double costoPasajeMenor = 0.0;
-        if (boleto !=null){
-            costoPasajeMenor = boleto.getPrecioPasaje()*0.5;
-        }
-        
-        precioBaseMenor = costoAlojamientoMenor+costoPensionMenor+costoPasajeMenor;
-        
-        
-        double costoTrasladoMenor = 0.0;
-        if (traslado) {
-            costoTrasladoMenor = (precioBaseMenor * 0.01)*0.5; 
-        }
-        
-        precioBaseMenor += costoTrasladoMenor;
-        
-        if ("alta".equals(temporada)) {
-            precioBaseMenor *= 1.30;
-        } else if ("media".equals(temporada)) {
-            precioBaseMenor *= 1.15;
-        }
-        
-        BigDecimal menorRedondeado = new BigDecimal(precioBaseMenor);
-        menorRedondeado = menorRedondeado.setScale(2, RoundingMode.HALF_UP); 
-        return menorRedondeado.doubleValue();  
+        double precioBaseMenor = getCostoAlojamiento(true)+getCostoPasaje(true)+getCostoPension(true);
+        double costoTraslado = getCostoTraslado(true, precioBaseMenor);
+        return Math.round((precioBaseMenor+costoTraslado)*100)/100; 
     }
     
     public double getCostoAlojamiento(boolean menor){
@@ -314,7 +229,8 @@ public class Paquete {
         if (estadia != null) {
             costoAlojamiento = estadia.getPrecioNoche() * totalDias();
         }
-        return costoAlojamiento;
+        return Math.round(costoAlojamiento*100)/100;
+    
     }
     
     public double getCostoPension(boolean menor){
@@ -327,7 +243,7 @@ public class Paquete {
                 costoPension *= 0.5;
             }
         }
-        return costoPension;
+        return Math.round(costoPension*100)/100;
     }
     
     public double getCostoPasaje(boolean menor) {
@@ -337,8 +253,8 @@ public class Paquete {
             if (menor) {
                 costoPasaje *= 0.5; 
             }
-        }
-        return costoPasaje;
+        } 
+        return Math.round(costoPasaje*100)/100;
     }
     
     public double getCostoTraslado(boolean menor, double precioBase) {
@@ -349,7 +265,7 @@ public class Paquete {
             costoTraslado *= 0.5; 
             }
         }
-        return (costoTraslado);
+        return Math.round(costoTraslado*100)/100;
     }
     
     public double getRecargoTemporada(double costoBase) {
@@ -362,7 +278,7 @@ public class Paquete {
         } else if ("baja".equals(temporada)) {
             recargo = 0.0; 
         }
-    return recargo;
+    return Math.round(recargo*100)/100;
     }
     
     

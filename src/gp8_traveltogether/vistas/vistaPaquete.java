@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -142,6 +143,10 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jbMostrarTuri = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(700, 982));
+        setRequestFocusEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Paquete");
@@ -292,6 +297,11 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel6.setText("Codigo:");
 
         jbEliminar.setText("Eliminar paquete");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbBuscarPaquete.setText("Buscar");
         jbBuscarPaquete.addActionListener(new java.awt.event.ActionListener() {
@@ -321,6 +331,13 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setText("Limpiar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -345,13 +362,6 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jbGuardarPaquete)
-                        .addGap(71, 71, 71)
-                        .addComponent(jButton4)
-                        .addGap(57, 57, 57)
-                        .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel13)
@@ -416,9 +426,6 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                                     .addComponent(jcDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jdVuelta, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(265, 265, 265)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(286, 286, 286)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jbGuardarTuri)
@@ -431,6 +438,18 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jbActualizarTuri)))))
                 .addContainerGap(29, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jbGuardarPaquete)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(18, 18, 18)
+                .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,7 +503,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                     .addComponent(jcTuristas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
                     .addComponent(jbMostrarTuri))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -514,10 +533,10 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jbGuardarPaquete)
-                    .addComponent(jbEliminar))
-                .addGap(15, 15, 15)
-                .addComponent(jButton1)
-                .addContainerGap())
+                    .addComponent(jbEliminar)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
+                .addGap(38, 38, 38))
         );
 
         pack();
@@ -688,16 +707,16 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         if(paqueteData.existePaquete(paqueteActual.getCodigoPaquete())){
             int rta = JOptionPane.showConfirmDialog(this, "Modificar el paquete implica un recargo del 10% por pasajero. Confirma?", "Confirmar modificación y recargo",JOptionPane.OK_CANCEL_OPTION);
             if (rta ==0){
-                double montoFinalRecargo = 0.0;
+                double montoFinalRecargo = paqueteActual.calcularMontoFinalConRecargo();
         
         
-                for (Turista turista : paqueteActual.getTuristas()) {
-                    if (turista.getEdad() < 10) {
-                        montoFinalRecargo += paqueteActual.calcularMontoFinal() * 1.1; 
-                    } else {
-                        montoFinalRecargo += paqueteActual.calcularMontoFinal() * 1.1; 
-                    }
-                }
+//                for (Turista turista : paqueteActual.getTuristas()) {
+//                    if (turista.getEdad() < 10) {
+//                        montoFinalRecargo += paqueteActual.costoMenor() * 1.1; 
+//                    } else {
+//                        montoFinalRecargo += paqueteActual.costoAdulto() * 1.1; 
+//                    }
+//                }
         
                 paqueteActual.setMontoFinal(montoFinalRecargo);
                 paqueteData.modificarPaquete(paqueteActual);
@@ -793,6 +812,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             turistaActual.setDni(dni);
             turistaActual.setNombre(nombre);
             turistaActual.setEdad(edad);
+            turiData.modificarTurista(turistaActual);
             JOptionPane.showMessageDialog(this,"Turista actualizado");
         } else {
             JOptionPane.showMessageDialog(this,"No se pudo actualizar.");
@@ -827,6 +847,27 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jbMostrarTuriActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        limpiarCampos();
+        paqueteActual = null;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        LocalDate ida = paqueteActual.getFechaInicio();
+        LocalDate hoy = LocalDate.now();
+        long cantDias = ChronoUnit.DAYS.between(hoy, ida);
+        if (paqueteActual != null && cantDias>30 ){
+            paqueteData.bajaLogicaPaquete(paqueteActual.getCodigoPaquete());
+            paqueteActual = null;
+            limpiarCampos();
+           
+        }else{
+            JOptionPane.showMessageDialog(this, "Restan menos de 30 días para el viaje. No se puede eliminar el paquete.");
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
     
     private void cargarOrigen(){
         jcOrigen.removeAllItems();
@@ -915,18 +956,27 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         }
     }
     
-//    private void limpiarCampos(){
-//        jtCodigo.setText("");
-//        jcOrigen.setSelectedItem(0);
-//        jcDestino.setSelectedItem(0);
-//        jtPrecio.setText("");
-//        jcTipo.setSelectedItem("Seleccione");
-//        jrEstado.setSelected(false);
-//    }
+    private void limpiarCampos(){
+        jtCodigoPaquete.setText("");
+        jcOrigen.setSelectedIndex(0);
+        jcDestino.setSelectedIndex(0);
+        jdIda.setDate(null);
+        jdVuelta.setDate(null);
+        jtDniTuri.setText("");
+        jtNombreTuri.setText("");
+        jtEdadTuri.setText("");
+        jcTuristas.setSelectedItem(0);
+        modeloAlojam.setRowCount(0);
+        modeloPasaje.setRowCount(0);
+        jrTraslado.setSelected(false);
+        jcPension.setSelectedIndex(0);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
