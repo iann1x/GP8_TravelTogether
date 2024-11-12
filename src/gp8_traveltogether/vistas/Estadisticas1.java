@@ -169,11 +169,11 @@ int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
    
     
     private void cargarEstadisticasPorMes(int mes) {
-        List<EstadisticaCiudad> estadisticas = paqueteData.mostrarCiudadPreferidaPorMes(mes);
+        List<Ciudad> estadisticas = paqueteData.mostrarCiudadPreferidaPorMes(mes);
         DefaultTableModel model = (DefaultTableModel) jTableEstadisticas.getModel();
         model.setRowCount(0); 
 
-        for (EstadisticaCiudad estadistica : estadisticas) {
+        for (Ciudad estadistica : estadisticas) {
             model.addRow(new Object[]{
                 estadistica.getCodCiudad(),
                 estadistica.getNombre(),
