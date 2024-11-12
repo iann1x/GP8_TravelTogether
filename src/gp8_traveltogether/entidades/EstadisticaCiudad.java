@@ -10,6 +10,7 @@ public class EstadisticaCiudad {
     private String nombre;
     private int frecuencia;
 
+    
     public int getCodCiudad() {
         return codCiudad;
     }
@@ -33,5 +34,4 @@ public class EstadisticaCiudad {
     public void setFrecuencia(int frecuencia) {
         this.frecuencia = frecuencia;
     }
-    
 }
