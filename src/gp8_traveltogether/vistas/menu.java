@@ -133,7 +133,7 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:&&
         escritorio.removeAll();
         escritorio.repaint();
         vistaCiudad vd = new vistaCiudad();
@@ -194,9 +194,9 @@ public class menu extends javax.swing.JFrame {
         // TODO add your handling code here:
          escritorio.removeAll();
         escritorio.repaint();
-        Estadisticas ve = new Estadisticas();
-        ve.setVisible(true);
-        escritorio.add(ve);
+        Estadisticas1 v1 = new Estadisticas1();
+        v1.setVisible(true);
+        escritorio.add(v1);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
