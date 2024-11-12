@@ -17,6 +17,7 @@ import gp8_traveltogether.persistencia.PaqueteData;
 import gp8_traveltogether.persistencia.PasajeData;
 import gp8_traveltogether.persistencia.PensionData;
 import gp8_traveltogether.persistencia.TuristaData;
+import static gp8_traveltogether.vistas.menu.escritorio;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -594,10 +595,10 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        vistaPresupuesto vPresu = new vistaPresupuesto(paqueteActual);
-        menu.escritorio.add(vPresu);
-        vPresu.toFront();
-        vPresu.setVisible(true);
+//        vistaPresupuesto vPresu = new vistaPresupuesto(paqueteActual);
+//        menu.escritorio.add(vPresu);
+//        vPresu.toFront();
+//        vPresu.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearActionPerformed
@@ -696,10 +697,14 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         paqueteActual.setTraslado(traslado);
         
         Pension pensionSelected = (Pension) jcPension.getSelectedItem();
-        paqueteActual.setPension(pensionSelected);
+        if (pensionSelected != null){
+            paqueteActual.setPension(pensionSelected);
+        }else{
+            JOptionPane.showMessageDialog(this, "Selecciona una pensión.");
+            return;
+        }
         
-        double montoFinal = paqueteActual.calcularMontoFinal();
-        paqueteActual.setMontoFinal(montoFinal);
+       
         paqueteActual.setEstado(true);
 
         
@@ -708,38 +713,48 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
             int rta = JOptionPane.showConfirmDialog(this, "Modificar el paquete implica un recargo del 10% por pasajero. Confirma?", "Confirmar modificación y recargo",JOptionPane.OK_CANCEL_OPTION);
             if (rta ==0){
                 double montoFinalRecargo = paqueteActual.calcularMontoFinalConRecargo();
-        
-        
-//                for (Turista turista : paqueteActual.getTuristas()) {
-//                    if (turista.getEdad() < 10) {
-//                        montoFinalRecargo += paqueteActual.costoMenor() * 1.1; 
-//                    } else {
-//                        montoFinalRecargo += paqueteActual.costoAdulto() * 1.1; 
-//                    }
-//                }
-        
                 paqueteActual.setMontoFinal(montoFinalRecargo);
                 paqueteData.modificarPaquete(paqueteActual);
                 JOptionPane.showMessageDialog(this, "Paquete modificado.");
+                mostrarPresupuestoModificacion();
+            
             }else{
                 JOptionPane.showMessageDialog(this, "Modificación cancelada.");
                 dispose();
             }
         }else{
+            double montoFinal = paqueteActual.calcularMontoFinal();
+            paqueteActual.setMontoFinal(montoFinal);
             paqueteData.guardarPaquete(paqueteActual);
             JOptionPane.showMessageDialog(this, "Paquete guardado.");
+            mostrarPresupuestoOriginal();
         } 
         
-        for (Turista turista : paqueteActual.getTuristas()) {
-            if (!turiData.existeTuristaEnPaquete(turista.getDni(), paqueteActual.getCodigoPaquete())) {
-                turista.setCodigoPaquete(paqueteActual.getCodigoPaquete()); 
-                turiData.agregarTurista(turista);
+        if (paqueteActual.getTuristas()!=null && !paqueteActual.getTuristas().isEmpty()){
+            for (Turista turista : paqueteActual.getTuristas()) {
+                if (!turiData.existeTuristaEnPaquete(turista.getDni(), paqueteActual.getCodigoPaquete())) {
+                    turista.setCodigoPaquete(paqueteActual.getCodigoPaquete()); 
+                    turiData.agregarTurista(turista);
+                }
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Cargue uno o más turistas.");
+            return;
         }
-        
-        System.out.println(paqueteActual);
-    }//GEN-LAST:event_jbGuardarPaqueteActionPerformed
 
+    }//GEN-LAST:event_jbGuardarPaqueteActionPerformed
+    
+    private void mostrarPresupuestoOriginal(){
+        vistaPresupuesto2 vistaPresuO = new vistaPresupuesto2(paqueteActual);
+        escritorio.add(vistaPresuO);
+        vistaPresuO.setVisible(true);
+    }
+    
+    private void mostrarPresupuestoModificacion(){
+        vistaPresupuesto vistaPresuM = new vistaPresupuesto(paqueteActual);
+        escritorio.add(vistaPresuM);
+        vistaPresuM.setVisible(true);  
+}
     private void jbBuscarPaqueteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarPaqueteActionPerformed
         // TODO add your handling code here:
         try{

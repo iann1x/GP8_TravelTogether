@@ -198,7 +198,7 @@ public class Paquete {
             }
 
         costoFinal+= getRecargoTemporada(costoFinal);
-        return Math.round(costoFinal*100)/100;   
+        return Math.round(costoFinal*100.0)/100.0;   
     }
     
     public double calcularMontoFinalConRecargo() {
@@ -207,20 +207,20 @@ public class Paquete {
         double recargoPorPasajero = montoTotal * 0.1;
         montoTotal += recargoPorPasajero;
     
-        return Math.round(montoTotal*100)/100;
+        return Math.round(montoTotal*100.0)/100.0;
     }
 
     public double costoAdulto(){
         double precioBaseAdulto = getCostoAlojamiento(false)+getCostoPasaje(false)+getCostoPension(false);
         double costoTraslado = getCostoTraslado(false, precioBaseAdulto);
         
-        return Math.round((precioBaseAdulto+costoTraslado)*100)/100; 
+        return Math.round((precioBaseAdulto+costoTraslado)*100.0)/100.0; 
     }
     
     public double costoMenor(){
         double precioBaseMenor = getCostoAlojamiento(true)+getCostoPasaje(true)+getCostoPension(true);
         double costoTraslado = getCostoTraslado(true, precioBaseMenor);
-        return Math.round((precioBaseMenor+costoTraslado)*100)/100; 
+        return Math.round((precioBaseMenor+costoTraslado)*100.0)/100.0; 
     }
     
     public double getCostoAlojamiento(boolean menor){
@@ -229,7 +229,7 @@ public class Paquete {
         if (estadia != null) {
             costoAlojamiento = estadia.getPrecioNoche() * totalDias();
         }
-        return Math.round(costoAlojamiento*100)/100;
+        return Math.round(costoAlojamiento*100.0)/100.0;
     
     }
     
@@ -243,7 +243,7 @@ public class Paquete {
                 costoPension *= 0.5;
             }
         }
-        return Math.round(costoPension*100)/100;
+        return Math.round(costoPension*100.0)/100.0;
     }
     
     public double getCostoPasaje(boolean menor) {
@@ -254,7 +254,7 @@ public class Paquete {
                 costoPasaje *= 0.5; 
             }
         } 
-        return Math.round(costoPasaje*100)/100;
+        return Math.round(costoPasaje*100.0)/100.0;
     }
     
     public double getCostoTraslado(boolean menor, double precioBase) {
@@ -265,7 +265,7 @@ public class Paquete {
             costoTraslado *= 0.5; 
             }
         }
-        return Math.round(costoTraslado*100)/100;
+        return Math.round(costoTraslado*100.0)/100.0;
     }
     
     public double getRecargoTemporada(double costoBase) {
@@ -278,7 +278,7 @@ public class Paquete {
         } else if ("baja".equals(temporada)) {
             recargo = 0.0; 
         }
-    return Math.round(recargo*100)/100;
+    return Math.round(recargo*100.0)/100.0;
     }
     
     

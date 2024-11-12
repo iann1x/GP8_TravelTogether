@@ -1,31 +1,30 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gp8_traveltogether.vistas;
 
 import gp8_traveltogether.entidades.Paquete;
 import gp8_traveltogether.entidades.Turista;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
 
-
-public class vistaPresupuesto extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author xiana
+ */
+public class vistaPresupuesto2 extends javax.swing.JInternalFrame {
 
     private Paquete paquete;
     private DefaultTableModel detallePresupuesto = new DefaultTableModel();
     
-    public vistaPresupuesto(Paquete paquete) {
+    public vistaPresupuesto2(Paquete paquete) {
+        initComponents();
         this.paquete = paquete;
         initComponents();
         armarTablaPresupuesto();
         mostrarPresupuestoModificacion();
-        
-        
-//        System.out.println(paquete);
-//        System.out.println(paquete.getTuristas());
-    }
-
-    public vistaPresupuesto() {
     }
 
     /**
@@ -38,37 +37,48 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jlTitulo = new javax.swing.JLabel();
-        jbSiguiente = new javax.swing.JButton();
-        jlIdaVuelta = new javax.swing.JLabel();
-        jlGrupo = new javax.swing.JLabel();
-        jlAdultos = new javax.swing.JLabel();
-        jlMenores = new javax.swing.JLabel();
-        jlPrecioPromedio = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaPresupuesto = new javax.swing.JTable();
         jlTotal = new javax.swing.JLabel();
+        jlIdaVuelta = new javax.swing.JLabel();
         jlTemporada = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        jlGrupo = new javax.swing.JLabel();
+        jlPrecioPromedio = new javax.swing.JLabel();
         jlAlojaNombre = new javax.swing.JLabel();
         jlTipoTransporte = new javax.swing.JLabel();
         jlPension = new javax.swing.JLabel();
+        jlAdultos = new javax.swing.JLabel();
+        jlMenores = new javax.swing.JLabel();
         jlTraslado = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaPresupuesto = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         jlTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlTitulo.setText("Presupuesto paquete:");
 
-        jbSiguiente.setText("Cerrar");
-        jbSiguiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSiguienteActionPerformed(evt);
-            }
-        });
+        jlTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlTotal.setText("Total: $");
 
         jlIdaVuelta.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlIdaVuelta.setText("Paquete:");
 
+        jlTemporada.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlTemporada.setText("Temporada:");
+
         jlGrupo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlGrupo.setText("Grupo: personas");
+
+        jlPrecioPromedio.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlPrecioPromedio.setText("Precio promedio por persona:");
+
+        jlAlojaNombre.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlAlojaNombre.setText("Alojamiento:");
+
+        jlTipoTransporte.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlTipoTransporte.setText("Tipo de Transporte:");
+
+        jlPension.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlPension.setText("Pension:");
 
         jlAdultos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlAdultos.setText("Adultos:");
@@ -76,8 +86,8 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         jlMenores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlMenores.setText("Menores:");
 
-        jlPrecioPromedio.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlPrecioPromedio.setText("Precio promedio por persona:");
+        jlTraslado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlTraslado.setText("Traslados:");
 
         tablaPresupuesto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,111 +102,89 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaPresupuesto);
 
-        jlTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jlTotal.setText("Total: $");
-
-        jlTemporada.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlTemporada.setText("Temporada:");
-
-        jlAlojaNombre.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlAlojaNombre.setText("Alojamiento:");
-
-        jlTipoTransporte.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlTipoTransporte.setText("Tipo de transporte:");
-
-        jlPension.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlPension.setText("Pensión:");
-
-        jlTraslado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlTraslado.setText("Traslados:");
+        jButton1.setText("Cerrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(230, 230, 230)
+            .addComponent(jSeparator1)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlTipoTransporte)
+                    .addComponent(jlAlojaNombre)
+                    .addComponent(jlTraslado)
+                    .addComponent(jlPension)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 933, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 25, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(364, 364, 364)
                 .addComponent(jlTotal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbSiguiente)
-                .addGap(86, 86, 86))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1)
-                .addContainerGap())
+                .addComponent(jButton1)
+                .addGap(85, 85, 85))
             .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlTitulo)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jlGrupo)
-                                            .addComponent(jlPrecioPromedio))
-                                        .addGap(76, 76, 76)
-                                        .addComponent(jlAdultos))
-                                    .addComponent(jlIdaVuelta))
-                                .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlTemporada)
-                                    .addComponent(jlMenores)))))
+                        .addComponent(jlGrupo)
+                        .addGap(224, 224, 224)
+                        .addComponent(jlAdultos)
+                        .addGap(186, 186, 186)
+                        .addComponent(jlMenores))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlTipoTransporte)
-                            .addComponent(jlAlojaNombre)
-                            .addComponent(jlPension)
-                            .addComponent(jlTraslado))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(jlIdaVuelta)
+                        .addGap(307, 307, 307)
+                        .addComponent(jlTemporada))
+                    .addComponent(jlPrecioPromedio))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(25, 25, 25)
                 .addComponent(jlTitulo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlIdaVuelta)
                     .addComponent(jlTemporada))
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlGrupo)
                     .addComponent(jlAdultos)
                     .addComponent(jlMenores))
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(jlPrecioPromedio)
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jlAlojaNombre)
-                .addGap(18, 18, 18)
-                .addComponent(jlTipoTransporte)
-                .addGap(13, 13, 13)
-                .addComponent(jlPension)
-                .addGap(18, 18, 18)
-                .addComponent(jlTraslado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSiguiente)
-                    .addComponent(jlTotal))
-                .addGap(26, 26, 26))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlAlojaNombre)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlTipoTransporte)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlPension)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlTraslado)
+                        .addGap(36, 36, 36)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
+                        .addComponent(jlTotal))
+                    .addComponent(jButton1))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiguienteActionPerformed
-           dispose();
-    }//GEN-LAST:event_jbSiguienteActionPerformed
-    
     public void mostrarPresupuestoModificacion(){
         jlTitulo.setText("Presupuesto paquete N°: "+paquete.getCodigoPaquete());
         DateTimeFormatter formatoNuestro = DateTimeFormatter.ofPattern("dd/MM/yy");
@@ -216,7 +204,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         
         jlAdultos.setText("Adultos: "+adultos);
         jlMenores.setText("Menores: "+menores);
-        double promedio = paquete.calcularMontoFinalConRecargo()/(menores+adultos);
+        double promedio = paquete.calcularMontoFinal()/(menores+adultos);
         jlPrecioPromedio.setText("Precio promedio por persona: "+ promedio);
         
         jlAlojaNombre.setText("Alojamiento: " + paquete.getEstadia().getTipoAlojam() + " " +paquete.getEstadia().getNombre());
@@ -243,8 +231,7 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
             double traslado = paquete.getCostoTraslado(esMenor, alojamiento + pension + pasaje);
             double costoTotal = alojamiento + pension + pasaje + traslado;
             double temporada = paquete.getRecargoTemporada(costoTotal);
-            double plusCambio = (costoTotal+temporada)*0.1;
-            double totalPorPersona = costoTotal+temporada+plusCambio;
+            double totalPorPersona = costoTotal+temporada;
 
             
             Object[] fila = {
@@ -254,18 +241,21 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                 pension,                              
                 traslado,                          
                 temporada,
-                plusCambio,
                 totalPorPersona,                          
             };
 
             
             detallePresupuesto.addRow(fila);
-            jlTotal.setText("Total $: "+ paquete.calcularMontoFinalConRecargo());
+            jlTotal.setText("Total $: "+ paquete.calcularMontoFinal());
         }
     }
 }
     
-   
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void armarTablaPresupuesto(){
         detallePresupuesto.addColumn("Nombre");
         detallePresupuesto.addColumn("Alojamiento");
@@ -273,15 +263,14 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         detallePresupuesto.addColumn("Pension");
         detallePresupuesto.addColumn("Traslados");
         detallePresupuesto.addColumn("Plus temporada");
-        detallePresupuesto.addColumn ("Plus por cambios");
         detallePresupuesto.addColumn("Total");
         
         tablaPresupuesto.setModel(detallePresupuesto);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JButton jbSiguiente;
     private javax.swing.JLabel jlAdultos;
     private javax.swing.JLabel jlAlojaNombre;
     private javax.swing.JLabel jlGrupo;

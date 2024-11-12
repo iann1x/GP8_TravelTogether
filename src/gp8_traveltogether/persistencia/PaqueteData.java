@@ -58,13 +58,15 @@ public class PaqueteData{
                 if(rs !=null && rs.next()){
                     int codigoPaquete = rs.getInt(1);
                     paquete.setCodigoPaquete(codigoPaquete);
-                    JOptionPane.showMessageDialog(null, "El paquete se guardó con éxito.");
+                    //JOptionPane.showMessageDialog(null, "El paquete se guardó con éxito.");
 
-                for (Turista turista : paquete.getTuristas()) {
-                    turista.setCodigoPaquete(codigoPaquete);
-                    turistaData.agregarTurista(turista);
+               
+                    for (Turista turista : paquete.getTuristas()) {
+                        turista.setCodigoPaquete(codigoPaquete);
+                        turistaData.agregarTurista(turista);
+                    }
                 }
-                }
+                
             ps.close();
             rs.close();
             psTurista.close();
@@ -154,7 +156,7 @@ public class PaqueteData{
             
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "El paquete se modificó con éxito.");
+                //JOptionPane.showMessageDialog(null, "El paquete se modificó con éxito.");
             } else{
                 JOptionPane.showMessageDialog(null, "No se encontró el paquete a modificar.");
             }

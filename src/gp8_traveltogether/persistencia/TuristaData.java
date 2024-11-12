@@ -29,7 +29,7 @@ public class TuristaData{
             ps.setInt(4, turista.getCodigoPaquete());
             ps.setBoolean(5,true);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "El turista se agregó con éxito.");
+            JOptionPane.showMessageDialog(null, "Grupo cargado con éxito.");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
         }
