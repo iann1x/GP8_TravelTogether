@@ -36,7 +36,7 @@ public class menu extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1059, Short.MAX_VALUE)
+            .addGap(0, 1321, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -53,7 +53,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Modificar paquete");
+        jMenuItem2.setText("Mostrar paquetes");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -179,11 +179,11 @@ public class menu extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-//        escritorio.removeAll();
-//        escritorio.repaint();
-//        vistaPresupuesto vp1 = new vistaPresupuesto(paqueteActual);
-//        vp1.setVisible(true);
-//        escritorio.add(vp1);
+        escritorio.removeAll();
+        escritorio.repaint();
+        vistaMostrarPaquetes vmp = new vistaMostrarPaquetes();
+        vmp.setVisible(true);
+        escritorio.add(vmp);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
