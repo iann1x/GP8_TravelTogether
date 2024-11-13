@@ -3,27 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/Alojamiento.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/CiudadData.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/Ciudad.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/EstadisticaCiudad.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaAlojamiento.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaCiudad.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/PensionData.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/Conexion.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/PaqueteData.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/PasajeData.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaPaquete.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/Paquete.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/Pension.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/Pasaje.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/AlojamientoData.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/entidades/Turista.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/vistas/menu.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/vistas/GP8_TravelTogether.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/vistas/Estadisticas1.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/EstadisticaCiudadData.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/GP8_TravelTogether/src/gp8_traveltogether/persistencia/TuristaData.java</file>
+            <file>file:/C:/Users/xiana/OneDrive/Documentos/ULP-%20DESARROLLO%20SOFTWARE/1°%20Año/2°%20Cuatrimestre/04.%20Laboratorio%20de%20Programacion%20I/GP8_TravelTogether/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaMostrarPaquetes.java</file>
+            <file>file:/C:/Users/xiana/OneDrive/Documentos/ULP-%20DESARROLLO%20SOFTWARE/1°%20Año/2°%20Cuatrimestre/04.%20Laboratorio%20de%20Programacion%20I/GP8_TravelTogether/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaAlojamiento.java</file>
+            <file>file:/C:/Users/xiana/OneDrive/Documentos/ULP-%20DESARROLLO%20SOFTWARE/1°%20Año/2°%20Cuatrimestre/04.%20Laboratorio%20de%20Programacion%20I/GP8_TravelTogether/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaPresupuesto.java</file>
+            <file>file:/C:/Users/xiana/OneDrive/Documentos/ULP-%20DESARROLLO%20SOFTWARE/1°%20Año/2°%20Cuatrimestre/04.%20Laboratorio%20de%20Programacion%20I/GP8_TravelTogether/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaPresupuesto2.java</file>
+            <file>file:/C:/Users/xiana/OneDrive/Documentos/ULP-%20DESARROLLO%20SOFTWARE/1°%20Año/2°%20Cuatrimestre/04.%20Laboratorio%20de%20Programacion%20I/GP8_TravelTogether/GP8_TravelTogether/src/gp8_traveltogether/vistas/vistaPaquete.java</file>
+            <file>file:/C:/Users/xiana/OneDrive/Documentos/ULP-%20DESARROLLO%20SOFTWARE/1°%20Año/2°%20Cuatrimestre/04.%20Laboratorio%20de%20Programacion%20I/GP8_TravelTogether/GP8_TravelTogether/src/gp8_traveltogether/vistas/menu.java</file>
         </group>
     </open-files>
 </project-private>

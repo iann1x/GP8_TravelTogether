@@ -36,25 +36,21 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jlTitulo" min="-2" pref="264" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jlGrupo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jlPrecioPromedio" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-                                      <Component id="jlAdultos" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jlIdaVuelta" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlGrupo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jlPrecioPromedio" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jlTemporada" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jlMenores" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                              <Component id="jlAdultos" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jlIdaVuelta" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlTitulo" alignment="0" min="-2" pref="264" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jlTemporada" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlMenores" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -78,9 +74,9 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jlTitulo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jlIdaVuelta" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlTemporada" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -103,9 +99,9 @@
               <Component id="jlPension" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jlTraslado" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="171" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="128" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbSiguiente" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jlTotal" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -119,14 +115,20 @@
     <Component class="javax.swing.JLabel" name="jlTitulo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="1"/>
+          <Font name="Lucida Sans" size="20" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Presupuesto paquete:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbSiguiente">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cerrar"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Lucida Sans" size="13" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/recursos/cerrar-sesion.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbSiguienteActionPerformed"/>
@@ -135,7 +137,7 @@
     <Component class="javax.swing.JLabel" name="jlIdaVuelta">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Paquete:"/>
       </Properties>
@@ -143,7 +145,7 @@
     <Component class="javax.swing.JLabel" name="jlGrupo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Grupo: personas"/>
       </Properties>
@@ -151,7 +153,7 @@
     <Component class="javax.swing.JLabel" name="jlAdultos">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Adultos:"/>
       </Properties>
@@ -159,7 +161,7 @@
     <Component class="javax.swing.JLabel" name="jlMenores">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Menores:"/>
       </Properties>
@@ -167,7 +169,7 @@
     <Component class="javax.swing.JLabel" name="jlPrecioPromedio">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Precio promedio por persona:"/>
       </Properties>
@@ -196,7 +198,7 @@
     <Component class="javax.swing.JLabel" name="jlTotal">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="1"/>
+          <Font name="Lucida Sans" size="20" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Total: $"/>
       </Properties>
@@ -204,7 +206,7 @@
     <Component class="javax.swing.JLabel" name="jlTemporada">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Temporada:"/>
       </Properties>
@@ -214,7 +216,7 @@
     <Component class="javax.swing.JLabel" name="jlAlojaNombre">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Alojamiento:"/>
       </Properties>
@@ -222,7 +224,7 @@
     <Component class="javax.swing.JLabel" name="jlTipoTransporte">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Tipo de transporte:"/>
       </Properties>
@@ -230,7 +232,7 @@
     <Component class="javax.swing.JLabel" name="jlPension">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Pensi&#xf3;n:"/>
       </Properties>
@@ -238,7 +240,7 @@
     <Component class="javax.swing.JLabel" name="jlTraslado">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Lucida Sans" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Traslados:"/>
       </Properties>
