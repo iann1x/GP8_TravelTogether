@@ -149,14 +149,19 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-/*
-    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
 
+    
+    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
+int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
+        
+        
+  
             cargarEstadisticasPorMes(mesSeleccionado);     }//GEN-LAST:event_jcbMesesActionPerformed
-*/
+
     private void jcbTemporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTemporadasActionPerformed
          String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
             cargarEstadisticasPorTemporada(temporadaSeleccionada);
+            
     }//GEN-LAST:event_jcbTemporadasActionPerformed
 
   public void mostrarEstadisticasEnTabla(List<Ciudad> estadisticas) {
