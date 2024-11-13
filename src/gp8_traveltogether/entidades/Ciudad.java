@@ -6,6 +6,10 @@ public class Ciudad {
     private int codCiudad;
     private String nombre;
     private boolean estado;
+     private int frecuencia; 
+    
+  
+   
 
     public Ciudad(int codCiudad, String nombre, boolean estado) {
         this.codCiudad = codCiudad;
@@ -44,7 +48,13 @@ public class Ciudad {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
+     public int getFrecuencia() {
+        return frecuencia;
+    }
+
+    public void setFrecuencia(int frecuencia) {
+        this.frecuencia = frecuencia;
+    }
     @Override
     public String toString() {
         return nombre;
@@ -64,11 +74,12 @@ public class Ciudad {
     return codCiudad == ciudad.codCiudad;
     }
     
-    public Object getFrecuencia() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    }
-    
+}
+
+
+  
+
+   
     
     
     
