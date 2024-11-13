@@ -2,6 +2,9 @@
 package gp8_traveltogether.vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class menu extends javax.swing.JFrame {
 
@@ -15,7 +18,14 @@ public class menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu3 = new javax.swing.JMenu();
-        escritorio = new javax.swing.JDesktopPane();
+        ImageIcon icono = new ImageIcon(getClass().getResource("/recursos/fondoTravel.png"));
+        Image fondo = icono.getImage();
+        escritorio = new javax.swing.JDesktopPane(){
+
+            public void paintComponent(Graphics g){
+                g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -36,11 +46,11 @@ public class menu extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1321, Short.MAX_VALUE)
+            .addGap(0, 2561, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1016, Short.MAX_VALUE)
+            .addGap(0, 1230, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Paquetes");
@@ -126,7 +136,9 @@ public class menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();

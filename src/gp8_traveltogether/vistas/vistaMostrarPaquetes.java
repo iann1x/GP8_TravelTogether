@@ -204,7 +204,6 @@ public class vistaMostrarPaquetes extends javax.swing.JInternalFrame {
         
     }
              
-    
     public void armarTabla(){
         tablaMostrarPaquetes.addColumn("Código");
         tablaMostrarPaquetes.addColumn("Origen y destino");
