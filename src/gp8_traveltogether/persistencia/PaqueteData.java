@@ -274,12 +274,18 @@ public class PaqueteData{
         return paquetes;
     }
 
-    public List<Ciudad> mostrarCiudadPreferidaPorMes(int mes) {
+   public List<Ciudad> mostrarCiudadPreferidaPorMes(int mes) {
     List<Ciudad> ciudades = new ArrayList<>();
-    String query = "SELECT codCiudad, nombre, frecuencia FROM ciudad WHERE mes = ?";
+    String query = "SELECT codCiudad, nombre, COUNT(*) AS frecuencia " +
+               "FROM ciudad " +
+               "JOIN paquete ON ciudad.nombre = paquete.destino " +
+               "WHERE MONTH(paquete.fechaInicio) = ? AND paquete.estado = 1 " +
+               "GROUP BY ciudad.codCiudad, ciudad.nombre " +
+               "ORDER BY frecuencia DESC";
     try (PreparedStatement ps = con.prepareStatement(query)) {
         ps.setInt(1, mes);
         ResultSet rs = ps.executeQuery();
+        //System.out.println("Ejecutando consulta SQL...");
         while (rs.next()) {
             Ciudad ciudad = new Ciudad();
             ciudad.setCodCiudad(rs.getInt("codCiudad"));
@@ -287,34 +293,12 @@ public class PaqueteData{
             ciudad.setFrecuencia(rs.getInt("frecuencia"));
             ciudades.add(ciudad);
         }
+        //System.out.println("Ciudades obtenidas: " + ciudades.size()); 
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
     }
     return ciudades;
 }
 
-   public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String temporada) {
-    String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
-                   "FROM ciudad " +
-                   "JOIN paquete ON ciudad.codCiudad = paquete.destino " +
-                   "WHERE paquete.temporada = ? AND paquete.estado = 1 " +
-                   "GROUP BY ciudad.codCiudad, ciudad.nombre " +
-                   "ORDER BY frecuencia DESC";
-    List<EstadisticaCiudad> estadisticas = new ArrayList<>();
-    try {
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, temporada);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            EstadisticaCiudad estadistica = new EstadisticaCiudad();
-            estadistica.setCodCiudad(rs.getInt("codCiudad"));
-            estadistica.setNombre(rs.getString("nombre"));
-            estadistica.setFrecuencia(rs.getInt("frecuencia"));
-            estadisticas.add(estadistica);
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
-    }
-    return estadisticas;
-}
+  
 }

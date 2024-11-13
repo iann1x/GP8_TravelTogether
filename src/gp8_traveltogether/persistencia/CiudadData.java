@@ -2,12 +2,14 @@
 package gp8_traveltogether.persistencia;
 
 import gp8_traveltogether.entidades.Ciudad;
+import gp8_traveltogether.entidades.EstadisticaCiudad;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -180,6 +182,32 @@ public class CiudadData {
         }
     }
     
-
+ public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String temporada) {
+     //System.out.println("Pruebaaaaaaaaaaa");
+     String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
+                   "FROM ciudad " +
+                   "JOIN paquete ON ciudad.nombre = paquete.destino " +
+                   "WHERE paquete.temporada = ? AND paquete.estado = 1 " +
+                   "GROUP BY ciudad.codCiudad, ciudad.nombre " +
+                   "ORDER BY frecuencia DESC";
+    List<EstadisticaCiudad> estadisticas = new ArrayList<>();
+    try {
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, temporada);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            EstadisticaCiudad estadistica = new EstadisticaCiudad();
+            estadistica.setCodCiudad(rs.getInt("codCiudad"));
+            estadistica.setNombre(rs.getString("nombre"));
+            estadistica.setFrecuencia(rs.getInt("frecuencia"));
+            estadisticas.add(estadistica);
+            //System.out.println("Pruebaaaaaaaaaaa" + rs.getString("nombre"));
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Ciudad.");
+    }
+    return estadisticas;
+}
+  
 
 }
