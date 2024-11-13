@@ -53,40 +53,40 @@ public class vistaPresupuesto2 extends javax.swing.JInternalFrame {
         tablaPresupuesto = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
-        jlTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlTitulo.setFont(new java.awt.Font("Lucida Sans", 1, 20)); // NOI18N
         jlTitulo.setText("Presupuesto paquete:");
 
-        jlTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlTotal.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         jlTotal.setText("Total: $");
 
-        jlIdaVuelta.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlIdaVuelta.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlIdaVuelta.setText("Paquete:");
 
-        jlTemporada.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlTemporada.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlTemporada.setText("Temporada:");
 
-        jlGrupo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlGrupo.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlGrupo.setText("Grupo: personas");
 
-        jlPrecioPromedio.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlPrecioPromedio.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlPrecioPromedio.setText("Precio promedio por persona:");
 
-        jlAlojaNombre.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlAlojaNombre.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlAlojaNombre.setText("Alojamiento:");
 
-        jlTipoTransporte.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlTipoTransporte.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlTipoTransporte.setText("Tipo de Transporte:");
 
-        jlPension.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlPension.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlPension.setText("Pension:");
 
-        jlAdultos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlAdultos.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlAdultos.setText("Adultos:");
 
-        jlMenores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlMenores.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlMenores.setText("Menores:");
 
-        jlTraslado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlTraslado.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
         jlTraslado.setText("Traslados:");
 
         tablaPresupuesto.setModel(new javax.swing.table.DefaultTableModel(
@@ -102,7 +102,8 @@ public class vistaPresupuesto2 extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaPresupuesto);
 
-        jButton1.setText("Cerrar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cerrar-sesion.png"))); // NOI18N
+        jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -126,9 +127,9 @@ public class vistaPresupuesto2 extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlTotal)
-                .addGap(348, 348, 348)
+                .addGap(344, 344, 344)
                 .addComponent(jButton1)
-                .addGap(85, 85, 85))
+                .addGap(89, 89, 89))
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +150,9 @@ public class vistaPresupuesto2 extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap()
                 .addComponent(jlTitulo)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlIdaVuelta)
                     .addComponent(jlTemporada))
@@ -165,22 +166,20 @@ public class vistaPresupuesto2 extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlAlojaNombre)
-                        .addGap(18, 18, 18)
-                        .addComponent(jlTipoTransporte)
-                        .addGap(18, 18, 18)
-                        .addComponent(jlPension)
-                        .addGap(18, 18, 18)
-                        .addComponent(jlTraslado)
-                        .addGap(36, 36, 36)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jlTotal)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jlAlojaNombre)
+                .addGap(18, 18, 18)
+                .addComponent(jlTipoTransporte)
+                .addGap(18, 18, 18)
+                .addComponent(jlPension)
+                .addGap(18, 18, 18)
+                .addComponent(jlTraslado)
+                .addGap(36, 36, 36)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTotal)
+                    .addComponent(jButton1))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();

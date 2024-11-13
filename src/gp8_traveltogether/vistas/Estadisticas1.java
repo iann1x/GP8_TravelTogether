@@ -152,7 +152,7 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
 
     
     private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
-int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
+        int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
         
         
   

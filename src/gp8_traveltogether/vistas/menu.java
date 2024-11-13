@@ -53,8 +53,12 @@ public class menu extends javax.swing.JFrame {
             .addGap(0, 1230, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Paquetes");
+        jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
 
+        jMenu1.setText("Paquetes");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem1.setText("Paquete");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +67,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem2.setText("Mostrar paquetes");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,7 +79,9 @@ public class menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Administrador");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem3.setText("Destinos");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,6 +90,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem4.setText("Alojamiento");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +99,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem4);
 
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem5.setText("Pasajes");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +108,7 @@ public class menu extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem6.setText("Pension");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,12 +120,14 @@ public class menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu4.setText("Estadisticas");
+        jMenu4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jMenu4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu4ActionPerformed(evt);
             }
         });
 
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         jMenuItem7.setText("Estadistica");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
