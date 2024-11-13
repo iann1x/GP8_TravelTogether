@@ -7,9 +7,14 @@ package gp8_traveltogether.vistas;
 
 import gp8_traveltogether.entidades.Ciudad;
 import gp8_traveltogether.entidades.EstadisticaCiudad;
+import gp8_traveltogether.persistencia.Conexion;
 import gp8_traveltogether.persistencia.EstadisticaCiudadData;
 import gp8_traveltogether.persistencia.PaqueteData;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -144,45 +149,63 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+/*
     private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
-int mesSeleccionado = jcbMeses.getSelectedIndex() + 1; 
-            cargarEstadisticasPorMes(mesSeleccionado);     }//GEN-LAST:event_jcbMesesActionPerformed
 
+            cargarEstadisticasPorMes(mesSeleccionado);     }//GEN-LAST:event_jcbMesesActionPerformed
+*/
     private void jcbTemporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTemporadasActionPerformed
          String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
             cargarEstadisticasPorTemporada(temporadaSeleccionada);
     }//GEN-LAST:event_jcbTemporadasActionPerformed
 
-   public void mostrarEstadisticasEnTabla(List<EstadisticaCiudad> estadisticas) {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Código de Ciudad");
-        model.addColumn("Nombre");
-        model.addColumn("Frecuencia");
+  public void mostrarEstadisticasEnTabla(List<Ciudad> estadisticas) {
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Código de Ciudad");
+    model.addColumn("Nombre");
+    model.addColumn("Frecuencia");
 
-        for (EstadisticaCiudad estadistica : estadisticas) {
-            model.addRow(new Object[]{estadistica.getCodCiudad(), estadistica.getNombre(), estadistica.getFrecuencia()});
-        }
-
-        jtEstadisticas.setModel(model);
+    for (Ciudad ciudad : estadisticas) {
+        model.addRow(new Object[]{ciudad.getCodCiudad(), ciudad.getNombre(), ciudad.getFrecuencia()});
     }
+
+    jtEstadisticas.setModel(model);
+}
 
    
     
-    private void cargarEstadisticasPorMes(int mes) {
-        List<Ciudad> estadisticas = paqueteData.mostrarCiudadPreferidaPorMes(mes);
-        DefaultTableModel model = (DefaultTableModel) jTableEstadisticas.getModel();
-        model.setRowCount(0); 
+    private void cargarEstadisticasPorMes(int mes) throws SQLException {
+    // Define la consulta SQL
+    String query = "SELECT c.codCiudad, c.nombre, COUNT(*) AS frecuencia "
+                 + "FROM paquete p "
+                 + "JOIN ciudad c ON p.codigoCiudad = c.codCiudad "
+                 + "WHERE MONTH(p.fechaInicio) = ? "
+                 + "GROUP BY c.codCiudad, c.nombre "
+                 + "ORDER BY frecuencia DESC LIMIT 25";
 
-        for (Iterator<Ciudad> it = estadisticas.iterator(); it.hasNext();) {
-            Ciudad estadistica = it.next();
-            model.addRow(new Object[]{
-                estadistica.getCodCiudad(),
-                estadistica.getNombre(),
-                estadistica.getFrecuencia()
-            });
+    try (Connection con = Conexion.obtenerConexion();  // Conexión abierta
+         PreparedStatement ps = con.prepareStatement(query)) {
+
+        // Establece el mes en la consulta
+        ps.setInt(1, mes);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            List<Ciudad> estadisticas = new ArrayList<>();
+
+            // Recorrer los resultados
+            while (rs.next()) {
+                Ciudad ciudad = new Ciudad();
+                ciudad.setCodCiudad(rs.getInt("codCiudad"));
+                ciudad.setNombre(rs.getString("nombre"));
+                ciudad.setFrecuencia(rs.getInt("frecuencia"));
+                estadisticas.add(ciudad);
+            }
+
+            // Mostrar los resultados en la tabla
+            mostrarEstadisticasEnTabla(estadisticas);
         }
-    }
+
+    }}
   private void cargarEstadisticasPorTemporada(String temporada) {
         List<EstadisticaCiudad> estadisticas = paqueteData.mostrarDestinosMasElegidosPorTemporada(temporada);
         DefaultTableModel model = (DefaultTableModel) jTableEstadisticas.getModel();
