@@ -57,6 +57,30 @@ public class TuristaData{
         }
         return turistas;
     }
+    
+    public ArrayList <Turista> mostrarTuristasPorPaquete(int codigoPaquete) {
+        String query = "SELECT dni, nombre, edad FROM turista WHERE codigoPaquete =?";
+        ArrayList<Turista> turistas = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, codigoPaquete);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                Turista turista = new Turista();
+                turista.setDni(rs.getInt("dni"));
+                turista.setNombre(rs.getString("nombre"));
+                turista.setEdad(rs.getInt("edad"));
+                turistas.add(turista);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Turista.");
+        }
+        return turistas;
+    }
 
     public void modificarTurista(Turista turista) {
         String query = "UPDATE turista SET nombre=?, edad=?, codigoPaquete=?, estado=? WHERE dni=?";

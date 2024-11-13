@@ -73,8 +73,15 @@ public class Ciudad {
     Ciudad ciudad = (Ciudad) obj;
     return codCiudad == ciudad.codCiudad;
     }
+<<<<<<< HEAD
 
   
+=======
+    
+    public Object getFrecuencia() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+>>>>>>> 0f18b5f4b2bbb6714dbb704a73609a5d74852b05
     }
     
     

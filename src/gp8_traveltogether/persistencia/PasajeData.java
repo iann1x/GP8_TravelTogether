@@ -143,25 +143,25 @@ public class PasajeData{
        }
     }
 
-    public List<Pasaje> mostrarPasajesPorCiudad(int codCiudad) {
-        String query = "SELECT * FROM pasaje WHERE codCiudad=? AND estado=1"; 
-        List<Pasaje> pasajes = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, codCiudad);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Pasaje pasaje = new Pasaje();
-                pasaje.setCodPasaje(rs.getInt("codPasaje"));
-                pasaje.setPrecioPasaje(rs.getDouble("precioPasaje"));
-                pasaje.setTipoViaje(rs.getString("tipoViaje"));
-                pasajes.add(pasaje);
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Pasaje.");
-        }
-        return pasajes;
-    }
+//    public List<Pasaje> mostrarPasajesPorCiudad(int codCiudad) {
+//        String query = "SELECT * FROM pasaje WHERE codCiudad=? AND estado=1"; 
+//        List<Pasaje> pasajes = new ArrayList<>();
+//
+//        try {
+//            PreparedStatement ps = con.prepareStatement(query);
+//            ps.setInt(1, codCiudad);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                Pasaje pasaje = new Pasaje();
+//                pasaje.setCodPasaje(rs.getInt("codPasaje"));
+//                pasaje.setPrecioPasaje(rs.getDouble("precioPasaje"));
+//                pasaje.setTipoViaje(rs.getString("tipoViaje"));
+//                pasajes.add(pasaje);
+//            }
+//            rs.close();
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Pasaje.");
+//        }
+//        return pasajes;
+//    }
 } //cierre clase PaqueteData

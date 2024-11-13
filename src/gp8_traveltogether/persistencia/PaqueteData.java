@@ -230,20 +230,46 @@ public class PaqueteData{
         return turistasPaquete;
     }
 
-    public List<Paquete> mostrarPaquetes() {
-        String query = "SELECT * FROM paquete WHERE estado=1"; 
-        List<Paquete> paquetes = new ArrayList<>();
+    public ArrayList<Paquete> mostrarPaquetes(boolean estado) {
+        String query = "SELECT codigoPaquete, origen, destino, fechaInicio, fechaFin, temporada, codAlojam, codPasaje, codAdicional, traslado, montoFinal FROM paquete WHERE estado=?"; 
+        ArrayList<Paquete> paquetes = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(query);
+            ps.setBoolean(1, estado);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Paquete paquete = new Paquete();
                 paquete.setCodigoPaquete(rs.getInt("codigoPaquete"));
-                paquete.setMontoFinal(rs.getDouble("precio"));
+                Ciudad origen = ciudadData.buscarCiudad(rs.getInt("origen"));
+                paquete.setOrigen(origen);
+                
+                Ciudad destino = ciudadData.buscarCiudad(rs.getInt("destino"));
+                paquete.setDestino(destino);
+                
+                paquete.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                paquete.setFechaFin(rs.getDate("fechaFin").toLocalDate());
+                paquete.setTemporada(rs.getString("temporada"));
+                
+                Alojamiento aloja = alojaData.buscarAlojamiento(rs.getInt("codAlojam"));
+                paquete.setEstadia(aloja);
+                
+                Pasaje pasaje = pasajeData.buscarPasaje(rs.getInt("codPasaje"));
+                paquete.setBoleto(pasaje);
+                
+                Pension pension = pensionData.buscarPensionPorCod(rs.getInt("codAdicional"));
+                paquete.setPension(pension);
+                
+                paquete.setTraslado(rs.getBoolean("traslado"));
+                
+                paquete.setMontoFinal(rs.getDouble("montoFinal"));
+                
+                ArrayList<Turista> turistas = turistaData.mostrarTuristasPorPaquete(paquete.getCodigoPaquete());
+                paquete.setTuristas(turistas);
+                
                 paquetes.add(paquete);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete.");
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete."+ex.getMessage());
         }
         return paquetes;
     }
