@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -151,18 +153,22 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
-    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
-int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
-        
-        
-  
-            cargarEstadisticasPorMes(mesSeleccionado);     }//GEN-LAST:event_jcbMesesActionPerformed
-
     private void jcbTemporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTemporadasActionPerformed
          String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
             cargarEstadisticasPorTemporada(temporadaSeleccionada);
             
     }//GEN-LAST:event_jcbTemporadasActionPerformed
+
+    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
+        try {
+            int mesSeleccionado = jcbMeses.getSelectedIndex() + 1; // El índice de JComboBox es 0-11, así que sumamos 1
+            
+            // Llamamos al método para cargar las estadísticas por mes
+            cargarEstadisticasPorMes(mesSeleccionado);
+        } catch (SQLException ex) {
+            Logger.getLogger(Estadisticas1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jcbMesesActionPerformed
 
   public void mostrarEstadisticasEnTabla(List<Ciudad> estadisticas) {
     DefaultTableModel model = new DefaultTableModel();
