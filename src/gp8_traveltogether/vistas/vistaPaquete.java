@@ -181,7 +181,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel8.setText("DNI:");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel9.setText("Nombre:");
+        jLabel9.setText("Nombre completo:");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel10.setText("Edad:");
@@ -271,7 +271,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Pension:");
 
-        jButton4.setText("Ver presupuesto");
+        jButton4.setText("Ver presupuesto original");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -438,7 +438,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
                                 .addComponent(jbLimpiarTuri)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbActualizarTuri)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jbGuardarPaquete)
@@ -595,10 +595,7 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-//        vistaPresupuesto vPresu = new vistaPresupuesto(paqueteActual);
-//        menu.escritorio.add(vPresu);
-//        vPresu.toFront();
-//        vPresu.setVisible(true);
+        mostrarPresupuestoOriginal();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearActionPerformed

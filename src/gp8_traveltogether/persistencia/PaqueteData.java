@@ -230,9 +230,9 @@ public class PaqueteData{
         return turistasPaquete;
     }
 
-    public List<Paquete> mostrarPaquetes() {
+    public ArrayList<Paquete> mostrarPaquetes() {
         String query = "SELECT * FROM paquete WHERE estado=1"; 
-        List<Paquete> paquetes = new ArrayList<>();
+        ArrayList<Paquete> paquetes = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
