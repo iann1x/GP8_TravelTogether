@@ -10,6 +10,7 @@ import gp8_traveltogether.entidades.EstadisticaCiudad;
 import gp8_traveltogether.persistencia.EstadisticaCiudadData;
 import gp8_traveltogether.persistencia.PaqueteData;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -173,7 +174,8 @@ int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
         DefaultTableModel model = (DefaultTableModel) jTableEstadisticas.getModel();
         model.setRowCount(0); 
 
-        for (Ciudad estadistica : estadisticas) {
+        for (Iterator<Ciudad> it = estadisticas.iterator(); it.hasNext();) {
+            Ciudad estadistica = it.next();
             model.addRow(new Object[]{
                 estadistica.getCodCiudad(),
                 estadistica.getNombre(),
@@ -182,7 +184,7 @@ int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
         }
     }
   private void cargarEstadisticasPorTemporada(String temporada) {
-        List<EstadisticaCiudad> estadisticas = paqueteData.mostrarCiudadPreferidaPorTemp(temporada);
+        List<EstadisticaCiudad> estadisticas = paqueteData.mostrarDestinosMasElegidosPorTemporada(temporada);
         DefaultTableModel model = (DefaultTableModel) jTableEstadisticas.getModel();
         model.setRowCount(0); 
 

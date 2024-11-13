@@ -251,7 +251,7 @@ public class PaqueteData{
     public List<Ciudad> mostrarCiudadPreferidaPorMes(int mes) {
         String query = "SELECT ciudad.codCiudad, ciudad.nombre FROM ciudad " +
                        "JOIN paquete ON ciudad.codCiudad = paquete.codCiudad " +
-                       "WHERE MONTH(paquete.fecha) = ? AND paquete.estado = 1";
+                       "WHERE MONTH(paquete.fechaFin) = ? AND paquete.estado = 1";
         List<Ciudad> ciudades = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(query);
@@ -269,10 +269,10 @@ public class PaqueteData{
         return ciudades;
     }
 
-   public List<EstadisticaCiudad> mostrarCiudadPreferidaPorTemp(String temporada) {
+   public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String temporada) {
     String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
                    "FROM ciudad " +
-                   "JOIN paquete ON ciudad.codCiudad = paquete.codCiudad " +
+                   "JOIN paquete ON ciudad.codCiudad = paquete.destino " +
                    "WHERE paquete.temporada = ? AND paquete.estado = 1 " +
                    "GROUP BY ciudad.codCiudad, ciudad.nombre " +
                    "ORDER BY frecuencia DESC";
