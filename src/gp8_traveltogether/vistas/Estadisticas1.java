@@ -69,7 +69,7 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
                 {null, null, null}
             },
             new String [] {
-                "Codigo ", "Ciudad", "Frecuencia"
+                "Codigo de Ciudad", "Ciudad", "Frecuencia"
             }
         ));
         jScrollPane1.setViewportView(jtEstadisticas);
@@ -154,8 +154,8 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
     
     private void cargarEstadisticasPorMes(int mes){
     List<Ciudad> estadisticas = paqueteData.mostrarCiudadPreferidaPorMes(mes);
-    DefaultTableModel model = (DefaultTableModel) jtEstadisticas.getModel();
-    model.setRowCount(0); 
+    DefaultTableModel model1 = (DefaultTableModel) jtEstadisticas.getModel();
+    model1.setRowCount(0); 
 
     for (Ciudad estadistica : estadisticas) {
         model.addRow(new Object[]{
