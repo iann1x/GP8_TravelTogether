@@ -36,9 +36,9 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
         jbEliminar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-        jtNombre = new javax.swing.JTextField();
-        jrEstado = new javax.swing.JRadioButton();
         jtCodigoCiudad = new javax.swing.JTextField();
+        jrEstado = new javax.swing.JRadioButton();
+        jtNombre = new javax.swing.JTextField();
         jtBuscar = new javax.swing.JButton();
         bg = new javax.swing.JLabel();
 
@@ -75,11 +75,11 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, -1, -1));
-        getContentPane().add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 90, -1));
+        getContentPane().add(jtCodigoCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 90, -1));
 
         jrEstado.setText("Disponible");
         getContentPane().add(jrEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, -1));
-        getContentPane().add(jtCodigoCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 170, -1));
+        getContentPane().add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 170, -1));
 
         jtBuscar.setText("Buscar");
         jtBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -152,8 +152,8 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbEliminarActionPerformed
     
     private void limpiarCampos(){
-        jtCodigoCiudad.setText("");
         jtNombre.setText("");
+        jtCodigoCiudad.setText("");
         jrEstado.setSelected(false);    
     }
 

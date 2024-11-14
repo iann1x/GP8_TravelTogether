@@ -289,6 +289,7 @@ public class PaqueteData{
         while (rs.next()) {
             Ciudad ciudad = new Ciudad();
             ciudad.setCodCiudad(rs.getInt("codCiudad"));
+            ciudad.setNombre(rs.getString("nombre"));
             ciudad.setFrecuencia(rs.getInt("frecuencia"));
             ciudades.add(ciudad);
         }

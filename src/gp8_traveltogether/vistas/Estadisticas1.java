@@ -158,7 +158,7 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
     model1.setRowCount(0); 
 
     for (Ciudad estadistica : estadisticas) {
-        model.addRow(new Object[]{
+        model1.addRow(new Object[]{
             estadistica.getCodCiudad(),
             estadistica.getNombre(),
             estadistica.getFrecuencia()
