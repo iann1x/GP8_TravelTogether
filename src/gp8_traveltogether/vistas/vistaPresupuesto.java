@@ -54,31 +54,29 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         jlPension = new javax.swing.JLabel();
         jlTraslado = new javax.swing.JLabel();
 
-        jlTitulo.setFont(new java.awt.Font("Lucida Sans", 1, 20)); // NOI18N
+        jlTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlTitulo.setText("Presupuesto paquete:");
 
-        jbSiguiente.setFont(new java.awt.Font("Lucida Sans", 1, 13)); // NOI18N
-        jbSiguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/cerrar-sesion.png"))); // NOI18N
-        jbSiguiente.setText("Salir");
+        jbSiguiente.setText("Cerrar");
         jbSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSiguienteActionPerformed(evt);
             }
         });
 
-        jlIdaVuelta.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlIdaVuelta.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlIdaVuelta.setText("Paquete:");
 
-        jlGrupo.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlGrupo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlGrupo.setText("Grupo: personas");
 
-        jlAdultos.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlAdultos.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlAdultos.setText("Adultos:");
 
-        jlMenores.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlMenores.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlMenores.setText("Menores:");
 
-        jlPrecioPromedio.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlPrecioPromedio.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlPrecioPromedio.setText("Precio promedio por persona:");
 
         tablaPresupuesto.setModel(new javax.swing.table.DefaultTableModel(
@@ -94,22 +92,22 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tablaPresupuesto);
 
-        jlTotal.setFont(new java.awt.Font("Lucida Sans", 1, 20)); // NOI18N
+        jlTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlTotal.setText("Total: $");
 
-        jlTemporada.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlTemporada.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlTemporada.setText("Temporada:");
 
-        jlAlojaNombre.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlAlojaNombre.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlAlojaNombre.setText("Alojamiento:");
 
-        jlTipoTransporte.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlTipoTransporte.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlTipoTransporte.setText("Tipo de transporte:");
 
-        jlPension.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlPension.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlPension.setText("Pensión:");
 
-        jlTraslado.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jlTraslado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jlTraslado.setText("Traslados:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,18 +129,20 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jlGrupo)
-                                    .addComponent(jlPrecioPromedio))
-                                .addGap(76, 76, 76)
-                                .addComponent(jlAdultos))
-                            .addComponent(jlIdaVuelta)
-                            .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlTemporada)
-                            .addComponent(jlMenores)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlGrupo)
+                                            .addComponent(jlPrecioPromedio))
+                                        .addGap(76, 76, 76)
+                                        .addComponent(jlAdultos))
+                                    .addComponent(jlIdaVuelta))
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlTemporada)
+                                    .addComponent(jlMenores)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 916, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -158,9 +158,9 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(29, 29, 29)
                 .addComponent(jlTitulo)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlIdaVuelta)
                     .addComponent(jlTemporada))
@@ -181,9 +181,9 @@ public class vistaPresupuesto extends javax.swing.JInternalFrame {
                 .addComponent(jlPension)
                 .addGap(18, 18, 18)
                 .addComponent(jlTraslado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSiguiente)
                     .addComponent(jlTotal))
