@@ -208,6 +208,5 @@ public class CiudadData {
     }
     return estadisticas;
 }
-  
 
 }
