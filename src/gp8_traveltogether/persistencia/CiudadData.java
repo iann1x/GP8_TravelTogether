@@ -186,7 +186,7 @@ public class CiudadData {
      //System.out.println("Pruebaaaaaaaaaaa");
      String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
                    "FROM ciudad " +
-                   "JOIN paquete ON ciudad.nombre = paquete.destino " +
+                   "JOIN paquete ON ciudad.codCiudad = paquete.destino " +
                    "WHERE paquete.temporada = ? AND paquete.estado = 1 " +
                    "GROUP BY ciudad.codCiudad, ciudad.nombre " +
                    "ORDER BY frecuencia DESC";

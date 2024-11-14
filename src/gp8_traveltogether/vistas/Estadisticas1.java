@@ -78,7 +78,7 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
         jLabel1.setForeground(new java.awt.Color(51, 102, 255));
         jLabel1.setText("Destinos mas elegidos");
 
-        jcbTemporadas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primavera", "Verano", "Otoño", "Invierno" }));
+        jcbTemporadas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "alta", "media", "baja" }));
         jcbTemporadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbTemporadasActionPerformed(evt);

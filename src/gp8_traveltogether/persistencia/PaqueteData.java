@@ -276,12 +276,12 @@ public class PaqueteData{
 
    public List<Ciudad> mostrarCiudadPreferidaPorMes(int mes) {
     List<Ciudad> ciudades = new ArrayList<>();
-    String query = "SELECT codCiudad, nombre, COUNT(*) AS frecuencia " +
-               "FROM ciudad " +
-               "JOIN paquete ON ciudad.nombre = paquete.destino " +
-               "WHERE MONTH(paquete.fechaInicio) = ? AND paquete.estado = 1 " +
-               "GROUP BY ciudad.codCiudad, ciudad.nombre " +
-               "ORDER BY frecuencia DESC";
+     String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
+                   "FROM ciudad " +
+                   "JOIN paquete ON ciudad.codCiudad = paquete.destino " +
+                   "WHERE MONTH(paquete.fechaInicio) = ? AND paquete.estado = 1 " +
+                   "GROUP BY ciudad.codCiudad, ciudad.nombre " +
+                   "ORDER BY frecuencia DESC";
     try (PreparedStatement ps = con.prepareStatement(query)) {
         ps.setInt(1, mes);
         ResultSet rs = ps.executeQuery();
