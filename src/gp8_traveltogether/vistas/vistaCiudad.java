@@ -32,27 +32,17 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jbNuevo = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
         jtNombre = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         jrEstado = new javax.swing.JRadioButton();
         jtCodigoCiudad = new javax.swing.JTextField();
         jtBuscar = new javax.swing.JButton();
+        bg = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Ciudad");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel2.setText("Nombre:");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel3.setText("Estado:");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +50,7 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
                 jbNuevoActionPerformed(evt);
             }
         });
+        getContentPane().add(jbNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, -1, -1));
 
         jbEliminar.setText("Eliminar");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -67,6 +58,7 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
                 jbEliminarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, -1, -1));
 
         jbGuardar.setText("Guardar");
         jbGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +66,7 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
                 jbGuardarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 410, -1, -1));
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -81,11 +74,12 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
                 jbSalirActionPerformed(evt);
             }
         });
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel4.setText("Codigo:");
+        getContentPane().add(jbSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, -1, -1));
+        getContentPane().add(jtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 90, -1));
 
         jrEstado.setText("Disponible");
+        getContentPane().add(jrEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, -1));
+        getContentPane().add(jtCodigoCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 170, -1));
 
         jtBuscar.setText("Buscar");
         jtBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -93,68 +87,10 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
                 jtBuscarActionPerformed(evt);
             }
         });
+        getContentPane().add(jtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 40, Short.MAX_VALUE)
-                .addComponent(jbNuevo)
-                .addGap(29, 29, 29)
-                .addComponent(jbEliminar)
-                .addGap(30, 30, 30)
-                .addComponent(jbGuardar)
-                .addGap(33, 33, 33)
-                .addComponent(jbSalir)
-                .addGap(35, 35, 35))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jrEstado)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jtCodigoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtBuscar)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jtCodigoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jrEstado))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbEliminar)
-                    .addComponent(jbGuardar)
-                    .addComponent(jbSalir))
-                .addGap(25, 25, 25))
-        );
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/ciudad600.png"))); // NOI18N
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, -1, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -222,10 +158,7 @@ public class vistaCiudad extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel bg;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbNuevo;
