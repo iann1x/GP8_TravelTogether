@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import gp8_traveltogether.persistencia.CiudadData;
 
 /**
  *
@@ -151,18 +152,40 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
-    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
-        int mesSeleccionado = jcbMeses.getSelectedIndex() + 1;
-        
-        
+/*
+    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {                                         
+       
+       
+     
   
-            cargarEstadisticasPorMes(mesSeleccionado);     }//GEN-LAST:event_jcbMesesActionPerformed
+            cargarEstadisticasPorMes(mesSeleccionado);     }                                        
+*/
+
 
     private void jcbTemporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTemporadasActionPerformed
+<<<<<<< HEAD
+          String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
+         //System.out.println(temporadaSeleccionada);
+         cargarEstadisticasPorTemporada(temporadaSeleccionada);
+=======
          String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
             cargarEstadisticasPorTemporada(temporadaSeleccionada);
+>>>>>>> parent of 9620cb4 (Vista Estadisticas Funcionando al finnnnnnn)
             
     }//GEN-LAST:event_jcbTemporadasActionPerformed
+
+    private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
+        try {
+            int mesSeleccionado = jcbMeses.getSelectedIndex() + 1; // El índice de JComboBox es 0-11, así que sumamos 1
+            
+            // Llamamos al método para cargar las estadísticas por mes
+            cargarEstadisticasPorMes(mesSeleccionado);
+        } catch (SQLException ex) {
+            Logger.getLogger(Estadisticas1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jcbMesesActionPerformed
+
+
 
   public void mostrarEstadisticasEnTabla(List<Ciudad> estadisticas) {
     DefaultTableModel model = new DefaultTableModel();
@@ -188,6 +211,24 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
                  + "GROUP BY c.codCiudad, c.nombre "
                  + "ORDER BY frecuencia DESC LIMIT 25";
 
+<<<<<<< HEAD
+    for (Ciudad estadistica : estadisticas) {
+        model.addRow(new Object[]{
+            estadistica.getCodCiudad(),
+            estadistica.getNombre(),
+            estadistica.getFrecuencia()
+        });
+    }
+    }
+    
+     private void cargarEstadisticasPorTemporada(String temporada) {
+          List<EstadisticaCiudad> estadisticas = ciudad.mostrarDestinosMasElegidosPorTemporada(temporada);
+        DefaultTableModel model1 = (DefaultTableModel) jtEstadisticas.getModel();
+        model1.setRowCount(0); 
+        for (EstadisticaCiudad estadistica : estadisticas) {
+            //System.out.println(estadistica.getCodCiudad());
+            model1.addRow(new Object[]{
+=======
     try (Connection con = Conexion.obtenerConexion();  // Conexión abierta
          PreparedStatement ps = con.prepareStatement(query)) {
 
@@ -218,12 +259,14 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
 
         for (EstadisticaCiudad estadistica : estadisticas) {
             model.addRow(new Object[]{
+>>>>>>> parent of 9620cb4 (Vista Estadisticas Funcionando al finnnnnnn)
                 estadistica.getCodCiudad(),
                 estadistica.getNombre(),
                 estadistica.getFrecuencia()
             });
         }
     }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;

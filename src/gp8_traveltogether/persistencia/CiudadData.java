@@ -2,14 +2,12 @@
 package gp8_traveltogether.persistencia;
 
 import gp8_traveltogether.entidades.Ciudad;
-import gp8_traveltogether.entidades.EstadisticaCiudad;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -182,6 +180,7 @@ public class CiudadData {
         }
     }
     
+<<<<<<< HEAD
  public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String temporada) {
      //System.out.println("Pruebaaaaaaaaaaa");
      String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
@@ -208,6 +207,8 @@ public class CiudadData {
     }
     return estadisticas;
 }
-  
+=======
+
+>>>>>>> parent of 9620cb4 (Vista Estadisticas Funcionando al finnnnnnn)
 
 }
