@@ -704,6 +704,12 @@ public class vistaPaquete extends javax.swing.JInternalFrame {
         
        
         paqueteActual.setEstado(true);
+        
+            
+        if (paqueteActual.getTuristas() == null || paqueteActual.getTuristas().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Agrega un turista como mínimo antes de guardar el paquete.");
+            return;
+        }
 
         
         

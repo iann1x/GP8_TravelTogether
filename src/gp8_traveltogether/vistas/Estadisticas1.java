@@ -36,7 +36,7 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
         private CiudadData ciudad;
     
     public Estadisticas1( ) {
-          initComponents();
+        initComponents();
         paqueteData = new PaqueteData(); 
         ciudad = new CiudadData();
   

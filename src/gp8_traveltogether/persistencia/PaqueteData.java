@@ -191,15 +191,21 @@ public class PaqueteData{
 
     public void bajaLogicaPaquete(int codigoPaquete) {
         String query = "UPDATE paquete SET estado=0 WHERE codigoPaquete=?";
+        String query2 = "UPDATE turista SET estado=0 WHERE codigoPaquete=?";
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, codigoPaquete);
-            int exito = ps.executeUpdate();
-            if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "El paquete se dio de baja con éxito.");
+            int exitoPaquete = ps.executeUpdate();
+            
+            PreparedStatement ps2 = con.prepareStatement(query2);
+            ps2.setInt(1, codigoPaquete);
+            int exitoTuristas = ps2.executeUpdate();
+            
+            if (exitoPaquete == 1 && exitoTuristas >=1) {
+                JOptionPane.showMessageDialog(null, "El paquete y los turistas se dieron de baja con éxito.");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla Paquete.");
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a la base de datos.");
         }
     }
 
