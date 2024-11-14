@@ -274,7 +274,7 @@ public class PaqueteData{
         return paquetes;
     }
 
-     public List<Ciudad> mostrarCiudadPreferidaPorMes(int mes) {
+   public List<Ciudad> mostrarCiudadPreferidaPorMes(int mes) {
     List<Ciudad> ciudades = new ArrayList<>();
     String query = "SELECT codCiudad, nombre, COUNT(*) AS frecuencia " +
                "FROM ciudad " +
@@ -289,6 +289,7 @@ public class PaqueteData{
         while (rs.next()) {
             Ciudad ciudad = new Ciudad();
             ciudad.setCodCiudad(rs.getInt("codCiudad"));
+            ciudad.setNombre(rs.getString("nombre"));
             ciudad.setFrecuencia(rs.getInt("frecuencia"));
             ciudades.add(ciudad);
         }
@@ -299,6 +300,5 @@ public class PaqueteData{
     return ciudades;
 }
 
-
+  
 }
-

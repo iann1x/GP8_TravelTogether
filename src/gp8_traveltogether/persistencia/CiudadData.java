@@ -182,7 +182,7 @@ public class CiudadData {
         }
     }
     
-public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String temporada) {
+ public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String temporada) {
      //System.out.println("Pruebaaaaaaaaaaa");
      String query = "SELECT ciudad.codCiudad, ciudad.nombre, COUNT(*) AS frecuencia " +
                    "FROM ciudad " +
@@ -208,5 +208,6 @@ public List<EstadisticaCiudad> mostrarDestinosMasElegidosPorTemporada(String tem
     }
     return estadisticas;
 }
+  
 
 }

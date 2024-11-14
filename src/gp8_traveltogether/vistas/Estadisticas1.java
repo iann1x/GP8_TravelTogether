@@ -35,12 +35,12 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
     private JTable jTableEstadisticas;
     private PaqueteData paqueteData;
         private DefaultTableModel model = new DefaultTableModel();
-         private CiudadData ciudad;
+        private CiudadData ciudad;
     
     public Estadisticas1( ) {
           initComponents();
-        paqueteData = new PaqueteData();
-         ciudad = new CiudadData();
+        paqueteData = new PaqueteData(); 
+        ciudad = new CiudadData();
   
     }
 
@@ -156,24 +156,22 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
-
     private void jcbTemporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTemporadasActionPerformed
-            String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
+        
+        String temporadaSeleccionada = (String) jcbTemporadas.getSelectedItem();
          //System.out.println(temporadaSeleccionada);
          cargarEstadisticasPorTemporada(temporadaSeleccionada);
-        
-
+         
             
     }//GEN-LAST:event_jcbTemporadasActionPerformed
 
     private void jcbMesesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbMesesActionPerformed
-               int mesSeleccionado = jcbMeses.getSelectedIndex() + 2;  
+    int mesSeleccionado = jcbMeses.getSelectedIndex() + 2;  
     //System.out.println("Mes seleccionado: " + mesSeleccionado);
     cargarEstadisticasPorMes(mesSeleccionado);
-    
     }//GEN-LAST:event_jcbMesesActionPerformed
 
-   public void mostrarEstadisticasEnTabla(List<Ciudad> estadisticas) {
+  public void mostrarEstadisticasEnTabla(List<Ciudad> estadisticas) {
     DefaultTableModel model = new DefaultTableModel();
     model.addColumn("Código de Ciudad");
     model.addColumn("Nombre");
@@ -185,7 +183,9 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
 
     jtEstadisticas.setModel(model);
 }
+
    
+    
     private void cargarEstadisticasPorMes(int mes){
     List<Ciudad> estadisticas = paqueteData.mostrarCiudadPreferidaPorMes(mes);
     DefaultTableModel model = (DefaultTableModel) jtEstadisticas.getModel();
@@ -199,11 +199,12 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
         });
     }
     }
-    
-    private void cargarEstadisticasPorTemporada(String temporada) {
-        List<EstadisticaCiudad> estadisticas = ciudad.mostrarDestinosMasElegidosPorTemporada(temporada);
+  private void cargarEstadisticasPorTemporada(String temporada) {
+        
+      List<EstadisticaCiudad> estadisticas = ciudad.mostrarDestinosMasElegidosPorTemporada(temporada);
         DefaultTableModel model1 = (DefaultTableModel) jtEstadisticas.getModel();
         model1.setRowCount(0); 
+
         for (EstadisticaCiudad estadistica : estadisticas) {
             //System.out.println(estadistica.getCodCiudad());
             model1.addRow(new Object[]{
@@ -213,14 +214,7 @@ public class Estadisticas1 extends javax.swing.JInternalFrame {
                 estadistica.getFrecuencia()
             });
         }
-        }
-    
-
-
-   
-
-
-  
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
